@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background-image: linear-gradient(to right, white, grey);
+}
+.Wrapper {
+    width: 100%;
+    min-height: 800px;
+    display: flex;
+}
+.Form__Items {
+    margin: auto;
+    background-color: white;
+    display: flex;
+    height: 600px;
+    width: 800px;
+}
+.Form__Item--Left {
+    width: 50%;
+}
+.Form__Image {
+    max-width: 100%;
+    min-height: 100%;
+}
+.Form__Item--Right {
+    width: 50%;
+}
+.Form__Logo {
+    display: flex;
+    justify-content: center;
+}
+.Register-Form-1 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+}
+input {
+    border: none;
+    border-bottom: solid 0.5px;
+    height: 40px;
+}
+.Register-Btn {
+    background-color: black;
+    width: 50%;
+    margin: auto;
+    border-radius: 10px;
+    height: 30px;
+    color: white;
+    margin-top: 20px;
+}
