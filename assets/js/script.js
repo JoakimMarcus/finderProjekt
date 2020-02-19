@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-function init() {
-
-=======
 async function createUser(username, email, password) {
-    const newUser = await fetch('localhost:8080/users', {
+    const newUser = await fetch('http://localhost:8080/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -14,6 +10,23 @@ async function createUser(username, email, password) {
             password: password
         })
     })
-    console.log(newUser)
->>>>>>> 79daf6670a81aa1eb89d9078d848f5204836e6a1
 }
+
+
+function init() {
+    let form = document.querySelector("#Reg-Form-1")
+    form.addEventListener("submit", async(event) => {
+        event.preventDefault()
+        const username = form.querySelector(".username").value
+        const email = form.querySelector(".email").value
+        const password = form.querySelector(".password").value
+        const repeatPassword = form.querySelector(".repeat-password").value
+        const hidden = document.querySelector(".hidden")
+        if (password !== repeatPassword) {
+            hidden.classList.toggle("hidden")
+        } else {
+            const createUsers = await createUser(username, email, password)
+        }
+    })
+}
+init()
