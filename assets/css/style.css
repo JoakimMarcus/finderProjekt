@@ -7,13 +7,13 @@ body {
     background-image: linear-gradient(to right, white, grey);
 }
 
-.Wrapper {
+.Reg__Wrapper {
     width: 100%;
     min-height: 800px;
     display: flex;
 }
 
-.Form__Items {
+.Reg__Items {
     margin: auto;
     background-color: white;
     display: flex;
@@ -21,32 +21,32 @@ body {
     width: 800px;
 }
 
-.Form__Item--Left {
+.Reg__Item-Left {
     width: 50%;
 }
 
-.Form__Image {
+.Reg__Image {
     max-width: 100%;
     min-height: 100%;
 }
 
-.Form__Item--Right {
+.Reg__Item-Right {
     width: 50%;
 }
 
-.Form__Logo {
+.Reg__Logo {
     display: flex;
     justify-content: center;
 }
 
-.Register-Form-1 {
+.Reg-Form-1 {
     display: flex;
     flex-direction: column;
     width: 50%;
     margin: auto;
 }
 
-.Register-Btn {
+.Reg-Btn {
     background-color: black;
     width: 50%;
     margin: auto;
@@ -57,22 +57,14 @@ body {
     cursor: pointer;
 }
 
-.border-box {
+.Form__Input-Wrap {
     width: 100%;
     overflow: hidden;
     font-size: 20px;
-    padding: 8px 0;
-    margin: 8px 0;
     border-bottom: 1px solid black;
 }
 
-.boder-box i {
-    width: 26px;
-    float: left;
-    text-align: center;
-}
-
-.border-box input {
+.Form__Input-Wrap input {
     border: none;
     outline: none;
     background: none;
