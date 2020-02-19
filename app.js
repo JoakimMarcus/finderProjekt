@@ -2,6 +2,8 @@ const express = require('express')
 const Datastore = require('nedb-promise')
 const users = new Datastore({ filename: './data/users.db', autoload: true })
 const app = express()
+const cors = require('cors')
+app.use(cors())
 
 app.use(express.json())
 
@@ -20,4 +22,4 @@ app.post("/users", async(req, res) => {
     res.json({ "result": result })
 })
 
-app.listen(8080, console.log("Server started", users))
+app.listen(8080, console.log("Server started"))
