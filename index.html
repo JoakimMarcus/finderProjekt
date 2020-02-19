@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://kit.fontawesome.com/bd7880edd1.js"></script>
     <title>Document</title>
 </head>
+
 <body>
     <div class="Wrapper">
         <div class="Form__Items">
@@ -18,10 +21,22 @@
                 </div>
                 <div class="Form__Container">
                     <form class="Register-Form-1">
-                        <input type="text" name="username" placeholder="Username">
-                        <input type="email" name="email" placeholder="Email">
-                        <input type="password" name="password" placeholder="Password">
-                        <input type="password" name="password" placeholder="Repeat password">
+                        <div class="border-box">
+                            <i class="fas fa-user-alt"></i>
+                            <input type="text" name="username" placeholder="Username" class="username">
+                        </div>
+                        <div class="border-box">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" name="email" placeholder="Email" class="email">
+                        </div>
+                        <div class="border-box">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Password" class="password">
+                        </div>
+                        <div class="border-box">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Repeat password" class="repeat-password">
+                        </div>
                         <button class="Register-Btn" type="submit">Create</button>
                     </form>
                 </div>
@@ -29,4 +44,5 @@
         </div>
     </div>
 </body>
+
 </html>
