@@ -7,19 +7,31 @@ app.use(cors())
 
 app.use(express.json())
 
-app.post("/users", async(req, res) => {
-    let newUser = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        games: {
-            game1: req.body.game1,
-            game2: req.body.game2,
-            game3: req.body.game3
+app.post("/register", async(req, res) => {
+    let user = await users.find({ username: req.body.username })
+    let email = await users.find({ email: req.body.email })
+    if (req.body.password !== req.body.repeatPassword) {
+        res.status(400).json({ error: 'ERROR_PASSWORD_MISMATCH' })
+    } else if (user == false) {
+        if (email == false) {
+            let newUser = {
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password,
+                games: {
+                    game1: req.body.game1,
+                    game2: req.body.game2,
+                    game3: req.body.game3
+                }
+            }
+            const result = await users.insert(newUser)
+            res.status(200).json({ message: 'user created' })
+        } else {
+            res.status(400).json({ error: 'ERROR_EMAIL_ALREADY_EXISTS' })
         }
+    } else {
+        res.status(400).json({ error: 'ERROR_USER_ALREADY_EXISTS' })
     }
-    const result = await users.insert(newUser)
-    res.json({ "result": result })
 })
 
 app.listen(8080, console.log("Server started"))

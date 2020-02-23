@@ -72,11 +72,29 @@ body {
     padding-left: 6px;
 }
 
-.hidden {
+.Hidden {
     display: none;
 }
 
-.error {
+.Hidden__Email {
+    display: none;
+}
+
+.Hidden__Password {
+    display: none;
+}
+
+.Error {
+    text-align: center;
+    color: red;
+}
+
+.Error__Email {
+    text-align: center;
+    color: red;
+}
+
+.Error__Password {
     text-align: center;
     color: red;
 }

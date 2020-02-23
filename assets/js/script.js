@@ -1,5 +1,5 @@
-async function createUser(username, email, password) {
-    const newUser = await fetch('http://localhost:8080/users', {
+async function createUser(username, email, password, repeatPassword) {
+    const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -7,9 +7,34 @@ async function createUser(username, email, password) {
         body: JSON.stringify({
             username: username,
             email: email,
-            password: password
+            password: password,
+            repeatPassword
         })
     })
+    console.log(response)
+
+    if (response == 200) {
+
+    } else {
+        const data = await response.json()
+        switch (data.error) {
+            case 'ERROR_USER_ALREADY_EXISTS':
+                const hidden = document.querySelector(".Error")
+                hidden.classList.toggle("Hidden")
+                hidden.innerHTML = "Username already exists!"
+                break;
+            case 'ERROR_EMAIL_ALREADY_EXISTS':
+                const hiddenEmail = document.querySelector(".Error__Email")
+                hiddenEmail.classList.toggle("Hidden__Email")
+                hiddenEmail.innerHTML = "Email already exists!"
+                break;
+            case 'ERROR_PASSWORD_MISMATCH':
+                const hiddenPassword = document.querySelector(".Error__Password")
+                hiddenPassword.classList.toggle("Hidden__Password")
+                hiddenPassword.innerHTML = "Password mismatch"
+                break;
+        }
+    }
 }
 
 
@@ -22,11 +47,7 @@ function init() {
         const password = form.querySelector(".password").value
         const repeatPassword = form.querySelector(".repeat-password").value
         const hidden = document.querySelector(".hidden")
-        if (password !== repeatPassword) {
-            hidden.classList.toggle("hidden")
-        } else {
-            const createUsers = await createUser(username, email, password)
-        }
+        const createUsers = await createUser(username, email, password, repeatPassword)
     })
 }
 init()

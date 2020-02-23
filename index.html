@@ -20,25 +20,27 @@
                 <div class="Reg__Logo">
                     <img src="assets/img/Logo Finder V2 1.svg">
                 </div>
-                <p class="error hidden">Lösenorden stämmer inte överens!</p>
                 <div class="Form__Container">
                     <form class="Reg-Form-1" id="Reg-Form-1">
                         <div class="Form__Input-Wrap">
                             <i class="fas fa-user-alt"></i>
                             <input type="text" name="username" placeholder="Username" class="username">
                         </div>
+                        <p class="Error Hidden"></p>
                         <div class="Form__Input-Wrap">
                             <i class="fas fa-envelope"></i>
                             <input type="email" name="email" placeholder="Email" class="email">
                         </div>
+                        <p class="Error__Email Hidden__Email"></p>
                         <div class="Form__Input-Wrap">
                             <i class="fas fa-lock"></i>
                             <input type="password" name="password" placeholder="Password" class="password">
                         </div>
                         <div class="Form__Input-Wrap">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="password" placeholder="Repeat password" class="repeat-password">
+                            <input type="password" name="repeatPassword" placeholder="Repeat password" class="repeat-password">
                         </div>
+                        <p class="Error__Password Hidden__Password"></p>
                         <button class="Reg-Btn" type="submit">Create</button>
                     </form>
                 </div>
