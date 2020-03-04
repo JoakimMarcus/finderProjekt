@@ -65,7 +65,13 @@ async function getGames() {
     const data = await request.json()
     console.log(data.game)
     console.log(request)
-    return data
+    let select = document.querySelector(".games")
+    for (let i = 0; i < data.game.length; i++) {
+        let option = document.createElement("option")
+        option.innerHTML = await JSON.stringify(data.game[i].game)
+        select.append(option)
+
+    }
 
     // }
 
