@@ -51,3 +51,21 @@ function init() {
     })
 }
 init()
+
+
+async function getGames() {
+    // let lists = document.querySelectorAll(".round")
+    // for (let i = 1; i <= lists.length; i++) {
+
+    const request = await fetch('http://localhost:8080/games/', {
+        method: 'GET',
+    })
+    const data = await request.json()
+    console.log(data.game)
+    console.log(request)
+    return data
+
+    // }
+
+}
+getGames()

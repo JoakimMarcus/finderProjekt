@@ -1,0 +1,135 @@
+{
+    "games": [{
+            "game": "Counter-Strike GO",
+            "genre": "FPS",
+            "platform": "steam"
+        },
+        {
+            "game": "Raft",
+            "genre": "Survival Games",
+            "platform": "steam"
+        },
+        {
+            "game": "Red Dead Redemption 2",
+            "genre": "Action",
+            "platform": "steam"
+        },
+        {
+            "game": "Tom Clancy's Rainbow Six® Siege",
+            "genre": "FPS",
+            "platform": "steam"
+        },
+        {
+            "game": "DOOM",
+            "genre": "FPS",
+            "platform": "steam"
+        },
+        {
+            "game": "Pubg",
+            "genre": "FPS",
+            "platform": "steam"
+        },
+        {
+            "game": "Far Cry® 5",
+            "genre": "FPS",
+            "platform": "steam"
+        },
+        {
+            "game": "Destiny 2",
+            "genre": "FPS",
+            "platform": "steam"
+        },
+        {
+            "game": "Team Fortress 2",
+            "genre": "FPS",
+            "platform": "steam"
+        },
+        {
+            "game": "Pummel Party",
+            "genre": "Action",
+            "platform": "steam"
+        },
+        {
+            "game": "Battlefield V",
+            "genre": "FPS",
+            "platform": "origin"
+        },
+        {
+            "game": "The sims 4",
+            "genre": "Life Simulators",
+            "platform": "origin"
+        },
+        {
+            "game": "The sims 4",
+            "genre": "Life Simulators",
+            "platform": "origin"
+        },
+        {
+            "game": "Apex",
+            "genre": "Battle Royale",
+            "platform": "origin"
+        },
+        {
+            "game": "Mass Effect 3",
+            "genre": "Action",
+            "platform": "origin"
+        },
+        {
+            "game": "FIFA 20",
+            "genre": "Sport",
+            "platform": "origin"
+        },
+        {
+            "game": "Anthem",
+            "genre": "Action",
+            "platform": "origin"
+        },
+        {
+            "game": "Age of empire III",
+            "genre": "Real Time Strategy",
+            "platform": "steam"
+        },
+        {
+            "game": "World of warcraft",
+            "genre": "MMORPG",
+            "platform": "blizzard"
+        },
+        {
+            "game": "Diablo III",
+            "genre": "Action RPG",
+            "platform": "blizzard"
+        },
+        {
+            "game": "Diablo II",
+            "genre": "Action RPG",
+            "platform": "blizzard"
+        },
+        {
+            "game": "Diablo I",
+            "genre": "Action RPG",
+            "platform": "blizzard"
+        },
+        {
+            "game": "Overwatch",
+            "genre": "FPS",
+            "platform": "blizzard"
+        },
+        {
+            "game": "Starcraft I",
+            "genre": "Real Time Strategy",
+            "platform": "blizzard"
+        },
+        {
+            "game": "Fortnite",
+            "genre": "Battle Royale",
+            "platform": "epic games"
+        },
+        {
+            "game": "Starcraft II",
+            "genre": "Real Time Strategy",
+            "platform": "blizzard"
+        }
+
+
+    ]
+}

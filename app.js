@@ -1,11 +1,21 @@
 const express = require('express')
 const Datastore = require('nedb-promise')
 const users = new Datastore({ filename: './data/users.db', autoload: true })
+const games = new Datastore({ filename: './data/games.db', autoload: true })
 const app = express()
 const cors = require('cors')
 app.use(cors())
 
 app.use(express.json())
+
+app.get("/games", async(req, res) => {
+    let game = await games.find({})
+    if (game.length > 0) {
+        res.json({ "game": game })
+    } else {
+        res.status(404).json("error")
+    }
+})
 
 app.post("/register", async(req, res) => {
     let user = await users.find({ username: req.body.username })
