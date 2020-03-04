@@ -28,11 +28,7 @@ app.post("/register", async(req, res) => {
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
-                games: {
-                    game1: req.body.game1,
-                    game2: req.body.game2,
-                    game3: req.body.game3
-                }
+                games: req.body.games
             }
             const result = await users.insert(newUser)
             res.status(200).json({ message: 'user created' })

@@ -1,4 +1,4 @@
-async function createUser(username, email, password, repeatPassword) {
+async function createUser(username, email, password, repeatPassword, games) {
     const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
@@ -8,7 +8,8 @@ async function createUser(username, email, password, repeatPassword) {
             username: username,
             email: email,
             password: password,
-            repeatPassword
+            repeatPassword,
+            games: games
         })
     })
     console.log(response)
@@ -46,8 +47,9 @@ function init() {
         const email = form.querySelector(".email").value
         const password = form.querySelector(".password").value
         const repeatPassword = form.querySelector(".repeat-password").value
+        const games = form.querySelector(".games").value
         const hidden = document.querySelector(".hidden")
-        const createUsers = await createUser(username, email, password, repeatPassword)
+        const createUsers = await createUser(username, email, password, repeatPassword, games)
     })
 }
 init()
