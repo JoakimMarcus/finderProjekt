@@ -5,11 +5,27 @@ const games = new Datastore({ filename: './data/games.db', autoload: true })
 const app = express()
 const cors = require('cors')
 app.use(cors())
+require('dotenv').config()
+
+let Database, db
+
+if (process.env.NODE_ENV == "development") {
+    Database = require("./nedb")
+} else {
+    Database = require("./mongo")
+}
+
 
 app.use(express.json())
 
+
 app.get("/games", async(req, res) => {
-    let game = await games.find({})
+    if (process.env.NODE_ENV == "development") {
+        let game = await games.find({})
+    } else {
+        let cursor = collection.find({})
+        data = await cursor.toArray()
+    }
     if (game.length > 0) {
         res.json({ "game": game })
     } else {
@@ -18,6 +34,18 @@ app.get("/games", async(req, res) => {
 })
 
 app.post("/register", async(req, res) => {
+    let collections = db.collection('users')
+
+    let data
+
+    if (process.env.NODE_ENV == 'development') {
+        data = await Database.collections.users.find({})
+    } else {
+        let cursor = await Database.collections.users.find({})
+        data = await cursor.toArray()
+    }
+    res.json({ data: data })
+
     let user = await users.find({ username: req.body.username })
     let email = await users.find({ email: req.body.email })
     if (req.body.password !== req.body.repeatPassword) {
