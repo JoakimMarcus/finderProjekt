@@ -56,24 +56,27 @@ init()
 
 
 async function getGames() {
-    // let lists = document.querySelectorAll(".round")
-    // for (let i = 1; i <= lists.length; i++) {
-
     const request = await fetch('http://localhost:8080/games/', {
         method: 'GET',
     })
     const data = await request.json()
-    console.log(data.game)
-    console.log(request)
+    return data.game
+}
+
+function renderGames(games) {
     let select = document.querySelector(".games")
-    for (let i = 0; i < data.game.length; i++) {
+    for (let i = 0; i < games.length; i++) {
         let option = document.createElement("option")
-        option.innerHTML = await data.game[i].game
+        option.innerHTML = games[i].game
         select.append(option)
 
     }
+}
 
-    // }
+async function run() {
+    let games = await getGames()
+    renderGames(games)
 
 }
-getGames()
+
+run()

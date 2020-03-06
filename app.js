@@ -1,7 +1,9 @@
 const express = require('express')
 const Datastore = require('nedb-promise')
-const users = new Datastore({ filename: './data/users.db', autoload: true })
-const games = new Datastore({ filename: './data/games.db', autoload: true })
+let collections = {
+    users: new Datastore({ filename: './data/users.db', autoload: true }),
+    games: new Datastore({ filename: './data/games.db', autoload: true })
+}
 const app = express()
 const cors = require('cors')
 app.use(cors())
@@ -9,17 +11,17 @@ app.use(cors())
 app.use(express.json())
 
 app.get("/games", async(req, res) => {
-    let game = await games.find({})
-    if (game.length > 0) {
-        res.json({ "game": game })
+    let games = await collections.games.find({})
+    if (games.length > 0) {
+        res.json({ "games": game })
     } else {
         res.status(404).json("error")
     }
 })
 
 app.post("/register", async(req, res) => {
-    let user = await users.find({ username: req.body.username })
-    let email = await users.find({ email: req.body.email })
+    let user = await collections.users.find({ username: req.body.username })
+    let email = await collections.users.find({ email: req.body.email })
     if (req.body.password !== req.body.repeatPassword) {
         res.status(400).json({ error: 'ERROR_PASSWORD_MISMATCH' })
     } else if (user == false) {
