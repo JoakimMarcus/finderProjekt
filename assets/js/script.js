@@ -56,11 +56,12 @@ init()
 
 
 async function getGames() {
-    const request = await fetch('http://localhost:8080/games/', {
-        method: 'GET',
+    const request = await fetch('http://localhost:8080/games', {
+        method: 'GET'
     })
     const data = await request.json()
-    return data.game
+    console.log(data.games)
+    return data.games
 }
 
 function renderGames(games) {

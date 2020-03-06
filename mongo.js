@@ -22,6 +22,7 @@ module.exports = {
         await client.connect()
         const db = client.db(dbName)
         this.collections.users = db.collection('users')
+        this.collections.games = db.collection('games')
         return db
     },
     collections: {}

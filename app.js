@@ -22,17 +22,17 @@ app.use(express.json())
 
 
 app.get("/games", async(req, res) => {
-    let collection = db.collection("games")
-    let data
+    // let games = db.collection("games")
+    let data, games
     if (process.env.NODE_ENV == "development") {
-        let games = await collectionsNEDB.games.find({})
+        games = await collectionsNEDB.games.find({})
         if (games.length > 0) {
             res.json({ "games": games })
         } else {
             res.status(404).json("error")
         }
     } else {
-        let cursor = collection.find({})
+        let cursor = await Database.collections.games.find({})
         data = await cursor.toArray()
     }
 })
@@ -40,18 +40,17 @@ app.get("/games", async(req, res) => {
 app.post("/register", async(req, res) => {
 
     // let collections = db.collection('users')
-    let data
+    let data, user, email
 
     if (process.env.NODE_ENV == 'development') {
-        data = await Database.collections.users.find({})
+        user = await collectionsNEDB.users.find({ username: req.body.username })
+        email = await collectionsNEDB.users.find({ email: req.body.email })
     } else {
-        let cursor = await Database.collections.users.find({})
-        data = await cursor.toArray()
+        user = await Database.collections.users.find({ username: req.body.username })
+        email = await Database.collections.users.find({ username: req.body.username })
+        data = await user.toArray()
+        data = await email.toArray()
     }
-    res.json({ data: data })
-
-    let user = await users.find({ username: req.body.username })
-    let email = await users.find({ email: req.body.email })
     if (req.body.password !== req.body.repeatPassword) {
         res.status(400).json({ error: 'ERROR_PASSWORD_MISMATCH' })
     } else if (user == false) {
@@ -62,7 +61,7 @@ app.post("/register", async(req, res) => {
                 password: req.body.password,
                 games: req.body.games
             }
-            const result = await users.insert(newUser)
+            const result = await collectionsNEDB.users.insert(newUser)
             res.status(200).json({ message: 'user created' })
         } else {
             res.status(400).json({ error: 'ERROR_EMAIL_ALREADY_EXISTS' })
