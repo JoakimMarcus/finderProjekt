@@ -1,6 +1,6 @@
 const Datastore = require("nedb-promise")
 
-const users = new Datastore({ filename: './data/users.db', autoload: true })
+const users = new Datastore({ filename: '../data/users.db', autoload: true })
 let collections = { users }
 
 
