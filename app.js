@@ -17,6 +17,11 @@ app.get("/games", async(req, res) => {
     }
 })
 
+app.get("/users", async(req, res) => {
+    let matchList = await users.find({})
+    res.json({"matchList": matchList})
+})
+
 app.post("/register", async(req, res) => {
     let user = await users.find({ username: req.body.username })
     let email = await users.find({ email: req.body.email })
