@@ -84,7 +84,7 @@ async function run() {
     renderGames(games)
 
 }
-getGames()
+run()
 
 async function getUsers() {
     const usersRequest = await fetch('http://localhost:8080/users/', {
@@ -92,12 +92,12 @@ async function getUsers() {
     })
     const usersData = await usersRequest.json()
     console.log(usersData.matchList)
-   
+
     let matches = document.querySelector(".Match__List")
     let ul = document.querySelector("ul")
     let h3 = document.createElement("h3")
 
-    for(let j = 0; j < usersData.matchList.length; j++) {
+    for (let j = 0; j < usersData.matchList.length; j++) {
         let match = document.createElement("li")
         match.innerHTML = await [
             usersData.matchList[j].username,
@@ -106,8 +106,6 @@ async function getUsers() {
         ]
         ul.append(match)
     }
-    
+
 }
 getUsers()
-
-run()
