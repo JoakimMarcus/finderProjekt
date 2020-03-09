@@ -42,6 +42,11 @@ app.get("/games", async(req, res) => {
     }
 })
 
+app.get("/users", async(req, res) => {
+    let matchList = await users.find({})
+    res.json({"matchList": matchList})
+})
+
 app.post("/register", async(req, res) => {
 
     // let collections = db.collection('users')
