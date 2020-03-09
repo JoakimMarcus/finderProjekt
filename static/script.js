@@ -18,6 +18,8 @@ async function createUser(username, email, password, repeatPassword, games) {
 
     } else {
         const data = await response.json()
+        const p = document.querySelector("p")
+        p.innerHTML = ""
         for (let i = 0; i < data.errors.length; i++) {
             const error = data.errors[i]
             console.log(data.errors)

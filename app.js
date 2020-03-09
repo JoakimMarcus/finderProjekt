@@ -83,6 +83,7 @@ app.post("/register", async(req, res) => {
                 let db = await Database.connect()
                 let users = db.collection('users')
                 const result = await users.insert(newUser)
+                res.status(200).json({ message: 'user created' })
                 console.log(result)
             }
         } else {
