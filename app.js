@@ -1,5 +1,5 @@
-const express = require('express')
-const Datastore = require('nedb-promise')
+const express = require("express")
+const Datastore = require("nedb-promise")
 let collectionsNEDB = {
     users: new Datastore({ filename: './data/users.db', autoload: true }),
     games: new Datastore({ filename: './data/games.db', autoload: true })
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV == "development") {
     Database = require("./database/mongo")
 }
 
-app.use(express.static('static'))
+app.use(express.static("static"))
 
 app.use(express.json())
 
@@ -54,7 +54,7 @@ app.post("/register", async(req, res) => {
     // let collections = db.collection('users')
     let user, email
 
-    if (process.env.NODE_ENV == 'development') {
+    if (process.env.NODE_ENV == "development") {
         user = await collectionsNEDB.users.find({ username: req.body.username })
         email = await collectionsNEDB.users.find({ email: req.body.email })
     } else {
@@ -75,19 +75,19 @@ app.post("/register", async(req, res) => {
                 password: req.body.password,
                 games: req.body.games
             }
-            if (process.env.NODE_ENV == 'development') {
+            if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
-                res.status(200).json({ message: 'user created' })
+                res.status(200).json({ message: "user created" })
 
             } else {
                 let db = await Database.connect()
-                let users = db.collection('users')
+                let users = db.collection("users")
                 const result = await users.insert(newUser)
-                res.status(200).json({ message: 'user created' })
+                res.status(200).json({ message: "user created" })
                 console.log(result)
             }
         } else {
-            errors.push('ERROR_EMAIL_ALREADY_EXISTS')
+            errors.push("ERROR_EMAIL_ALREADY_EXISTS")
         }
     } else {
         errors.push("ERROR_USER_ALREADY_EXISTS")

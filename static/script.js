@@ -14,8 +14,8 @@ async function createUser(username, email, password, repeatPassword, games) {
     })
     console.log(response)
 
-    if (response == 200) {
-
+    if (response.status == 200) {
+        console.log("Hejhej")
     } else {
         const data = await response.json()
         const p = document.querySelector("p")
@@ -89,7 +89,7 @@ async function run() {
 run()
 
 async function getUsers() {
-    const usersRequest = await fetch('http://localhost:8080/users/', {
+    const usersRequest = await fetch("http://localhost:8080/users/", {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
