@@ -44,7 +44,6 @@ async function createUser(username, email, password, repeatPassword, games) {
     }
 }
 
-
 function init() {
     let form = document.querySelector("#Reg-Form-1")
     form.addEventListener("submit", async(event) => {
@@ -62,7 +61,7 @@ init()
 
 
 async function getGames() {
-    const request = await fetch('http://localhost:8080/games', {
+    const request = await fetch('https://finder--staging.herokuapp.com/games', {
         method: 'GET'
     })
     const data = await request.json()
