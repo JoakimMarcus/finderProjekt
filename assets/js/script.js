@@ -68,6 +68,7 @@ async function getGames() {
     return data.games
 }
 
+
 function renderGames(games) {
     let select = document.querySelector(".games")
     for (let i = 0; i < games.length; i++) {
