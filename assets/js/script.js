@@ -18,22 +18,26 @@ async function createUser(username, email, password, repeatPassword, games) {
 
     } else {
         const data = await response.json()
-        switch (data.error) {
-            case 'ERROR_USER_ALREADY_EXISTS':
-                const hidden = document.querySelector(".Error")
-                hidden.classList.toggle("Hidden")
-                hidden.innerHTML = "Username already exists!"
-                break;
-            case 'ERROR_EMAIL_ALREADY_EXISTS':
-                const hiddenEmail = document.querySelector(".Error__Email")
-                hiddenEmail.classList.toggle("Hidden__Email")
-                hiddenEmail.innerHTML = "Email already exists!"
-                break;
-            case 'ERROR_PASSWORD_MISMATCH':
-                const hiddenPassword = document.querySelector(".Error__Password")
-                hiddenPassword.classList.toggle("Hidden__Password")
-                hiddenPassword.innerHTML = "Password mismatch"
-                break;
+        for (let i = 0; i < data.errors.length; i++) {
+            const error = data.errors[i]
+            console.log(data.errors)
+            switch (error) {
+                case 'ERROR_USER_ALREADY_EXISTS':
+                    const hidden = document.querySelector(".Error")
+                    hidden.classList.toggle("Hidden")
+                    hidden.innerHTML = "Username already exists!"
+                    break;
+                case 'ERROR_EMAIL_ALREADY_EXISTS':
+                    const hiddenEmail = document.querySelector(".Error__Email")
+                    hiddenEmail.classList.toggle("Hidden__Email")
+                    hiddenEmail.innerHTML = "Email already exists!"
+                    break;
+                case 'ERROR_PASSWORD_MISMATCH':
+                    const hiddenPassword = document.querySelector(".Error__Password")
+                    hiddenPassword.classList.toggle("Hidden__Password")
+                    hiddenPassword.innerHTML = "Password mismatch"
+                    break;
+            }
         }
     }
 }
@@ -56,24 +60,27 @@ init()
 
 
 async function getGames() {
-    // let lists = document.querySelectorAll(".round")
-    // for (let i = 1; i <= lists.length; i++) {
-
-    const request = await fetch('http://localhost:8080/games/', {
-        method: 'GET',
+    const request = await fetch('http://localhost:8080/games', {
+        method: 'GET'
     })
     const data = await request.json()
-    console.log(data.game)
-    console.log(request)
+    console.log(data.games)
+    return data.games
+}
+
+function renderGames(games) {
     let select = document.querySelector(".games")
-    for (let i = 0; i < data.game.length; i++) {
+    for (let i = 0; i < games.length; i++) {
         let option = document.createElement("option")
-        option.innerHTML = await data.game[i].game
+        option.innerHTML = games[i].game
         select.append(option)
 
     }
+}
 
-    // }
+async function run() {
+    let games = await getGames()
+    renderGames(games)
 
 }
 getGames()
@@ -101,3 +108,5 @@ async function getUsers() {
     
 }
 getUsers()
+
+run()
