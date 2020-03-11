@@ -3,6 +3,7 @@
 {"username":"nikeboy121212","email":"Niklasborg112122@gmail.com","password":"hej","games":{},"_id":"28QERDNRVzTEnSYX"}
 {"username":"Köttarbjörnen","email":"axel@hotmail.com","password":"axel","games":"Starcraft I","_id":"2EJlGM9XGS36Xsiq"}
 {"username":"nikeboy13","email":"nikeboy13@hotmail.com","password":"hej","games":{},"_id":"3NhAK1U0Gz5xjxbd"}
+{"username":"smartajocke","email":"smartajocke@gmail.com","password":"hej","games":"Raft","_id":"5R032QxIKn0gbzDK"}
 {"username":"nikeboy12","email":"nikeboy@hotmail.com","password":"hej","games":{},"_id":"AtXLwypdiqFus85Y"}
 {"username":"par","email":"par@gmail.com","password":"hej","games":"","_id":"B17MUZ2JnmAXaP0c"}
 {"username":"hankypanky","email":"hanna.westlund90@gmail.com","password":"hanna","games":{},"_id":"EX2BbmXAUZ7t3GrI"}
@@ -12,6 +13,7 @@
 {"username":"niklas","email":"efwejoefiwe@gmail.com","password":"wqf","games":{},"_id":"NveIlYsiDssfe6ey"}
 {"games":{},"_id":"Pu8q5tB53NLhf8Kd"}
 {"username":"nikeboy","email":"nikeboy@hotmail.com","password":"1234","games":{"game1":"Counter-Strike GO","game2":"Rainbow six","game3":"Age of empire"},"_id":"S2cqi4i2KGr8oOOw"}
+{"username":"gamer_girl","email":"gamer_girl@email.se","password":"gamer","games":"Age of empire III","_id":"XJR6a9ZpOUEF6ARQ"}
 {"username":"kalleAnka","email":"Niklasborg12@gmail.com","password":"hej","games":"World of warcraft","_id":"XxKlveYdssyX6k25"}
 {"username":"joakim","email":"joamim@gmail.com","password":"hejhej","games":"\"Red Dead Redemption 2\"","_id":"ZTf2YkbETadUQvKN"}
 {"username":"korven","email":"korven@korvkiosk.se","password":"korvis","games":"Raft","_id":"brGYrLRBOuXYF8SK"}
@@ -27,4 +29,7 @@
 {"username":"nickepicke","email":"lol@rofl.se","password":"knas","games":{},"_id":"v7AyMxJtc0BN0aQT"}
 {"username":"Pontus","email":"pontus@email.se","password":"pontus","games":"The sims 4","_id":"vMdLnhiEqmKlRYiZ"}
 {"username":"nikeboy1212","email":"nikeboy@hotmail.com","password":"hej","games":{},"_id":"yF3GUFe6oBKGTg4u"}
-{"username":"smartajocke","email":"smartajocke@gmail.com","password":"hej","games":"Raft","_id":"5R032QxIKn0gbzDK"}
+<<<<<<< HEAD
+{"username":"star_girl","email":"stargirl@email.com","password":"star","games":"Age of empire III","_id":"yp1tYXNFjQBJTwQv"}
+=======
+>>>>>>> 19de50d800bfdbbb79db4178699d3cf8331de351
