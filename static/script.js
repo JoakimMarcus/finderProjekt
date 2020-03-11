@@ -43,6 +43,49 @@ async function createUser(username, email, password, repeatPassword, games) {
 }
 
 
+let form = document.querySelector("form")
+form.addEventListener("submit", async event => {
+    event.preventDefault();
+    let username = form.querySelector(".username").value
+    let password = form.querySelector(".password").value
+    let response = await fetch('http://localhost:8080/login', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            username,
+            password
+        })
+    })
+    console.log(response.status)
+    if (response.status == 200) {
+        let data = await response.json()
+        window.localStorage.setItem("token", data.token)
+    } else {
+        console.log("HANDLE ERROR ON LOGIN")
+    }
+})
+
+document.querySelector("#get").addEventListener("click", async event => {
+    const token = window.localStorage.getItem("token")
+    let response = await fetch('http://localhost:8080/secured', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    let data = await response.json()
+    if (response.status == 200) {
+        document.querySelector(".message").innerText = data.message
+    } else {
+        document.querySelector(".message").innerText = data.error
+    }
+
+    console.log(data)
+})
+
+
+
 function init() {
     let form = document.querySelector("#Reg-Form-1")
     form.addEventListener("submit", async(event) => {
