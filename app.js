@@ -43,8 +43,16 @@ app.get("/games", async(req, res) => {
 })
 
 app.get("/users", async(req, res) => {
-    let matchList = await users.find({})
-    res.json({"matchList": matchList})
+    let matchList
+    if(process.env.NODE_ENV == "development") {
+        matchList = await collectionsNEDB.users.find({})
+        res.json({"matchList": matchList})
+        
+    }else{
+        let cursor = await Database.collections.users.find({})
+        matchList = await cursor.toArray()
+    }   
+    
 })
 
 app.post("/register", async(req, res) => {
