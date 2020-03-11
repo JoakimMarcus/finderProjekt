@@ -49,10 +49,10 @@ form.addEventListener("submit", async event => {
     let username = form.querySelector(".username").value
     let password = form.querySelector(".password").value
     let response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'POST',
         body: JSON.stringify({
             username,
             password
@@ -65,6 +65,9 @@ form.addEventListener("submit", async event => {
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
+    let div = document.querySelector(".Log_Container")
+    let h3 = div.createElement("h3").innerHTML = "Välkommen!"
+    div.append(h3)
 })
 
 document.querySelector("#get").addEventListener("click", async event => {
@@ -125,12 +128,12 @@ function renderGames(games) {
 async function run() {
     let games = await getGames()
     renderGames(games)
-
+    getUsers()
 }
 run()
 
 async function getUsers() {
-    const usersRequest = await fetch('http://localhost:8080/users/', {
+    const usersRequest = await fetch('http://localhost:8080/users', {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
@@ -151,4 +154,3 @@ async function getUsers() {
     }
 
 }
-getUsers()
