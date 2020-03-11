@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/bd7880edd1.js"></script>
     <title>Document</title>
 </head>
@@ -14,11 +14,11 @@
     <div class="Reg__Wrapper">
         <div class="Reg__Items">
             <div class="Reg__Item-Left">
-                <img class="Reg__Image" src="assets/img/image 1.png">
+                <img class="Reg__Image" src="./img/image1.png">
             </div>
             <div class="Reg__Item-Right">
                 <div class="Reg__Logo">
-                    <img src="assets/img/Logo Finder V2 1.svg">
+                    <img src="./img/LogoFinderV21.svg">
                 </div>
                 <div class="Form__Container">
                     <form class="Reg-Form-1" id="Reg-Form-1">
@@ -77,7 +77,36 @@
             </ul>
         </div>
     </div>
-    <script src="assets/js/script.js"></script>
+    <!-- Log in -->
+    <div class="Log__Wrapper">
+        <div class="Log__Items">
+            <div class="Log__Item-Left">
+                <img class="Log__Image" src="./img/loginpage.png">
+            </div>
+            <div class="Log__Item-Right">
+                <div class="Log__Logo">
+                    <img src="./img/LogoFinderV21.svg">
+                </div>
+                <div class="Log__Container">
+                    <form class="Log-Form-1" id="Log-Form-1">
+                        <div class="Form__Input-Wrap">
+                            <i class="fas fa-user-alt"></i>
+                            <input type="text" name="username" placeholder="Användarnamn" class="username">
+                        </div>
+                        <p class="Error__Email Hidden__Email"></p>
+                        <div class="Form__Input-Wrap">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Lösenord" class="password">
+                        </div>
+                        <p class="Error__Password Hidden__Password"></p>
+                        <button class="Log-Btn" type="submit">Logga in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Log in code -->
+    <script src="./script.js"></script>
 </body>
 
 </html>

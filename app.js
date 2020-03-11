@@ -9,6 +9,7 @@ const cors = require('cors')
 app.use(cors())
 require('dotenv').config()
 
+
 let Database, db
 
 if (process.env.NODE_ENV == "development") {
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV == "development") {
     Database = require("./database/mongo")
 }
 
+app.use(express.static('static'))
 
 app.use(express.json())
 
