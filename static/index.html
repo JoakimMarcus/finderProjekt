@@ -11,7 +11,7 @@
 
 <body>
     <!-- Body class?-->
-    <div class="Reg__Wrapper">
+    <div class="Reg__Wrapper Hidden">
         <div class="Reg__Items">
             <div class="Reg__Item-Left">
                 <img class="Reg__Image" src="./img/image1.png">
@@ -59,18 +59,29 @@
             </div>
         </div>
     </div>
-    <form action="/login" method="POST">
+    <!-- <form action="/login" method="POST">
         <input type="text" class="username" placeholder="username">
         <input type="text" class="password" placeholder="pass">
         <input type="submit" value="LOGIN">
     </form>
 
     <button id="get">GET MESSAGE</button>
-    <p class="message"></p>
-    <div class="Match__List">
-        <ul>
+    <p class="message"></p> -->
 
-        </ul>
+    <!--För att testa matchningen-->
+    <div class="Match__Games Hidden">
+        <button class="Match__Button">Börja matcha</button>
+        <select class="gejms" name="gejms">
+                <option class="disabled" value="" disabled selected>Välj ett spel</option>
+          
+          </select>
+        <!--Matchningslistan ska skrivas ut när man klickar på knappen i reg-sidan-->
+        <div class="Match__List">
+            <ul>
+
+            </ul>
+        </div>
+
     </div>
     <!-- Log in -->
     <div class="Log__Wrapper">
@@ -82,8 +93,9 @@
                 <div class="Log__Logo">
                     <img src="./img/LogoFinderV21.svg">
                 </div>
+                <div class="test"></div>
                 <div class="Log__Container">
-                    <form action="/login" method="POST" class="Log-Form-1" id="Log-Form-1">
+                    <form class="Log-Form-1" id="Log-Form-1">
                         <div class="Form__Input-Wrap">
                             <i class="fas fa-user-alt"></i>
                             <input type="text" name="username" placeholder="Användarnamn" class="username">

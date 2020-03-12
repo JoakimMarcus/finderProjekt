@@ -46,8 +46,16 @@ app.get("/games", async(req, res) => {
 })
 
 app.get("/users", async(req, res) => {
-    let matchList = await collectionsNEDB.users.find({})
-    res.json({ "matchList": matchList })
+    let matchList
+    if (process.env.NODE_ENV == "development") {
+        matchList = await collectionsNEDB.users.find({})
+        res.json({ "matchList": matchList })
+
+    } else {
+        let cursor = await Database.collections.users.find({})
+        matchList = await cursor.toArray()
+    }
+
 })
 
 app.post("/register", async(req, res) => {
@@ -120,6 +128,7 @@ app.post('/login', async(req, res) => {
             const payload = { userId: 1337 }
             const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
             res.json({ token })
+            res.status(200).json({ message: 'loggedin' })
         }
     }
     res.status(403).json({ error: 'Invalid Credentials' })

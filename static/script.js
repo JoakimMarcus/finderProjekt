@@ -43,7 +43,7 @@ async function createUser(username, email, password, repeatPassword, games) {
 }
 
 
-let form = document.querySelector("form")
+let form = document.querySelector("#Log-Form-1")
 form.addEventListener("submit", async event => {
     event.preventDefault();
     let username = form.querySelector(".username").value
@@ -61,13 +61,14 @@ form.addEventListener("submit", async event => {
     console.log(response.status)
     if (response.status == 200) {
         let data = await response.json()
+        let match = document.querySelector(".Match__Games")
+        let login = document.querySelector(".Log__Wrapper")
+        match.classList.toggle("Hidden")
+        login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
-    let div = document.querySelector(".Log_Container")
-    let h3 = div.createElement("h3").innerHTML = "Välkommen!"
-    div.append(h3)
 })
 
 document.querySelector("#get").addEventListener("click", async event => {
@@ -125,32 +126,78 @@ function renderGames(games) {
     }
 }
 
-async function run() {
-    let games = await getGames()
-    renderGames(games)
-    getUsers()
-}
-run()
 
+// async function run() {
+//     let games = await getGames()
+//     renderGames(games)
+//     getUsers()
+// }
+// run()
+// async function getGejms() {
+//     const request = await fetch('http://localhost:8080/games', {
+//         method: 'GET'
+//     })
+//     const data = await request.json()
+//     console.log(data.games)
+//     return data.games
+// }
+
+function renderGejms(games) {
+    let select = document.querySelector(".gejms")
+    for (let i = 0; i < games.length; i++) {
+        let option = document.createElement("option")
+        option.innerHTML = games[i].game
+        select.append(option)
+
+
+    }
+}
 async function getUsers() {
     const usersRequest = await fetch('http://localhost:8080/users', {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
     console.log(usersData.matchList)
+    return usersData.matchList
+}
 
+// ritar ut listan med matchningar
+function renderMatches(users) {
     let matches = document.querySelector(".Match__List")
     let ul = document.querySelector("ul")
     let h3 = document.createElement("h3")
+    let matchGames = document.querySelector(".Match__Games")
+    let matchButton = document.querySelector(".Match__Button")
+    matchButton.addEventListener("click", async(event) => {
+        ul.innerHTML = ""
+        for (let j = 0; j < users.length; j++) {
+            let gejm = matchGames.querySelector(".gejms").value
+            console.log(users[j].games)
+            if (users[j].games == gejm) {
+                let match = document.createElement("li")
+                match.innerHTML = [
+                    users[j].username,
+                    users[j].email,
+                    users[j].games
+                ]
+                console.log(gejm)
+                ul.append(match)
+            }
+        }
 
-    for (let j = 0; j < usersData.matchList.length; j++) {
-        let match = document.createElement("li")
-        match.innerHTML = await [
-            usersData.matchList[j].username,
-            usersData.matchList[j].email,
-            usersData.matchList[j].games
-        ]
-        ul.append(match)
-    }
+    })
+}
+async function run() {
+    let games = await getGames()
+    renderGames(games)
+    let users = await getUsers()
+    renderMatches(users)
+        // let gejms = await getGejms()
+    renderGejms(games)
 
 }
+
+// getGames()
+// getUsers()
+// getGejms()
+run()
