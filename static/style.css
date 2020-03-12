@@ -7,13 +7,15 @@ body {
     background-image: linear-gradient(to right, white, grey);
 }
 
-.Reg__Wrapper, .Log__Wrapper  {
+.Reg__Wrapper,
+.Log__Wrapper {
     width: 100%;
     min-height: 800px;
     display: flex;
 }
 
-.Reg__Items, .Log__Items {
+.Reg__Items,
+.Log__Items {
     margin: auto;
     background-color: white;
     display: flex;
@@ -21,32 +23,39 @@ body {
     width: 800px;
 }
 
-.Reg__Item-Left, .Log__Item-Left {
+.Reg__Item-Left,
+.Log__Item-Left {
     width: 50%;
 }
 
-.Reg__Image, .Log__Image {
+.Reg__Image,
+.Log__Image {
     max-width: 100%;
     min-height: 100%;
 }
 
-.Reg__Item-Right, .Log__Item-Right {
+.Reg__Item-Right,
+.Log__Item-Right {
     width: 50%;
 }
 
-.Reg__Logo, .Log__Logo {
+.Reg__Logo,
+.Log__Logo {
     display: flex;
     justify-content: center;
 }
 
-.Reg-Form-1, .Log-Form-1 {
+.Reg-Form-1,
+.Log-Form-1 {
     display: flex;
     flex-direction: column;
     width: 50%;
     margin: auto;
 }
 
-.Reg-Btn, .Log-Btn  {
+.Reg-Btn,
+.Log-Btn,
+.Create-Btn {
     background-color: black;
     width: 50%;
     margin: auto;
