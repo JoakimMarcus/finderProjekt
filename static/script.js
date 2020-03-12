@@ -69,24 +69,36 @@ form.addEventListener("submit", async event => {
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
+
 })
 
-document.querySelector("#get").addEventListener("click", async event => {
-    const token = window.localStorage.getItem("token")
-    let response = await fetch('http://localhost:8080/secured', {
-        headers: {
-            'Authorization': token
-        }
-    })
-    let data = await response.json()
-    if (response.status == 200) {
-        document.querySelector(".message").innerText = data.message
-    } else {
-        document.querySelector(".message").innerText = data.error
-    }
-
-    console.log(data)
+let createBtn = document.querySelector(".Create-Btn")
+createBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let reg = document.querySelector(".Reg__Wrapper")
+    let login = document.querySelector(".Log__Wrapper")
+    let match = document.querySelector(".Match__Games")
+    reg.classList.toggle("Hidden")
+    login.classList.toggle("Hidden")
+    match.classList.toggle("Hidden")
 })
+
+// document.querySelector("#get").addEventListener("click", async event => {
+//     const token = window.localStorage.getItem("token")
+//     let response = await fetch('http://localhost:8080/secured', {
+//         headers: {
+//             'Authorization': token
+//         }
+//     })
+//     let data = await response.json()
+//     if (response.status == 200) {
+//         document.querySelector(".message").innerText = data.message
+//     } else {
+//         document.querySelector(".message").innerText = data.error
+//     }
+
+//     console.log(data)
+// })
 
 
 
@@ -196,6 +208,8 @@ async function run() {
     renderGejms(games)
 
 }
+
+
 
 // getGames()
 // getUsers()
