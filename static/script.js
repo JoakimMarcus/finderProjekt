@@ -1,5 +1,5 @@
 async function createUser(username, email, password, repeatPassword, games) {
-    const response = await fetch('https://git.heroku.com/finder--staging.git', {
+    const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ form.addEventListener("submit", async event => {
     event.preventDefault();
     let username = form.querySelector(".username").value
     let password = form.querySelector(".password").value
-    let response = await fetch('https://git.heroku.com/finder--staging.git', {
+    let response = await fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -77,10 +77,17 @@ createBtn.addEventListener("click", async(event) => {
     event.preventDefault()
     let reg = document.querySelector(".Reg__Wrapper")
     let login = document.querySelector(".Log__Wrapper")
-    let match = document.querySelector(".Match__Games")
     reg.classList.toggle("Hidden")
     login.classList.toggle("Hidden")
-    match.classList.toggle("Hidden")
+})
+
+let backBtn = document.querySelector(".Back-Btn")
+backBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let reg = document.querySelector(".Reg__Wrapper")
+    let login = document.querySelector(".Log__Wrapper")
+    reg.classList.toggle("Hidden")
+    login.classList.toggle("Hidden")
 })
 
 // document.querySelector("#get").addEventListener("click", async event => {
@@ -119,7 +126,7 @@ init()
 
 
 async function getGames() {
-    const request = await fetch('https://git.heroku.com/finder--staging.git', {
+    const request = await fetch('http://localhost:8080/games', {
         method: 'GET'
     })
     const data = await request.json()
@@ -165,7 +172,7 @@ function renderGejms(games) {
     }
 }
 async function getUsers() {
-    const usersRequest = await fetch('https://git.heroku.com/finder--staging.git/users', {
+    const usersRequest = await fetch('http://localhost:8080/users', {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
