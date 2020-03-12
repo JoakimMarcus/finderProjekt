@@ -11,7 +11,7 @@
 
 <body>
     <!-- Body class?-->
-    <div class="Reg__Wrapper">
+    <div class="Reg__Wrapper Hidden">
         <div class="Reg__Items">
             <div class="Reg__Item-Left">
                 <img class="Reg__Image" src="./img/image1.png">
@@ -45,37 +45,39 @@
                             <i class="fas fa-gamepad"></i>
                             <select class="games" name="games">
                                 <option class="disabled" value="" disabled selected>Välj ett spel</option>
-                                <!-- <option value="Tarkov">Tarkov</option>
-                                <option value="Raft">Raft</option>
-                                <option value="Valorant">Valorant</option>
-                                <option value="Fortnite">Fortnite</option>
-                                <option value="Counter-Strike GO">Counter-Strike GO</option> -->
                               </select>
                         </div>
                         <p class="Error__Password Hidden__Password"></p>
                         <button class="Reg-Btn" type="submit">Skapa</button>
+                        <button class="Back-Btn" type="submit">Tillbaka</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- <form action="/login" method="POST">
+        <input type="text" class="username" placeholder="username">
+        <input type="text" class="password" placeholder="pass">
+        <input type="submit" value="LOGIN">
+    </form>
+
+    <button id="get">GET MESSAGE</button>
+    <p class="message"></p> -->
+
     <!--För att testa matchningen-->
-    <div class="Match__Games">
+    <div class="Match__Games Hidden">
         <button class="Match__Button">Börja matcha</button>
         <select class="gejms" name="gejms">
-            <option class="disabled" value="" disabled selected>Välj ett spel</option>
-            <!-- <option value="Tarkov">Tarkov</option>
-            <option value="Raft">Raft</option>
-            <option value="Valorant">Valorant</option>
-            <option value="Fortnite">Fortnite</option>
-            <option value="Counter-Strike GO">Counter-Strike GO</option> -->
+                <option class="disabled" value="" disabled selected>Välj ett spel</option>
+          
           </select>
         <!--Matchningslistan ska skrivas ut när man klickar på knappen i reg-sidan-->
         <div class="Match__List">
             <ul>
-                
+
             </ul>
         </div>
+
     </div>
     <!-- Log in -->
     <div class="Log__Wrapper">
@@ -87,6 +89,7 @@
                 <div class="Log__Logo">
                     <img src="./img/LogoFinderV21.svg">
                 </div>
+                <div class="test"></div>
                 <div class="Log__Container">
                     <form class="Log-Form-1" id="Log-Form-1">
                         <div class="Form__Input-Wrap">
@@ -100,6 +103,7 @@
                         </div>
                         <p class="Error__Password Hidden__Password"></p>
                         <button class="Log-Btn" type="submit">Logga in</button>
+                        <button class="Create-Btn" type="submit">Registrera</button>
                     </form>
                 </div>
             </div>
