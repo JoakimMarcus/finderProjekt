@@ -44,6 +44,66 @@ async function createUser(username, email, password, repeatPassword, games) {
     }
 }
 
+
+let form = document.querySelector("#Log-Form-1")
+form.addEventListener("submit", async event => {
+    event.preventDefault();
+    let username = form.querySelector(".username").value
+    let password = form.querySelector(".password").value
+    let response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+    })
+    console.log(response.status)
+    if (response.status == 200) {
+        let data = await response.json()
+        let match = document.querySelector(".Match__Games")
+        let login = document.querySelector(".Log__Wrapper")
+        match.classList.toggle("Hidden")
+        login.classList.toggle("Hidden")
+        window.localStorage.setItem("token", data.token)
+    } else {
+        console.log("HANDLE ERROR ON LOGIN")
+    }
+
+})
+
+let createBtn = document.querySelector(".Create-Btn")
+createBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let reg = document.querySelector(".Reg__Wrapper")
+    let login = document.querySelector(".Log__Wrapper")
+    let match = document.querySelector(".Match__Games")
+    reg.classList.toggle("Hidden")
+    login.classList.toggle("Hidden")
+    match.classList.toggle("Hidden")
+})
+
+// document.querySelector("#get").addEventListener("click", async event => {
+//     const token = window.localStorage.getItem("token")
+//     let response = await fetch('http://localhost:8080/secured', {
+//         headers: {
+//             'Authorization': token
+//         }
+//     })
+//     let data = await response.json()
+//     if (response.status == 200) {
+//         document.querySelector(".message").innerText = data.message
+//     } else {
+//         document.querySelector(".message").innerText = data.error
+//     }
+
+//     console.log(data)
+// })
+
+
+
 function init() {
     let form = document.querySelector("#Reg-Form-1")
     form.addEventListener("submit", async(event) => {
@@ -80,6 +140,13 @@ function renderGames(games) {
     }
 }
 
+
+// async function run() {
+//     let games = await getGames()
+//     renderGames(games)
+//     getUsers()
+// }
+// run()
 // async function getGejms() {
 //     const request = await fetch('http://localhost:8080/games', {
 //         method: 'GET'
@@ -96,10 +163,11 @@ function renderGejms(games) {
         option.innerHTML = games[i].game
         select.append(option)
 
+
     }
 }
 async function getUsers() {
-    const usersRequest = await fetch('http://localhost:8080/users/', {
+    const usersRequest = await fetch('http://localhost:8080/users', {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
@@ -115,6 +183,7 @@ function renderMatches(users) {
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     matchButton.addEventListener("click", async(event) => {
+        ul.innerHTML = ""
         for (let j = 0; j < users.length; j++) {
             let gejm = matchGames.querySelector(".gejms").value
             console.log(users[j].games)
@@ -141,6 +210,9 @@ async function run() {
     renderGejms(games)
 
 }
+
+
+
 // getGames()
 // getUsers()
 // getGejms()
