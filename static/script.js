@@ -77,10 +77,17 @@ createBtn.addEventListener("click", async(event) => {
     event.preventDefault()
     let reg = document.querySelector(".Reg__Wrapper")
     let login = document.querySelector(".Log__Wrapper")
-    let match = document.querySelector(".Match__Games")
     reg.classList.toggle("Hidden")
     login.classList.toggle("Hidden")
-    match.classList.toggle("Hidden")
+})
+
+let backBtn = document.querySelector(".Back-Btn")
+backBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let reg = document.querySelector(".Reg__Wrapper")
+    let login = document.querySelector(".Log__Wrapper")
+    reg.classList.toggle("Hidden")
+    login.classList.toggle("Hidden")
 })
 
 // document.querySelector("#get").addEventListener("click", async event => {
