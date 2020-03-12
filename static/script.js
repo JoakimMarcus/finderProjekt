@@ -114,6 +114,7 @@ function renderMatches(users) {
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     matchButton.addEventListener("click", async (event) => {
+        ul.innerHTML = ""
         for(let j = 0; j < users.length; j++) {
             let gejm = matchGames.querySelector(".gejms").value
             console.log(users[j].games)
