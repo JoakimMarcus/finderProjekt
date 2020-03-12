@@ -14,7 +14,11 @@
 {"games":{},"_id":"Pu8q5tB53NLhf8Kd"}
 {"username":"frumppende","email":"Niklasborg12be@gmail.com","password":"hej","games":"The sims 4","_id":"QXkc5v09y7xqpJzm"}
 {"username":"nikeboy","email":"nikeboy@hotmail.com","password":"1234","games":{"game1":"Counter-Strike GO","game2":"Rainbow six","game3":"Age of empire"},"_id":"S2cqi4i2KGr8oOOw"}
+<<<<<<< HEAD
 {"username":"frumppen1212","email":"Niklasborg12ab@gmail.com","password":"djko","games":"","_id":"UfDoAIA2F51aaBRF"}
+=======
+{"username":"gamer_girl","email":"gamer_girl@email.se","password":"gamer","games":"Age of empire III","_id":"XJR6a9ZpOUEF6ARQ"}
+>>>>>>> 1957b1d02529de00e2f5cd1a79e39a29163ea4ee
 {"username":"kalleAnka","email":"Niklasborg12@gmail.com","password":"hej","games":"World of warcraft","_id":"XxKlveYdssyX6k25"}
 {"username":"joakim","email":"joamim@gmail.com","password":"hejhej","games":"\"Red Dead Redemption 2\"","_id":"ZTf2YkbETadUQvKN"}
 {"username":"korven","email":"korven@korvkiosk.se","password":"korvis","games":"Raft","_id":"brGYrLRBOuXYF8SK"}
@@ -32,3 +36,7 @@
 {"username":"Pontus","email":"pontus@email.se","password":"pontus","games":"The sims 4","_id":"vMdLnhiEqmKlRYiZ"}
 {"username":"frumppen12","email":"Niklasborg1212121212@gmail.com","password":"wefg","games":"Mass Effect 3","_id":"wfCu2uXJ7UqFToK9"}
 {"username":"nikeboy1212","email":"nikeboy@hotmail.com","password":"hej","games":{},"_id":"yF3GUFe6oBKGTg4u"}
+<<<<<<< HEAD
+{"username":"star_girl","email":"stargirl@email.com","password":"star","games":"Age of empire III","_id":"yp1tYXNFjQBJTwQv"}
+=======
+>>>>>>> 19de50d800bfdbbb79db4178699d3cf8331de351

@@ -80,26 +80,73 @@ function renderGames(games) {
     }
 }
 
+<<<<<<< HEAD
 async function run() {
     let games = await getGames()
     renderGames(games)
     getUsers(games)
+=======
+// async function getGejms() {
+//     const request = await fetch('http://localhost:8080/games', {
+//         method: 'GET'
+//     })
+//     const data = await request.json()
+//     console.log(data.games)
+//     return data.games
+// }
+>>>>>>> 1957b1d02529de00e2f5cd1a79e39a29163ea4ee
 
-}
-run()
+function renderGejms(games) {
+    let select = document.querySelector(".gejms")
+    for (let i = 0; i < games.length; i++) {
+        let option = document.createElement("option")
+        option.innerHTML = games[i].game
+        select.append(option)
 
+<<<<<<< HEAD
 async function getUsers(games) {
     const usersRequest = await fetch("http://localhost:8080/users/", {
+=======
+    }
+}
+async function getUsers() {
+    const usersRequest = await fetch('http://localhost:8080/users/', {
+>>>>>>> 1957b1d02529de00e2f5cd1a79e39a29163ea4ee
         method: 'GET'
     })
     const usersData = await usersRequest.json()
     console.log(usersData.matchList)
+<<<<<<< HEAD
     console.log(games)
+=======
+    return usersData.matchList      
+}
+>>>>>>> 1957b1d02529de00e2f5cd1a79e39a29163ea4ee
 
+// ritar ut listan med matchningar
+function renderMatches(users) {
     let matches = document.querySelector(".Match__List")
     let ul = document.querySelector("ul")
     let h3 = document.createElement("h3")
+    let matchGames = document.querySelector(".Match__Games")
+    let matchButton = document.querySelector(".Match__Button")
+    matchButton.addEventListener("click", async (event) => {
+        for(let j = 0; j < users.length; j++) {
+            let gejm = matchGames.querySelector(".gejms").value
+            console.log(users[j].games)
+                if(users[j].games  == gejm) {
+                    let match = document.createElement("li")
+                    match.innerHTML = [
+                        users[j].username,
+                        users[j].email,
+                        users[j].games
+                    ]
+                    console.log(gejm)
+                    ul.append(match)
+                }
+        }
 
+<<<<<<< HEAD
     for (let j = 0; j < usersData.matchList.length; j++) {
         let match = document.createElement("li")
         match.innerHTML = await [
@@ -112,3 +159,20 @@ async function getUsers(games) {
     }
 
 }
+=======
+    })
+}
+async function run() {
+    let games = await getGames()
+    renderGames(games)
+    let users = await getUsers()
+    renderMatches(users)
+    // let gejms = await getGejms()
+    renderGejms(games)
+
+}
+// getGames()
+// getUsers()
+// getGejms()
+run()
+>>>>>>> 1957b1d02529de00e2f5cd1a79e39a29163ea4ee
