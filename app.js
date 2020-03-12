@@ -6,6 +6,7 @@ let collectionsNEDB = {
 }
 const app = express()
 const cors = require('cors')
+const jwt = require('jsonwebtoken')
 app.use(cors())
 require('dotenv').config()
 
@@ -46,15 +47,15 @@ app.get("/games", async(req, res) => {
 
 app.get("/users", async(req, res) => {
     let matchList
-    if(process.env.NODE_ENV == "development") {
+    if (process.env.NODE_ENV == "development") {
         matchList = await collectionsNEDB.users.find({})
-        res.json({"matchList": matchList})
-        
-    }else{
+        res.json({ "matchList": matchList })
+
+    } else {
         let cursor = await Database.collections.users.find({})
         matchList = await cursor.toArray()
-    }   
-    
+    }
+
 })
 
 app.post("/register", async(req, res) => {
@@ -102,6 +103,39 @@ app.post("/register", async(req, res) => {
     if (errors.length > 0) {
         res.status(400).json({ errors: errors })
     }
+})
+
+const auth = (req, res, next) => {
+    try {
+        if (req.headers.authorization) {
+            const payload = jwt.verify(req.headers.authorization, "hej")
+            req.user = payload.userId
+            next()
+        } else {
+            throw new Error("dilfjsdjklh")
+        }
+    } catch (error) {
+        res.status(403).json({ error: 'Unauthorized' })
+    }
+}
+
+app.post('/login', async(req, res) => {
+    user = await collectionsNEDB.users.find({})
+    console.log(req.body)
+    for (let i = 0; i < user.length; i++) {
+        console.log(user[i].username)
+        if (req.body.username == user[i].username && req.body.password == user[i].password) {
+            const payload = { userId: 1337 }
+            const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
+            res.json({ token })
+            res.status(200).json({ message: 'loggedin' })
+        }
+    }
+    res.status(403).json({ error: 'Invalid Credentials' })
+})
+
+app.get('/secured', auth, (req, res) => {
+    res.json({ message: `You are user ${req.user}` })
 })
 
 async function run() {

@@ -43,6 +43,53 @@ async function createUser(username, email, password, repeatPassword, games) {
 }
 
 
+let form = document.querySelector("#Log-Form-1")
+form.addEventListener("submit", async event => {
+    event.preventDefault();
+    let username = form.querySelector(".username").value
+    let password = form.querySelector(".password").value
+    let response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+    })
+    console.log(response.status)
+    if (response.status == 200) {
+        let data = await response.json()
+        let match = document.querySelector(".Match__Games")
+        let login = document.querySelector(".Log__Wrapper")
+        match.classList.toggle("Hidden")
+        login.classList.toggle("Hidden")
+        window.localStorage.setItem("token", data.token)
+    } else {
+        console.log("HANDLE ERROR ON LOGIN")
+    }
+})
+
+document.querySelector("#get").addEventListener("click", async event => {
+    const token = window.localStorage.getItem("token")
+    let response = await fetch('http://localhost:8080/secured', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    let data = await response.json()
+    if (response.status == 200) {
+        document.querySelector(".message").innerText = data.message
+    } else {
+        document.querySelector(".message").innerText = data.error
+    }
+
+    console.log(data)
+})
+
+
+
 function init() {
     let form = document.querySelector("#Reg-Form-1")
     form.addEventListener("submit", async(event) => {
@@ -79,6 +126,13 @@ function renderGames(games) {
     }
 }
 
+
+// async function run() {
+//     let games = await getGames()
+//     renderGames(games)
+//     getUsers()
+// }
+// run()
 // async function getGejms() {
 //     const request = await fetch('http://localhost:8080/games', {
 //         method: 'GET'
@@ -95,15 +149,16 @@ function renderGejms(games) {
         option.innerHTML = games[i].game
         select.append(option)
 
+
     }
 }
 async function getUsers() {
-    const usersRequest = await fetch('http://localhost:8080/users/', {
+    const usersRequest = await fetch('http://localhost:8080/users', {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
     console.log(usersData.matchList)
-    return usersData.matchList      
+    return usersData.matchList
 }
 
 // ritar ut listan med matchningar
@@ -113,20 +168,21 @@ function renderMatches(users) {
     let h3 = document.createElement("h3")
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
-    matchButton.addEventListener("click", async (event) => {
-        for(let j = 0; j < users.length; j++) {
+    matchButton.addEventListener("click", async(event) => {
+        ul.innerHTML = ""
+        for (let j = 0; j < users.length; j++) {
             let gejm = matchGames.querySelector(".gejms").value
             console.log(users[j].games)
-                if(users[j].games  == gejm) {
-                    let match = document.createElement("li")
-                    match.innerHTML = [
-                        users[j].username,
-                        users[j].email,
-                        users[j].games
-                    ]
-                    console.log(gejm)
-                    ul.append(match)
-                }
+            if (users[j].games == gejm) {
+                let match = document.createElement("li")
+                match.innerHTML = [
+                    users[j].username,
+                    users[j].email,
+                    users[j].games
+                ]
+                console.log(gejm)
+                ul.append(match)
+            }
         }
 
     })
@@ -136,10 +192,11 @@ async function run() {
     renderGames(games)
     let users = await getUsers()
     renderMatches(users)
-    // let gejms = await getGejms()
+        // let gejms = await getGejms()
     renderGejms(games)
 
 }
+
 // getGames()
 // getUsers()
 // getGejms()
