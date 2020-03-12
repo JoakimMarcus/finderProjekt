@@ -61,7 +61,7 @@ init()
 
 
 async function getGames() {
-    const request = await fetch('https://finder--staging.herokuapp.com/games', {
+    const request = await fetch('http://localhost:8080/games', {
         method: 'GET'
     })
     const data = await request.json()
@@ -83,16 +83,18 @@ function renderGames(games) {
 async function run() {
     let games = await getGames()
     renderGames(games)
+    getUsers(games)
 
 }
 run()
 
-async function getUsers() {
+async function getUsers(games) {
     const usersRequest = await fetch("http://localhost:8080/users/", {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
     console.log(usersData.matchList)
+    console.log(games)
 
     let matches = document.querySelector(".Match__List")
     let ul = document.querySelector("ul")
@@ -106,7 +108,7 @@ async function getUsers() {
             usersData.matchList[j].games
         ]
         ul.append(match)
+
     }
 
 }
-getUsers()
