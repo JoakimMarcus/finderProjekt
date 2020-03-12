@@ -75,8 +75,7 @@ app.post("/register", async(req, res) => {
     let errors = []
     if (req.body.password !== req.body.repeatPassword) {
         errors.push("ERROR_PASSWORD_MISMATCH")
-    }
-    if (user == false) {
+    } else if (user == false) {
         if (email == false) {
             let newUser = {
                 username: req.body.username,
@@ -92,7 +91,7 @@ app.post("/register", async(req, res) => {
                 let db = await Database.connect()
                 let users = db.collection("users")
                 const result = await users.insert(newUser)
-                res.status(200).json({ message: "user created" })
+                res.status(200).json({ message: "USER_CREATED" })
                 console.log(result)
             }
         } else {

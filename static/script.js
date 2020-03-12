@@ -15,7 +15,7 @@ async function createUser(username, email, password, repeatPassword, games) {
     console.log(response)
 
     if (response.status == 200) {
-        console.log("Hejhej")
+
     } else {
         const data = await response.json()
         const p = document.querySelector("p")
@@ -24,17 +24,17 @@ async function createUser(username, email, password, repeatPassword, games) {
             const error = data.errors[i]
             console.log(data.errors)
             switch (error) {
-                case 'ERROR_USER_ALREADY_EXISTS':
+                case "ERROR_USER_ALREADY_EXISTS":
                     const hidden = document.querySelector(".Error")
                     hidden.classList.toggle("Hidden")
                     hidden.innerHTML = "Username already exists!"
                     break;
-                case 'ERROR_EMAIL_ALREADY_EXISTS':
+                case "ERROR_EMAIL_ALREADY_EXISTS":
                     const hiddenEmail = document.querySelector(".Error__Email")
                     hiddenEmail.classList.toggle("Hidden__Email")
                     hiddenEmail.innerHTML = "Email already exists!"
                     break;
-                case 'ERROR_PASSWORD_MISMATCH':
+                case "ERROR_PASSWORD_MISMATCH":
                     const hiddenPassword = document.querySelector(".Error__Password")
                     hiddenPassword.classList.toggle("Hidden__Password")
                     hiddenPassword.innerHTML = "Password mismatch"
@@ -79,28 +79,26 @@ createBtn.addEventListener("click", async(event) => {
     event.preventDefault()
     let reg = document.querySelector(".Reg__Wrapper")
     let login = document.querySelector(".Log__Wrapper")
-    let match = document.querySelector(".Match__Games")
     reg.classList.toggle("Hidden")
     login.classList.toggle("Hidden")
-    match.classList.toggle("Hidden")
 })
 
-// document.querySelector("#get").addEventListener("click", async event => {
-//     const token = window.localStorage.getItem("token")
-//     let response = await fetch('http://localhost:8080/secured', {
-//         headers: {
-//             'Authorization': token
-//         }
-//     })
-//     let data = await response.json()
-//     if (response.status == 200) {
-//         document.querySelector(".message").innerText = data.message
-//     } else {
-//         document.querySelector(".message").innerText = data.error
-//     }
+document.querySelector("#get").addEventListener("click", async event => {
+    const token = window.localStorage.getItem("token")
+    let response = await fetch('http://localhost:8080/secured', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    let data = await response.json()
+    if (response.status == 200) {
+        document.querySelector(".message").innerText = data.message
+    } else {
+        document.querySelector(".message").innerText = data.error
+    }
 
-//     console.log(data)
-// })
+    console.log(data)
+})
 
 
 
