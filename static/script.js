@@ -1,5 +1,5 @@
 async function createUser(username, email, password, repeatPassword, games) {
-    const response = await fetch('http://localhost:8080/register', {
+    const response = await fetch('https://git.heroku.com/finder--staging.git', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ form.addEventListener("submit", async event => {
     event.preventDefault();
     let username = form.querySelector(".username").value
     let password = form.querySelector(".password").value
-    let response = await fetch('http://localhost:8080/login', {
+    let response = await fetch('https://git.heroku.com/finder--staging.git', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -119,7 +119,7 @@ init()
 
 
 async function getGames() {
-    const request = await fetch('http://localhost:8080/games', {
+    const request = await fetch('https://git.heroku.com/finder--staging.git', {
         method: 'GET'
     })
     const data = await request.json()
@@ -165,7 +165,7 @@ function renderGejms(games) {
     }
 }
 async function getUsers() {
-    const usersRequest = await fetch('http://localhost:8080/users', {
+    const usersRequest = await fetch('https://git.heroku.com/finder--staging.git/users', {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
