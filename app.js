@@ -125,8 +125,8 @@ app.post('/login', async(req, res) => {
     for (let i = 0; i < user.length; i++) {
         console.log(user[i].username)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
-            const payload = { userId: 1337 }
-            const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
+            const payload = { userId: user[i].username }
+            const token = jwt.sign(payload, "hej", { expiresIn: '60m' }, )
             res.json({ token })
             res.status(200).json({ message: 'loggedin' })
         }
@@ -134,9 +134,9 @@ app.post('/login', async(req, res) => {
     res.status(403).json({ error: 'Invalid Credentials' })
 })
 
-app.get('/secured', auth, (req, res) => {
-    res.json({ message: `You are user ${req.user}` })
-})
+// app.get('/secured', auth, (req, res) => {
+//     res.send('Hello world')
+// })
 
 async function run() {
     try {

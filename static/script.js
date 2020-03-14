@@ -25,17 +25,17 @@ async function createUser(username, email, password, repeatPassword, games) {
                 case 'ERROR_USER_ALREADY_EXISTS':
                     const hidden = document.querySelector(".Error")
                     hidden.classList.toggle("Hidden")
-                    hidden.innerHTML = "Username already exists!"
+                    hidden.innerHTML = "Användarnamnet existerar redan!"
                     break;
                 case 'ERROR_EMAIL_ALREADY_EXISTS':
                     const hiddenEmail = document.querySelector(".Error__Email")
                     hiddenEmail.classList.toggle("Hidden__Email")
-                    hiddenEmail.innerHTML = "Email already exists!"
+                    hiddenEmail.innerHTML = "E-mail existerar redan!"
                     break;
                 case 'ERROR_PASSWORD_MISMATCH':
                     const hiddenPassword = document.querySelector(".Error__Password")
                     hiddenPassword.classList.toggle("Hidden__Password")
-                    hiddenPassword.innerHTML = "Password mismatch"
+                    hiddenPassword.innerHTML = "Lösenordet matchar inte"
                     break;
             }
         }
@@ -43,16 +43,16 @@ async function createUser(username, email, password, repeatPassword, games) {
 }
 
 
-let form = document.querySelector("#Log-Form-1")
-form.addEventListener("submit", async event => {
+let form = document.querySelector(".Log-Form-1")
+form.addEventListener("submit", async(event) => {
     event.preventDefault();
     let username = form.querySelector(".username").value
     let password = form.querySelector(".password").value
     let response = await fetch('http://localhost:8080/login', {
-        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+        method: 'POST',
         body: JSON.stringify({
             username,
             password
@@ -90,7 +90,7 @@ backBtn.addEventListener("click", async(event) => {
     login.classList.toggle("Hidden")
 })
 
-// document.querySelector("#get").addEventListener("click", async event => {
+// document.querySelector(".Profile-Form-1").addEventListener("click", async event => {
 //     const token = window.localStorage.getItem("token")
 //     let response = await fetch('http://localhost:8080/secured', {
 //         headers: {
@@ -103,11 +103,7 @@ backBtn.addEventListener("click", async(event) => {
 //     } else {
 //         document.querySelector(".message").innerText = data.error
 //     }
-
-//     console.log(data)
 // })
-
-
 
 function init() {
     let form = document.querySelector("#Reg-Form-1")
