@@ -3,6 +3,9 @@
             "username": "nikeboy",
             "email": "nikeboy@gmail.com",
             "password": "hej",
+            "kön": "man",
+            "ålder": "16",
+            "stad": "stockholm",
             "games": [
                 "Counter-Strike GO",
                 "Raft"

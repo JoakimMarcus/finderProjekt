@@ -85,13 +85,13 @@ app.post("/register", async(req, res) => {
             }
             if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
-                res.status(200).json({ message: "user created" })
+                res.status(200).json({ message: "SUCCESS" })
 
             } else {
                 let db = await Database.connect()
                 let users = db.collection("users")
                 const result = await users.insert(newUser)
-                res.status(200).json({ message: "USER_CREATED" })
+                res.status(200).json({ message: "SUCCESS" })
                 console.log(result)
             }
         } else {
@@ -124,8 +124,9 @@ app.post('/login', async(req, res) => {
     console.log(req.body)
     for (let i = 0; i < user.length; i++) {
         console.log(user[i].username)
+        console.log(user[i]._id)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
-            const payload = { userId: 1337 }
+            const payload = { userId: user[i]._id }
             const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
             res.json({ token })
             res.status(200).json({ message: 'loggedin' })

@@ -13,9 +13,15 @@ async function createUser(username, email, password, repeatPassword, games) {
         })
     })
     console.log(response)
-
+    const data = await response.json()
     if (response.status == 200) {
-
+        console.log(data.message)
+        if (data.message == "SUCCESS") {
+            console.log("Great")
+            let Success = document.querySelector(".Success")
+            Success.innerHTML = "Användare skapad!"
+            alert("Användare skapad!")
+        }
     } else {
         const data = await response.json()
         const p = document.querySelector("p")
@@ -45,6 +51,7 @@ async function createUser(username, email, password, repeatPassword, games) {
 }
 
 
+
 let form = document.querySelector("#Log-Form-1")
 form.addEventListener("submit", async event => {
     event.preventDefault();
@@ -68,6 +75,7 @@ form.addEventListener("submit", async event => {
         match.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
+        secured()
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
@@ -83,7 +91,7 @@ createBtn.addEventListener("click", async(event) => {
     login.classList.toggle("Hidden")
 })
 
-document.querySelector("#get").addEventListener("click", async event => {
+async function secured() {
     const token = window.localStorage.getItem("token")
     let response = await fetch('http://localhost:8080/secured', {
         headers: {
@@ -91,14 +99,9 @@ document.querySelector("#get").addEventListener("click", async event => {
         }
     })
     let data = await response.json()
-    if (response.status == 200) {
-        document.querySelector(".message").innerText = data.message
-    } else {
-        document.querySelector(".message").innerText = data.error
-    }
-
     console.log(data)
-})
+}
+
 
 
 

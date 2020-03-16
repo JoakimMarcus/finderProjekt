@@ -122,3 +122,7 @@ body {
 option {
     color: black;
 }
+
+.Success {
+    color: green;
+}
