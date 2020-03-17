@@ -1,0 +1,107 @@
+{
+    "users": [{
+            "username": "nikeboy",
+            "email": "nikeboy@gmail.com",
+            "password": "hej",
+            "kön": "man",
+            "ålder": "16",
+            "stad": "stockholm",
+            "games": [
+                "Counter-Strike GO",
+                "Raft"
+            ]
+
+        },
+        {
+            "username": "frumppen",
+            "email": "frumppen@hotmail.com",
+            "password": "test",
+            "games": [
+                "Age of empire III",
+                "Raft"
+            ]
+        },
+        {
+            "username": "hawe",
+            "email": "hawe@gmail.com",
+            "password": "1234",
+            "games": [
+                "Team Fortress 2"
+            ]
+        },
+        {
+            "username": "knest",
+            "email": "knest@outlook.com",
+            "password": "rosa123",
+            "games": [
+                "Counter-Strike GO"
+            ]
+        },
+        {
+            "username": "carro",
+            "email": "carro@webb.se",
+            "password": "korr34",
+            "games": [
+                "Counter-Strike GO"
+            ]
+        },
+        {
+            "username": "mandypandy",
+            "email": "mandypandy@gmail.com",
+            "password": "hej",
+            "games": [
+                "Diablo II"
+            ]
+        },
+        {
+            "username": "elsa",
+            "email": "elsa@gmail.com",
+            "password": "kalle123",
+            "games": [
+                "Apex"
+            ]
+        },
+        {
+            "username": "bobox",
+            "email": "bobox@hotmail.com",
+            "password": "test234",
+            "games": [
+                "Counter-Strike GO",
+                "Battlefield V"
+            ]
+        },
+        {
+            "username": "arooma",
+            "email": "arooma@outlook.com",
+            "password": "password1234",
+            "games": [
+                "Battlefield V"
+            ]
+        },
+        {
+            "username": "kalle",
+            "email": "kalle@evilcorp.com",
+            "password": "hej1234",
+            "games": [
+                "Pummel Party"
+            ]
+        },
+        {
+            "username": "bobshift",
+            "email": "bobshift@hotmail.com",
+            "password": "sprit123",
+            "games": [
+                "Counter-Strike GO"
+            ]
+        },
+        {
+            "username": "gamer_girl",
+            "email": "gamer_girl@gmail.com",
+            "password": "hellyeah",
+            "games": [
+                "FIFA 20"
+            ]
+        }
+
+    ]
+}

@@ -1,5 +1,5 @@
-const express = require('express')
-const Datastore = require('nedb-promise')
+const express = require("express")
+const Datastore = require("nedb-promise")
 let collectionsNEDB = {
     users: new Datastore({ filename: './data/users.db', autoload: true }),
     games: new Datastore({ filename: './data/games.db', autoload: true })
@@ -19,7 +19,7 @@ if (process.env.NODE_ENV == "development") {
     Database = require("./database/mongo")
 }
 
-app.use(express.static('static'))
+app.use(express.static("static"))
 
 app.use(express.json())
 
@@ -63,7 +63,7 @@ app.post("/register", async(req, res) => {
     // let collections = db.collection('users')
     let user, email
 
-    if (process.env.NODE_ENV == 'development') {
+    if (process.env.NODE_ENV == "development") {
         user = await collectionsNEDB.users.find({ username: req.body.username })
         email = await collectionsNEDB.users.find({ email: req.body.email })
     } else {
@@ -75,8 +75,7 @@ app.post("/register", async(req, res) => {
     let errors = []
     if (req.body.password !== req.body.repeatPassword) {
         errors.push("ERROR_PASSWORD_MISMATCH")
-    }
-    if (user == false) {
+    } else if (user == false) {
         if (email == false) {
             let newUser = {
                 username: req.body.username,
@@ -84,18 +83,19 @@ app.post("/register", async(req, res) => {
                 password: req.body.password,
                 games: req.body.games
             }
-            if (process.env.NODE_ENV == 'development') {
+            if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
-                res.status(200).json({ message: 'user created' })
+                res.status(200).json({ message: "SUCCESS" })
 
             } else {
                 let db = await Database.connect()
-                let users = db.collection('users')
+                let users = db.collection("users")
                 const result = await users.insert(newUser)
+                res.status(200).json({ message: "SUCCESS" })
                 console.log(result)
             }
         } else {
-            errors.push('ERROR_EMAIL_ALREADY_EXISTS')
+            errors.push("ERROR_EMAIL_ALREADY_EXISTS")
         }
     } else {
         errors.push("ERROR_USER_ALREADY_EXISTS")
@@ -124,8 +124,9 @@ app.post('/login', async(req, res) => {
     console.log(req.body)
     for (let i = 0; i < user.length; i++) {
         console.log(user[i].username)
+        console.log(user[i]._id)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
-            const payload = { userId: 1337 }
+            const payload = { userId: user[i]._id }
             const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
             res.json({ token })
             res.status(200).json({ message: 'loggedin' })
