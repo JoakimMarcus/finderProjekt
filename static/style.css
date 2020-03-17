@@ -55,7 +55,8 @@ body {
 
 .Reg-Btn,
 .Log-Btn,
-.Create-Btn {
+.Create-Btn,
+.Back-Btn {
     background-color: black;
     width: 50%;
     margin: auto;
