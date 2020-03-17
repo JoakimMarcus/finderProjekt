@@ -13,26 +13,34 @@ async function createUser(username, email, password, repeatPassword, games) {
         })
     })
     console.log(response)
-
-    if (response == 200) {
-
+    const data = await response.json()
+    if (response.status == 200) {
+        console.log(data.message)
+        if (data.message == "SUCCESS") {
+            console.log("Great")
+            let Success = document.querySelector(".Success")
+            Success.innerHTML = "Användare skapad!"
+            alert("Användare skapad!")
+        }
     } else {
         const data = await response.json()
+        const p = document.querySelector("p")
+        p.innerHTML = ""
         for (let i = 0; i < data.errors.length; i++) {
             const error = data.errors[i]
             console.log(data.errors)
             switch (error) {
-                case 'ERROR_USER_ALREADY_EXISTS':
+                case "ERROR_USER_ALREADY_EXISTS":
                     const hidden = document.querySelector(".Error")
                     hidden.classList.toggle("Hidden")
                     hidden.innerHTML = "Username already exists!"
                     break;
-                case 'ERROR_EMAIL_ALREADY_EXISTS':
+                case "ERROR_EMAIL_ALREADY_EXISTS":
                     const hiddenEmail = document.querySelector(".Error__Email")
                     hiddenEmail.classList.toggle("Hidden__Email")
                     hiddenEmail.innerHTML = "Email already exists!"
                     break;
-                case 'ERROR_PASSWORD_MISMATCH':
+                case "ERROR_PASSWORD_MISMATCH":
                     const hiddenPassword = document.querySelector(".Error__Password")
                     hiddenPassword.classList.toggle("Hidden__Password")
                     hiddenPassword.innerHTML = "Password mismatch"
@@ -41,6 +49,7 @@ async function createUser(username, email, password, repeatPassword, games) {
         }
     }
 }
+
 
 
 let form = document.querySelector("#Log-Form-1")
@@ -66,6 +75,7 @@ form.addEventListener("submit", async event => {
         match.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
+        secured()
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
@@ -90,22 +100,17 @@ backBtn.addEventListener("click", async(event) => {
     login.classList.toggle("Hidden")
 })
 
-// document.querySelector("#get").addEventListener("click", async event => {
-//     const token = window.localStorage.getItem("token")
-//     let response = await fetch('http://localhost:8080/secured', {
-//         headers: {
-//             'Authorization': token
-//         }
-//     })
-//     let data = await response.json()
-//     if (response.status == 200) {
-//         document.querySelector(".message").innerText = data.message
-//     } else {
-//         document.querySelector(".message").innerText = data.error
-//     }
+async function secured() {
+    const token = window.localStorage.getItem("token")
+    let response = await fetch('http://localhost:8080/secured', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    let data = await response.json()
+    console.log(data)
+}
 
-//     console.log(data)
-// })
 
 
 
@@ -181,71 +186,40 @@ async function getUsers() {
     return usersData.matchList
 }
 
-// ritar ut listan med matchningar
-// function renderMatches(users) {
-//     let matches = document.querySelector(".Match__List")
-//     let ul = document.querySelector("ul")
-//     let matchGames = document.querySelector(".Match__Games")
-//     let matchButton = document.querySelector(".Match__Button")
-//     let noMatch = document.createElement("h3")
-//     matchButton.addEventListener("click", async (event) => {
-//         ul.innerHTML = ""
-//         noMatch.innerHTML = ""
-//         let gejm = matchGames.querySelector(".gejms").value
-//         for(let j = 0; j < users.length; j++) {
-//             if (users[j].games == gejm) {
-//                 let match = document.createElement("li")
-//                 match.innerHTML = [
-//                     users[j].username,
-//                     users[j].email,
-//                     users[j].games
-//                 ]
-//                 console.log(gejm)
-//                 ul.append(match)
-//             }        
-//         }
-//         if(numOfMatches == 0) {
-
-//         }
-        
-//         for(let i = 0; i < users.length; i++) {
-//             if(users[i].games !== gejm) {
-//                 noMatch.innerHTML = "No matches found"
-//                 matches.append(noMatch)
-//             }   
-//         }
-        
-//     })
-// }
-
 function renderMatches(users) {
     let matches = document.querySelector(".Match__List")
-    let ul = document.querySelector("ul")
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     let noMatch = document.createElement("h3")
     
     matchButton.addEventListener("click", async (event) => {
-        ul.innerHTML = ""
+    
+        matches.innerHTML = ""
         noMatch.innerHTML = ""
         let numOfMatches = []
         let gejm = matchGames.querySelector(".gejms").value
-        for(let j = 0; j < users.length; j++) {
+        for (let j = 0; j < users.length; j++) {
             let currentUser = users[j]
             if (currentUser.games == gejm) { 
-                let match = document.createElement("li")
-                numOfMatches += match
-                match.innerHTML = [
-                    users[j].username,
-                    users[j].email,
-                    users[j].games
-                ]
+                let matchListUsername = document.createElement("h3")
+                let matchListEmail = document.createElement("p")
+                let matchListGame = document.createElement("p")
+
+                numOfMatches += matchListUsername, matchListEmail, matchListGame
+                matchListUsername.innerHTML = users[j].username
+                matchListEmail.innerHTML = users[j].email
+                matchListGame.innerHTML = users[j].games
+                
                 console.log(gejm)
-                ul.append(match)
+
+                matches.append(matchListUsername)
+                matches.append(matchListEmail)
+                matches.append(matchListGame)
+        
                 console.log(numOfMatches)
-            }        
+            }
         }
-        if(numOfMatches.length == 0) {
+        if (numOfMatches.length == 0) {
             noMatch.innerHTML = "No matches found"
             matches.append(noMatch)
         }
@@ -261,9 +235,4 @@ async function run() {
 
 }
 
-
-
-// getGames()
-// getUsers()
-// getGejms()
 run()
