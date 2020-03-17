@@ -117,6 +117,7 @@ const auth = (req, res, next) => {
     } catch (error) {
         res.status(403).json({ error: 'Unauthorized' })
     }
+    next()
 }
 
 app.post('/login', async(req, res) => {
@@ -126,7 +127,7 @@ app.post('/login', async(req, res) => {
         console.log(user[i].username)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
             const payload = { userId: user[i].username }
-            const token = jwt.sign(payload, "hej", { expiresIn: '60m' }, )
+            const token = jwt.sign(payload, "hej", { expiresIn: '1m' }, )
             res.json({ token })
             res.status(200).json({ message: 'loggedin' })
         }
@@ -134,9 +135,9 @@ app.post('/login', async(req, res) => {
     res.status(403).json({ error: 'Invalid Credentials' })
 })
 
-// app.get('/secured', auth, (req, res) => {
-//     res.send('Hello world')
-// })
+app.get('/secured', auth, (req, res) => {
+    res.json({ message: 'You are user ${req.user}' })
+})
 
 async function run() {
     try {
@@ -152,4 +153,4 @@ async function run() {
 }
 run()
 
-//app.listen(8080, console.log("Server started"))
+app.listen(8080, console.log("Server started"))

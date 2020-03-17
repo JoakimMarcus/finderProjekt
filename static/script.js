@@ -66,10 +66,10 @@ form.addEventListener("submit", async(event) => {
         match.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
+        res.redirect('secured')
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
-
 })
 
 let createBtn = document.querySelector(".Create-Btn")
@@ -178,41 +178,6 @@ async function getUsers() {
 }
 
 // ritar ut listan med matchningar
-// function renderMatches(users) {
-//     let matches = document.querySelector(".Match__List")
-//     let ul = document.querySelector("ul")
-//     let matchGames = document.querySelector(".Match__Games")
-//     let matchButton = document.querySelector(".Match__Button")
-//     let noMatch = document.createElement("h3")
-//     matchButton.addEventListener("click", async (event) => {
-//         ul.innerHTML = ""
-//         noMatch.innerHTML = ""
-//         let gejm = matchGames.querySelector(".gejms").value
-//         for(let j = 0; j < users.length; j++) {
-//             if (users[j].games == gejm) {
-//                 let match = document.createElement("li")
-//                 match.innerHTML = [
-//                     users[j].username,
-//                     users[j].email,
-//                     users[j].games
-//                 ]
-//                 console.log(gejm)
-//                 ul.append(match)
-//             }        
-//         }
-//         if(numOfMatches == 0) {
-
-//         }
-        
-//         for(let i = 0; i < users.length; i++) {
-//             if(users[i].games !== gejm) {
-//                 noMatch.innerHTML = "No matches found"
-//                 matches.append(noMatch)
-//             }   
-//         }
-        
-//     })
-// }
 
 function renderMatches(users) {
     let matches = document.querySelector(".Match__List")
@@ -220,15 +185,15 @@ function renderMatches(users) {
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     let noMatch = document.createElement("h3")
-    
-    matchButton.addEventListener("click", async (event) => {
+
+    matchButton.addEventListener("click", async(event) => {
         ul.innerHTML = ""
         noMatch.innerHTML = ""
         let numOfMatches = []
         let gejm = matchGames.querySelector(".gejms").value
-        for(let j = 0; j < users.length; j++) {
+        for (let j = 0; j < users.length; j++) {
             let currentUser = users[j]
-            if (currentUser.games == gejm) { 
+            if (currentUser.games == gejm) {
                 let match = document.createElement("li")
                 numOfMatches += match
                 match.innerHTML = [
@@ -239,9 +204,9 @@ function renderMatches(users) {
                 console.log(gejm)
                 ul.append(match)
                 console.log(numOfMatches)
-            }        
+            }
         }
-        if(numOfMatches.length == 0) {
+        if (numOfMatches.length == 0) {
             noMatch.innerHTML = "No matches found"
             matches.append(noMatch)
         }

@@ -102,34 +102,13 @@
     </div>
     <!-- End of Log in code -->
 
-    <div class="Log__Wrapper Hidden">
-        <div class="Log__Items">
-            <div class="Log__Item-Left">
-                <img class="Log__Image" src="./img/loginpage.png">
-            </div>
-            <div class="Log__Item-Right">
-                <div class="Log__Logo">
-                    <img src="./img/LogoFinderV21.svg">
-                </div>
-                <div class="test"></div>
-                <div class="Log__Container">
-                    <form class="Profile-Form-1" action="/secured" method="GET">
-                        <div class="Form__Input-Wrap">
-                            <i class="fas fa-user-alt"></i>
-                            <input type="text" name="username" placeholder="Användarnamn" class="username">
-                        </div>
-                        <p class="Error__Email Hidden__Email"></p>
-                        <div class="Form__Input-Wrap">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" name="password" placeholder="Lösenord" class="password">
-                        </div>
-                        <p class="Error__Password Hidden__Password"></p>
-                        <button class="Log-Btn" type="submit">Logga in</button>
-                        <button class="Create-Btn" type="submit">Registrera</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="Profile__Wrapper">
+        <form class="Profile__Form">
+            <input type="text" name="Age" placeholder="Ålder">
+            <input type="text" name="City" placeholder="Stad">
+            <input type="text" name="Gender" placeholder="Kön">
+            <button class="update" type="submit">Uppdatera</button>
+        </form>
     </div>
 
     <script src="./script.js"></script>
