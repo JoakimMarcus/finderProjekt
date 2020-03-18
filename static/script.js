@@ -33,17 +33,17 @@ async function createUser(username, email, password, repeatPassword, games) {
                 case "ERROR_USER_ALREADY_EXISTS":
                     const hidden = document.querySelector(".Error")
                     hidden.classList.toggle("Hidden")
-                    hidden.innerHTML = "Username already exists!"
+                    hidden.innerHTML = "Användarnamnet existerar redan!"
                     break;
                 case "ERROR_EMAIL_ALREADY_EXISTS":
                     const hiddenEmail = document.querySelector(".Error__Email")
                     hiddenEmail.classList.toggle("Hidden__Email")
-                    hiddenEmail.innerHTML = "Email already exists!"
+                    hiddenEmail.innerHTML = "E-mail existerar redan!"
                     break;
                 case "ERROR_PASSWORD_MISMATCH":
                     const hiddenPassword = document.querySelector(".Error__Password")
                     hiddenPassword.classList.toggle("Hidden__Password")
-                    hiddenPassword.innerHTML = "Password mismatch"
+                    hiddenPassword.innerHTML = "Lösenordet matchar inte"
                     break;
             }
         }
@@ -51,17 +51,16 @@ async function createUser(username, email, password, repeatPassword, games) {
 }
 
 
-
-let form = document.querySelector("#Log-Form-1")
-form.addEventListener("submit", async event => {
+let form = document.querySelector(".Log-Form-1")
+form.addEventListener("submit", async(event) => {
     event.preventDefault();
     let username = form.querySelector(".username").value
     let password = form.querySelector(".password").value
     let response = await fetch('http://localhost:8080/login', {
-        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+        method: 'POST',
         body: JSON.stringify({
             username,
             password
@@ -76,11 +75,11 @@ form.addEventListener("submit", async event => {
         match.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
+        window.localStorage.setItem("userId", data.userId)
         secured()
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
-
 })
 
 let createBtn = document.querySelector(".Create-Btn")
@@ -121,8 +120,8 @@ async function secured() {
     })
     let data = await response.json()
     console.log(data.message)
+    return data.message
 }
-
 
 
 
@@ -152,6 +151,62 @@ async function getGames() {
 }
 
 
+function renderGames(games) {
+    let select = document.querySelector(".games")
+    for (let i = 0; i < games.length; i++) {
+        let option = document.createElement("option")
+        option.innerHTML = games[i].game
+        select.append(option)
+
+    }
+}
+
+async function updateUser(age, city, gender) {
+    const id = localStorage.getItem("userId")
+    const response = await fetch('http://localhost:8080/users/' + id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            age: age,
+            city: city,
+            gender: gender,
+        })
+    })
+    console.log(response)
+    const data = await response.json()
+    console.log(data)
+}
+
+function updateUsersIndex() {
+    let form = document.querySelector(".Profile__Form")
+    console.log(form)
+    form.addEventListener("submit", async(event) => {
+        console.log("hej")
+        event.preventDefault()
+        const age = form.querySelector(".age").value
+        const city = form.querySelector(".city").value
+        const gender = form.querySelector(".gender").value
+        const hidden = document.querySelector(".hidden")
+        const updateUsers = await updateUser(age, city, gender)
+    })
+}
+updateUsersIndex()
+    // async function run() {
+    //     let games = await getGames()
+    //     renderGames(games)
+    //     getUsers()
+    // }
+    // run()
+    // async function getGejms() {
+    //     const request = await fetch('http://localhost:8080/games', {
+    //         method: 'GET'
+    //     })
+    //     const data = await request.json()
+    //     console.log(data.games)
+    //     return data.games
+    // }
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
@@ -217,7 +272,8 @@ async function run() {
     let users = await getUsers()
     renderMatches(users)
     renderGejms(games)
-
+        // let secured = await secured()
+        // updateUser(users, secured)
 }
 
 run()
