@@ -175,28 +175,34 @@ async function getUsers() {
 
 function renderMatches(users) {
     let matches = document.querySelector(".Match__List")
-    let ul = document.querySelector("ul")
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     let noMatch = document.createElement("h3")
 
     matchButton.addEventListener("click", async(event) => {
-        ul.innerHTML = ""
+
+        matches.innerHTML = ""
         noMatch.innerHTML = ""
         let numOfMatches = []
         let gejm = matchGames.querySelector(".gejms").value
         for (let j = 0; j < users.length; j++) {
             let currentUser = users[j]
             if (currentUser.games == gejm) {
-                let match = document.createElement("li")
-                numOfMatches += match
-                match.innerHTML = [
-                    users[j].username,
-                    users[j].email,
-                    users[j].games
-                ]
+                let matchListUsername = document.createElement("h3")
+                let matchListEmail = document.createElement("p")
+                let matchListGame = document.createElement("p")
+
+                numOfMatches += matchListUsername, matchListEmail, matchListGame
+                matchListUsername.innerHTML = users[j].username
+                matchListEmail.innerHTML = users[j].email
+                matchListGame.innerHTML = users[j].games
+
                 console.log(gejm)
-                ul.append(match)
+
+                matches.append(matchListUsername)
+                matches.append(matchListEmail)
+                matches.append(matchListGame)
+
                 console.log(numOfMatches)
             }
         }
