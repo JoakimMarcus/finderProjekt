@@ -1,5 +1,5 @@
-const express = require('express')
-const Datastore = require('nedb-promise')
+const express = require("express")
+const Datastore = require("nedb-promise")
 let collectionsNEDB = {
     users: new Datastore({ filename: './data/users.db', autoload: true }),
     games: new Datastore({ filename: './data/games.db', autoload: true })
@@ -19,7 +19,7 @@ if (process.env.NODE_ENV == "development") {
     Database = require("./database/mongo")
 }
 
-app.use(express.static('static'))
+app.use(express.static("static"))
 
 app.use(express.json())
 
@@ -63,7 +63,7 @@ app.post("/register", async(req, res) => {
     // let collections = db.collection('users')
     let user, email
 
-    if (process.env.NODE_ENV == 'development') {
+    if (process.env.NODE_ENV == "development") {
         user = await collectionsNEDB.users.find({ username: req.body.username })
         email = await collectionsNEDB.users.find({ email: req.body.email })
     } else {
@@ -75,8 +75,7 @@ app.post("/register", async(req, res) => {
     let errors = []
     if (req.body.password !== req.body.repeatPassword) {
         errors.push("ERROR_PASSWORD_MISMATCH")
-    }
-    if (user == false) {
+    } else if (user == false) {
         if (email == false) {
             let newUser = {
                 username: req.body.username,
@@ -84,18 +83,19 @@ app.post("/register", async(req, res) => {
                 password: req.body.password,
                 games: req.body.games
             }
-            if (process.env.NODE_ENV == 'development') {
+            if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
-                res.status(200).json({ message: 'user created' })
+                res.status(200).json({ message: "SUCCESS" })
 
             } else {
                 let db = await Database.connect()
-                let users = db.collection('users')
+                let users = db.collection("users")
                 const result = await users.insert(newUser)
+                res.status(200).json({ message: "SUCCESS" })
                 console.log(result)
             }
         } else {
-            errors.push('ERROR_EMAIL_ALREADY_EXISTS')
+            errors.push("ERROR_EMAIL_ALREADY_EXISTS")
         }
     } else {
         errors.push("ERROR_USER_ALREADY_EXISTS")
@@ -123,22 +123,33 @@ const auth = (req, res, next) => {
 app.post('/login', async(req, res) => {
     user = await collectionsNEDB.users.find({})
     console.log(req.body)
+    let matchedUser
     for (let i = 0; i < user.length; i++) {
         console.log(user[i].username)
+        console.log(user[i]._id)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
-            const payload = { userId: user[i].username }
-            const token = jwt.sign(payload, "hej", { expiresIn: '1m' }, )
-            res.json({ token })
-            res.status(200).json({ message: 'loggedin' })
+            matchedUser = user[i]
+            break
         }
     }
-    res.status(403).json({ error: 'Invalid Credentials' })
+    if (matchedUser) {
+        const payload = { userId: matchedUser._id }
+        const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
+        res.json({ token, userId: matchedUser._id })
+    } else {
+        res.status(403).json({ error: 'Invalid Credentials' })
+    }
 })
 
 app.get('/secured', auth, (req, res) => {
-    res.json({ message: 'You are user ${req.user}' })
+    res.json({ message: `${req.user}` })
 })
 
+app.patch('/users/:id', async(req, res) => {
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, { $set: { "age": req.body.age, "city": req.body.city, "gender": req.body.gender } })
+    console.log(req.params.id)
+    res.json(result)
+})
 async function run() {
     try {
         await Database.connect()
@@ -152,5 +163,3 @@ async function run() {
 
 }
 run()
-
-app.listen(8080, console.log("Server started"))

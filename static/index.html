@@ -59,7 +59,7 @@
     <div class="Match__Games Hidden">
         <button class="Match__Button">Börja matcha</button>
         <select class="gejms" name="gejms">
-                <option class="disabled" value="" disabled selected>Välj ett spel</option>
+                <option class="disabled" value="" disabled selected>Välj ett spel!</option>
           
           </select>
         <!--Matchningslistan ska skrivas ut när man klickar på knappen i reg-sidan-->
@@ -68,7 +68,14 @@
 
             </ul>
         </div>
-
+        <div class="Profile__Wrapper">
+            <form class="Profile__Form">
+                <input type="text" name="age" placeholder="Ålder" class="age">
+                <input type="text" name="city" placeholder="Stad" class="city">
+                <input type="text" name="gender" placeholder="Kön" class="gender">
+                <button class="update" type="submit">Uppdatera</button>
+            </form>
+        </div>
     </div>
     <!-- Log in -->
     <div class="Log__Wrapper">
@@ -80,7 +87,7 @@
                 <div class="Log__Logo">
                     <img src="./img/LogoFinderV21.svg">
                 </div>
-                <div class="test"></div>
+                <p class="Success"></p>
                 <div class="Log__Container">
                     <form class="Log-Form-1" id="Log-Form-1">
                         <div class="Form__Input-Wrap">
@@ -102,14 +109,7 @@
     </div>
     <!-- End of Log in code -->
 
-    <div class="Profile__Wrapper">
-        <form class="Profile__Form">
-            <input type="text" name="Age" placeholder="Ålder">
-            <input type="text" name="City" placeholder="Stad">
-            <input type="text" name="Gender" placeholder="Kön">
-            <button class="update" type="submit">Uppdatera</button>
-        </form>
-    </div>
+
 
     <script src="./script.js"></script>
 </body>

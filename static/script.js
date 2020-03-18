@@ -13,26 +13,34 @@ async function createUser(username, email, password, repeatPassword, games) {
         })
     })
     console.log(response)
-
-    if (response == 200) {
-
+    const data = await response.json()
+    if (response.status == 200) {
+        console.log(data.message)
+        if (data.message == "SUCCESS") {
+            console.log("Great")
+            let Success = document.querySelector(".Success")
+            Success.innerHTML = "Användare skapad!"
+            alert("Användare skapad!")
+        }
     } else {
         const data = await response.json()
+        const p = document.querySelector("p")
+        p.innerHTML = ""
         for (let i = 0; i < data.errors.length; i++) {
             const error = data.errors[i]
             console.log(data.errors)
             switch (error) {
-                case 'ERROR_USER_ALREADY_EXISTS':
+                case "ERROR_USER_ALREADY_EXISTS":
                     const hidden = document.querySelector(".Error")
                     hidden.classList.toggle("Hidden")
                     hidden.innerHTML = "Användarnamnet existerar redan!"
                     break;
-                case 'ERROR_EMAIL_ALREADY_EXISTS':
+                case "ERROR_EMAIL_ALREADY_EXISTS":
                     const hiddenEmail = document.querySelector(".Error__Email")
                     hiddenEmail.classList.toggle("Hidden__Email")
                     hiddenEmail.innerHTML = "E-mail existerar redan!"
                     break;
-                case 'ERROR_PASSWORD_MISMATCH':
+                case "ERROR_PASSWORD_MISMATCH":
                     const hiddenPassword = document.querySelector(".Error__Password")
                     hiddenPassword.classList.toggle("Hidden__Password")
                     hiddenPassword.innerHTML = "Lösenordet matchar inte"
@@ -66,7 +74,8 @@ form.addEventListener("submit", async(event) => {
         match.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
-        res.redirect('secured')
+        window.localStorage.setItem("userId", data.userId)
+        secured()
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
@@ -90,20 +99,19 @@ backBtn.addEventListener("click", async(event) => {
     login.classList.toggle("Hidden")
 })
 
-// document.querySelector(".Profile-Form-1").addEventListener("click", async event => {
-//     const token = window.localStorage.getItem("token")
-//     let response = await fetch('http://localhost:8080/secured', {
-//         headers: {
-//             'Authorization': token
-//         }
-//     })
-//     let data = await response.json()
-//     if (response.status == 200) {
-//         document.querySelector(".message").innerText = data.message
-//     } else {
-//         document.querySelector(".message").innerText = data.error
-//     }
-// })
+async function secured() {
+    const token = window.localStorage.getItem("token")
+    let response = await fetch('http://localhost:8080/secured', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    let data = await response.json()
+    console.log(data.message)
+    return data.message
+}
+
+
 
 function init() {
     let form = document.querySelector("#Reg-Form-1")
@@ -141,21 +149,52 @@ function renderGames(games) {
     }
 }
 
+async function updateUser(age, city, gender) {
+    const id = localStorage.getItem("userId")
+    const response = await fetch('http://localhost:8080/users/' + id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            age: age,
+            city: city,
+            gender: gender,
+        })
+    })
+    console.log(response)
+    const data = await response.json()
+    console.log(data)
+}
 
-// async function run() {
-//     let games = await getGames()
-//     renderGames(games)
-//     getUsers()
-// }
-// run()
-// async function getGejms() {
-//     const request = await fetch('http://localhost:8080/games', {
-//         method: 'GET'
-//     })
-//     const data = await request.json()
-//     console.log(data.games)
-//     return data.games
-// }
+function updateUsersIndex() {
+    let form = document.querySelector(".Profile__Form")
+    console.log(form)
+    form.addEventListener("submit", async(event) => {
+        console.log("hej")
+        event.preventDefault()
+        const age = form.querySelector(".age").value
+        const city = form.querySelector(".city").value
+        const gender = form.querySelector(".gender").value
+        const hidden = document.querySelector(".hidden")
+        const updateUsers = await updateUser(age, city, gender)
+    })
+}
+updateUsersIndex()
+    // async function run() {
+    //     let games = await getGames()
+    //     renderGames(games)
+    //     getUsers()
+    // }
+    // run()
+    // async function getGejms() {
+    //     const request = await fetch('http://localhost:8080/games', {
+    //         method: 'GET'
+    //     })
+    //     const data = await request.json()
+    //     console.log(data.games)
+    //     return data.games
+    // }
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
@@ -219,7 +258,8 @@ async function run() {
     renderMatches(users)
         // let gejms = await getGejms()
     renderGejms(games)
-
+        // let secured = await secured()
+        // updateUser(users, secured)
 }
 
 
