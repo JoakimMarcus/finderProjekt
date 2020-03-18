@@ -67,6 +67,7 @@ form.addEventListener("submit", async(event) => {
         })
     })
     console.log(response.status)
+    console.log(response.message)
     if (response.status == 200) {
         let data = await response.json()
         let match = document.querySelector(".Match__Games")
@@ -98,6 +99,17 @@ backBtn.addEventListener("click", async(event) => {
     reg.classList.toggle("Hidden")
     login.classList.toggle("Hidden")
 })
+
+
+let profileBtn = document.querySelector(".Profile__Button")
+profileBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let profile = document.querySelector(".Update-Profile")
+    let match = document.querySelector(".Match__Games")
+    profile.classList.toggle("Hidden")
+    match.classList.toggle("Hidden")
+})
+
 
 async function secured() {
     const token = window.localStorage.getItem("token")
@@ -198,13 +210,13 @@ updateUsersIndex()
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
-    let select = document.querySelector(".gejms")
+    let select = document.querySelectorAll(".gejms")
     for (let i = 0; i < games.length; i++) {
-        let option = document.createElement("option")
-        option.innerHTML = games[i].game
-        select.append(option)
-
-
+        for (let j = 0; j < select.length; j++) {
+            let option = document.createElement("option")
+            option.innerHTML = games[i].game
+            select[j].append(option)
+        }
     }
 }
 async function getUsers() {
@@ -216,32 +228,36 @@ async function getUsers() {
     return usersData.matchList
 }
 
-// ritar ut listan med matchningar
-
 function renderMatches(users) {
     let matches = document.querySelector(".Match__List")
-    let ul = document.querySelector("ul")
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     let noMatch = document.createElement("h3")
 
     matchButton.addEventListener("click", async(event) => {
-        ul.innerHTML = ""
+
+        matches.innerHTML = ""
         noMatch.innerHTML = ""
         let numOfMatches = []
         let gejm = matchGames.querySelector(".gejms").value
         for (let j = 0; j < users.length; j++) {
             let currentUser = users[j]
             if (currentUser.games == gejm) {
-                let match = document.createElement("li")
-                numOfMatches += match
-                match.innerHTML = [
-                    users[j].username,
-                    users[j].email,
-                    users[j].games
-                ]
+                let matchListUsername = document.createElement("h3")
+                let matchListEmail = document.createElement("p")
+                let matchListGame = document.createElement("p")
+
+                numOfMatches += matchListUsername, matchListEmail, matchListGame
+                matchListUsername.innerHTML = users[j].username
+                matchListEmail.innerHTML = users[j].email
+                matchListGame.innerHTML = users[j].games
+
                 console.log(gejm)
-                ul.append(match)
+
+                matches.append(matchListUsername)
+                matches.append(matchListEmail)
+                matches.append(matchListGame)
+
                 console.log(numOfMatches)
             }
         }
@@ -253,18 +269,15 @@ function renderMatches(users) {
 }
 async function run() {
     let games = await getGames()
-    renderGames(games)
     let users = await getUsers()
     renderMatches(users)
-        // let gejms = await getGejms()
     renderGejms(games)
         // let secured = await secured()
         // updateUser(users, secured)
 }
 
-
+run()
 
 // getGames()
 // getUsers()
 // getGejms()
-run()
