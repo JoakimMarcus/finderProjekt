@@ -117,28 +117,39 @@ const auth = (req, res, next) => {
     } catch (error) {
         res.status(403).json({ error: 'Unauthorized' })
     }
+    next()
 }
 
 app.post('/login', async(req, res) => {
     user = await collectionsNEDB.users.find({})
     console.log(req.body)
+    let matchedUser
     for (let i = 0; i < user.length; i++) {
         console.log(user[i].username)
         console.log(user[i]._id)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
-            const payload = { userId: user[i]._id }
-            const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
-            res.json({ token })
-            res.status(200)
+            matchedUser = user[i]
+            break
         }
     }
-    res.status(403)
+    if (matchedUser) {
+        const payload = { userId: matchedUser._id }
+        const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
+        res.json({ token, userId: matchedUser._id })
+    } else {
+        res.status(403).json({ error: 'Invalid Credentials' })
+    }
 })
 
 app.get('/secured', auth, (req, res) => {
     res.json({ message: `${req.user}` })
 })
 
+app.patch('/users/:id', async(req, res) => {
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, { $set: { "age": req.body.age, "city": req.body.city, "gender": req.body.gender } })
+    console.log(req.params.id)
+    res.json(result)
+})
 async function run() {
     try {
         await Database.connect()
@@ -152,5 +163,3 @@ async function run() {
 
 }
 run()
-
-//app.listen(8080, console.log("Server started"))

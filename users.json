@@ -6,6 +6,9 @@
             "kön": "man",
             "ålder": "16",
             "stad": "stockholm",
+            "usernameDiscord": "nikeboy12",
+            "usernameSteam": "nikeboy",
+            "usernameOrigin": "nikeboy_88",
             "games": [
                 "Counter-Strike GO",
                 "Raft"
@@ -16,6 +19,9 @@
             "username": "frumppen",
             "email": "frumppen@hotmail.com",
             "password": "test",
+            "usernameDiscord": "frumppen",
+            "usernameSteam": "frumppen",
+            "usernameOrigin": "frumppen45",
             "games": [
                 "Age of empire III",
                 "Raft"
@@ -25,6 +31,9 @@
             "username": "hawe",
             "email": "hawe@gmail.com",
             "password": "1234",
+            "usernameDiscord": "hawe30",
+            "usernameSteam": "hawe",
+            "usernameOrigin": "hawe",
             "games": [
                 "Team Fortress 2"
             ]
@@ -33,6 +42,9 @@
             "username": "knest",
             "email": "knest@outlook.com",
             "password": "rosa123",
+            "usernameDiscord": "aram",
+            "usernameSteam": "knest",
+            "usernameOrigin": "knestis",
             "games": [
                 "Counter-Strike GO"
             ]
@@ -41,6 +53,9 @@
             "username": "carro",
             "email": "carro@webb.se",
             "password": "korr34",
+            "usernameDiscord": "carro",
+            "usernameSteam": "carro_girl",
+            "usernameOrigin": "kareo",
             "games": [
                 "Counter-Strike GO"
             ]
@@ -49,6 +64,9 @@
             "username": "mandypandy",
             "email": "mandypandy@gmail.com",
             "password": "hej",
+            "usernameDiscord": "mandy222",
+            "usernameSteam": "mandypandy",
+            "usernameOrigin": "mandypandy",
             "games": [
                 "Diablo II"
             ]
@@ -57,6 +75,9 @@
             "username": "elsa",
             "email": "elsa@gmail.com",
             "password": "kalle123",
+            "usernameDiscord": "jonte",
+            "usernameSteam": "jontis",
+            "usernameOrigin": "elsa",
             "games": [
                 "Apex"
             ]
@@ -65,6 +86,9 @@
             "username": "bobox",
             "email": "bobox@hotmail.com",
             "password": "test234",
+            "usernameDiscord": "bigbox",
+            "usernameSteam": "bigbox",
+            "usernameOrigin": "bobox",
             "games": [
                 "Counter-Strike GO",
                 "Battlefield V"
@@ -74,30 +98,20 @@
             "username": "arooma",
             "email": "arooma@outlook.com",
             "password": "password1234",
+            "usernameDiscord": "aaaaaris",
+            "usernameSteam": "kitas",
+            "usernameOrigin": "kitas",
             "games": [
                 "Battlefield V"
-            ]
-        },
-        {
-            "username": "kalle",
-            "email": "kalle@evilcorp.com",
-            "password": "hej1234",
-            "games": [
-                "Pummel Party"
-            ]
-        },
-        {
-            "username": "bobshift",
-            "email": "bobshift@hotmail.com",
-            "password": "sprit123",
-            "games": [
-                "Counter-Strike GO"
             ]
         },
         {
             "username": "gamer_girl",
             "email": "gamer_girl@gmail.com",
             "password": "hellyeah",
+            "usernameDiscord": "gamer_girl",
+            "usernameSteam": "gamer_girl12",
+            "usernameOrigin": "gamer_girl",
             "games": [
                 "FIFA 20"
             ]
