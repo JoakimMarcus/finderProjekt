@@ -129,14 +129,14 @@ app.post('/login', async(req, res) => {
             const payload = { userId: user[i]._id }
             const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
             res.json({ token })
-            res.status(200).json({ message: 'loggedin' })
+            res.status(200)
         }
     }
-    res.status(403).json({ error: 'Invalid Credentials' })
+    res.status(403)
 })
 
 app.get('/secured', auth, (req, res) => {
-    res.json({ message: `You are user ${req.user}` })
+    res.json({ message: `${req.user}` })
 })
 
 async function run() {
