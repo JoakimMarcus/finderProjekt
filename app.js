@@ -130,9 +130,11 @@ app.post('/login', async(req, res) => {
             const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
             res.json({ token })
             res.status(200)
+            console.log("It worked")
         }
     }
     res.status(403)
+    console.log("It dident worked")
 })
 
 app.get('/secured', auth, (req, res) => {

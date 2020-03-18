@@ -102,7 +102,7 @@ backBtn.addEventListener("click", async(event) => {
 })
 
 
-let profileBtn = document.querySelector(".Profile__Button")
+let profileBtn = document.querySelector(".Profiles__Button")
 profileBtn.addEventListener("click", async(event) => {
     event.preventDefault()
     let profile = document.querySelector(".Update-Profile")
