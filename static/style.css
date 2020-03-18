@@ -123,3 +123,148 @@ body {
 option {
     color: black;
 }
+
+.Success {
+    color: green;
+}
+
+
+/* Redigera finderprofil */
+
+.Update-Profile {
+    flex-direction: column;
+}
+
+.Update-Profile__Heading {
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.Content__Profile {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 450px;
+    margin-left: 100px;
+}
+
+.Update-Profile__Content {
+    display: flex;
+    justify-content: center;
+}
+
+.Profile__Profile-Picture {
+    background: #FCFCFC;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.Profil__Picture-Button {
+    display: flex;
+    align-items: center;
+}
+
+.Profile__Button {
+    height: 40px;
+    margin-left: 50px;
+}
+
+.Profile__Heading {
+    margin-left: 50px;
+}
+
+.Profile__Gender {
+    display: flex;
+}
+
+.Gender__Heading {
+    margin-right: 30px;
+}
+
+.Gender__Checkbox {
+    margin-top: 25px;
+}
+
+.Gender__Man {
+    margin-top: 23px;
+}
+
+.Gender__Women {
+    margin-right: 20px;
+    margin-top: 23px;
+}
+
+.Profile__Age,
+.Profile__City {
+    display: flex;
+}
+
+.Age__Input {
+    height: 30px;
+    margin-top: 14px;
+    margin-left: 20px;
+    text-align: center;
+}
+
+.City__Input {
+    height: 30px;
+    margin-top: 14px;
+    margin-left: 30px;
+    text-align: center;
+}
+
+.Profile__Discord,
+.Profile__Steam,
+.Profile__Origin {
+    display: flex;
+}
+
+.Discord__Input {
+    height: 30px;
+    margin-top: 14px;
+    margin-left: 30px;
+    text-align: center;
+}
+
+.Steam__Input {
+    height: 30px;
+    margin-top: 14px;
+    margin-left: 42px;
+    text-align: center;
+}
+
+.Origin__Input {
+    height: 30px;
+    margin-top: 14px;
+    margin-left: 39px;
+    text-align: center;
+}
+
+.Content__Profile-Right {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.Profile-Right__Select {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-bottom: 40px;
+}
+
+.Profile-Right__Button {
+    height: 40px;
+    margin-left: 50px;
+}
+
+.Profil-Right__Button-div {
+    display: flex;
+    height: 250px;
+    align-items: flex-end;
+    margin-bottom: 50px;
+    margin-left: 80px;
+}
