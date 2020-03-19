@@ -122,7 +122,6 @@ const auth = (req, res, next) => {
 
 app.post('/login', async(req, res) => {
     user = await collectionsNEDB.users.find({})
-    console.log(req.body)
     let matchedUser
     for (let i = 0; i < user.length; i++) {
         console.log(user[i].username)
@@ -146,7 +145,16 @@ app.get('/secured', auth, (req, res) => {
 })
 
 app.patch('/users/:id', async(req, res) => {
-    const result = await collectionsNEDB.users.update({ _id: req.params.id }, { $set: { "age": req.body.age, "city": req.body.city, "gender": req.body.gender } })
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+        $set: {
+            "age": req.body.age,
+            "city": req.body.city,
+            "gender": req.body.gender,
+            "usernameDiscord": req.body.discord,
+            "usernameSteam": req.body.steam,
+            "usernameOrigin": req.body.origin
+        }
+    })
     console.log(req.params.id)
     res.json(result)
 })

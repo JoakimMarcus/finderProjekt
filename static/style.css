@@ -5,6 +5,7 @@
 
 body {
     background-image: linear-gradient(to right, white, grey);
+    margin: 0;
 }
 
 .Reg__Wrapper,
@@ -80,10 +81,6 @@ body {
     background: none;
     height: 40px;
     padding-left: 6px;
-}
-
-.Hidden {
-    display: none;
 }
 
 .Hidden__Email {
@@ -267,4 +264,154 @@ option {
     align-items: flex-end;
     margin-bottom: 50px;
     margin-left: 80px;
+}
+
+.Profile__Background {
+    background-image: url("./img/finderBackgroundDots.jpg");
+    background-size: 100%;
+    height: 474px;
+    background-repeat: no-repeat;
+    display: flex;
+}
+
+.Profile__Picture,
+.Profile-Picture__Img {
+    border-radius: 50%;
+    width: 350px;
+    height: 350px;
+    border: #6937A8 solid 3px;
+}
+
+.Profile-Picture__Wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33%;
+    height: 100%;
+}
+
+.Profile__Info {
+    width: 33%;
+}
+
+.Profile-Info__Personal {
+    height: 33%;
+    display: flex;
+    align-items: center;
+}
+
+.fa-mars {
+    color: white;
+    font-size: 50px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.Profile-Info__Username-Age {
+    color: white;
+    font-size: 50px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.Profile-Info__City {
+    color: white;
+    margin-top: 0;
+    font-size: 20px;
+    margin-left: 30px;
+}
+
+.Profile-Info__Discord,
+.Profile-Info__Steam,
+.Profile-Info__Origin {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.fa-discord {
+    color: #6477C4;
+    font-size: 50px;
+}
+
+.fa-steam {
+    color: #2a475e;
+    font-size: 50px;
+}
+
+.Origin__Logo {
+    width: 50px;
+    height: auto;
+}
+
+.Profile-Info__Username {
+    color: white;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 40px;
+}
+
+.Profile__Button {
+    width: 33%;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    color: white;
+}
+
+.Profile-Button__Logout {
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+.Profile-Button__Update,
+.Profile-Button__Logout {
+    cursor: pointer;
+    height: 5%;
+}
+
+.Match-Button {
+    background: #ac74d9;
+    width: 192px;
+    height: 67px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 80px;
+    cursor: pointer;
+}
+
+.Profile__Match-Button {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.Profile__MatchList {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Profile__Wrapper-Container {
+    display: flex;
+}
+
+.MatchList__Heading {
+    margin: 0;
+}
+
+.Profile__Wrapper {
+    margin: 0;
+}
+
+.Hidden {
+    display: none;
 }

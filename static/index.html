@@ -59,27 +59,12 @@
 
     <!--Matchning-->
     <div class="Match__Games Hidden">
-        <button class="Profiles__Button">Redigera Profil</button>
         <button class="Match__Button">Börja matcha</button>
         <select class="gejms" name="gejms">
                 <option class="disabled" value="" disabled selected>Välj ett spel!</option>
           </select>
         <!--Matchningslistan ska skrivas ut när man klickar på börja matcha efter man loggat in-->
         <div class="Match__List">
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f31818ce47148db05d08b81ca37819aa8f802fa
-
-
-        </div>
-        <div class="Profile__Wrapper">
-            <form class="Profile__Form">
-                <input type="text" name="age" placeholder="Ålder" class="age">
-                <input type="text" name="city" placeholder="Stad" class="city">
-                <input type="text" name="gender" placeholder="Kön" class="gender">
-                <button class="update" type="submit">Uppdatera</button>
-            </form>
         </div>
     </div>
     <!-- Log in -->
@@ -129,10 +114,7 @@
                 </div>
                 <div class="Profile__Gender">
                     <h3 class="Gender__Heading">Kön</h3>
-                    <input type="checkbox" name="women" class="Gender__Checkbox">
-                    <p class="Gender__Women">Kvinna</p>
-                    <input type="checkbox" name="man" class="Gender__Checkbox">
-                    <p class="Gender__Man">Man</p>
+                    <input type="text" name="gender" class="Gender__Input" placeholder="Kön">
                 </div>
                 <div class="Profile__Age">
                     <h3 class="Age__Heading">Ålder</h3>
@@ -144,15 +126,15 @@
                 </div>
                 <div class="Profile__Discord">
                     <h3 class="Discord__Heading">Användarnamn till Discord</h3>
-                    <input type="text" name="discord" class="Discord__Input" placeholder="Vart bor du?">
+                    <input type="text" name="discord" class="Discord__Input" placeholder="Discord">
                 </div>
                 <div class="Profile__Steam">
                     <h3 class="Steam__Heading">Användarnamn till Steam</h3>
-                    <input type="text" name="steam" class="Steam__Input" placeholder="Vart bor du?">
+                    <input type="text" name="steam" class="Steam__Input" placeholder="Steam">
                 </div>
                 <div class="Profile__Origin">
                     <h3 class="Origin__Heading">Användarnamn till Origin</h3>
-                    <input type="text" name="origin" class="Origin__Input" placeholder="Vart bor du?">
+                    <input type="text" name="origin" class="Origin__Input" placeholder="Origin">
                 </div>
             </div>
             <div class="Content__Profile-Right">
@@ -171,6 +153,52 @@
                 <div class="Profil-Right__Button-div">
                     <button type="submit" class="Profile-Right__Button">Uppdatera</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Profile__Wrappe Hidden">
+        <div class="Profile__Background">
+            <div class="Profile-Picture__Wrapper">
+                <div class="Profile__Picture">
+                    <img src="./img/greta.jpg" alt="" class="Profile-Picture__Img">
+                </div>
+            </div>
+            <div class="Profile__Info">
+                <div class="Profile-Info__Personal">
+                    <i class="fas fa-mars"></i>
+                    <div class="Personal__Username-City">
+                        <h1 class="Profile-Info__Username-Age">Grettish, 13</h1>
+                        <p class="Profile-Info__City">Wuhan</p>
+                    </div>
+                </div>
+                <div class="Profile-Info__Discord">
+                    <i class="fab fa-discord"></i>
+                    <p class="Profile-Info__Username">Greetish-Streamer</p>
+                </div>
+                <div class="Profile-Info__Steam">
+                    <i class="fab fa-steam"></i>
+                    <p class="Profile-Info__Username">GreetishFajkers</p>
+                </div>
+                <div class="Profile-Info__Origin">
+                    <img src="./img/origin.jpg" alt="" class="Origin__Logo">
+                    <p class="Profile-Info__Username">GreetishFajkers22</p>
+                </div>
+            </div>
+            <div class="Profile__Button">
+                <p class="Profile-Button__Update">Redigera profil</p>
+                <p class="Profile-Button__Logout">Logga ut</p>
+            </div>
+        </div>
+        <div class="Profile__Wrapper-Container">
+            <div class="Profile__Match-Button">
+                <div class="Match-Button">
+                    <p>Börja matcha</p>
+                </div>
+            </div>
+            <div class="Profile__MatchList">
+                <img src="./img/LogoFinderV21.svg" alt="" class="MatchList__Logo">
+                <h2 class="MatchList__Heading">Mina matchningar</h2>
             </div>
         </div>
     </div>
