@@ -81,7 +81,13 @@ app.post("/register", async(req, res) => {
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
-                games: req.body.games
+                gender: "",
+                age: "",
+                city: "",
+                games: req.body.games,
+                usernameDiscord: req.body.usernameDiscord,
+                usernameSteam: req.body.usernameSteam,
+                usernameOrigin: req.body.usernameOrigin
             }
             if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
@@ -150,9 +156,9 @@ app.patch('/users/:id', async(req, res) => {
             "age": req.body.age,
             "city": req.body.city,
             "gender": req.body.gender,
-            "usernameDiscord": req.body.discord,
-            "usernameSteam": req.body.steam,
-            "usernameOrigin": req.body.origin
+            "usernameDiscord": req.body.usernameDiscord,
+            "usernameSteam": req.body.usernameSteam,
+            "usernameOrigin": req.body.usernameOrigin
         }
     })
     console.log(req.params.id)

@@ -1,4 +1,4 @@
-async function createUser(username, email, password, repeatPassword, games) {
+async function createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin) {
     const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
@@ -9,7 +9,11 @@ async function createUser(username, email, password, repeatPassword, games) {
             email: email,
             password: password,
             repeatPassword,
-            games: games
+            games: games,
+            usernameDiscord: usernameDiscord,
+            usernameSteam: usernameSteam,
+            usernameOrigin: usernameOrigin
+
         })
     })
     console.log(response)
@@ -142,9 +146,12 @@ function init() {
         const email = form.querySelector(".email").value
         const password = form.querySelector(".password").value
         const repeatPassword = form.querySelector(".repeat-password").value
-        const games = form.querySelector(".games").value
+        const games = form.querySelector(".gejms").value
+        const usernameDiscord = form.querySelector(".usernameDiscord").value
+        const usernameSteam = form.querySelector(".usernameSteam").value
+        const usernameOrigin = form.querySelector(".usernameOrigin").value
         const hidden = document.querySelector(".hidden")
-        const createUsers = await createUser(username, email, password, repeatPassword, games)
+        const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
     })
 }
 init()
@@ -164,7 +171,7 @@ function renderGames(games) {
     let select = document.querySelector(".gejms")
     for (let i = 0; i < games.length; i++) {
         let option = document.createElement("option")
-        option.innerHTML = games[i].game
+        option.innerHTML = games[i].gejms
         select.append(option)
 
     }
@@ -208,20 +215,6 @@ function updateUsersIndex() {
     })
 }
 updateUsersIndex()
-    // async function run() {
-    //     let games = await getGames()
-    //     renderGames(games)
-    //     getUsers()
-    // }
-    // run()
-    // async function getGejms() {
-    //     const request = await fetch('http://localhost:8080/games', {
-    //         method: 'GET'
-    //     })
-    //     const data = await request.json()
-    //     console.log(data.games)
-    //     return data.games
-    // }
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
@@ -250,7 +243,6 @@ function renderMatches(users) {
     let noMatch = document.createElement("h3")
 
     matchButton.addEventListener("click", async(event) => {
-
         matches.innerHTML = ""
         noMatch.innerHTML = ""
         let numOfMatches = []
@@ -259,19 +251,28 @@ function renderMatches(users) {
             let currentUser = users[j]
             if (currentUser.games == gejm) {
                 let matchListUsername = document.createElement("h3")
-                let matchListEmail = document.createElement("p")
+                let matchListAge = document.createElement("p")
                 let matchListGame = document.createElement("p")
+                let usernameDiscord = document.createElement("p")
+                let usernameSteam = document.createElement("p")
+                let usernameOrigin = document.createElement("p")
 
-                numOfMatches += matchListUsername, matchListEmail, matchListGame
+                numOfMatches += matchListUsername, matchListAge, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
                 matchListUsername.innerHTML = users[j].username
-                matchListEmail.innerHTML = users[j].email
-                matchListGame.innerHTML = users[j].games
+                matchListAge.innerHTML = "Ålder: " + users[j].age
+                matchListGame.innerHTML = "Spelar: " + users[j].games
+                usernameDiscord.innerHTML = "Discord: " + users[j].usernameDiscord
+                usernameSteam.innerHTML = "Steam: " + users[j].usernameSteam
+                usernameOrigin.innerHTML = "Origin: " + users[j].usernameOrigin
 
                 console.log(gejm)
 
                 matches.append(matchListUsername)
-                matches.append(matchListEmail)
+                matches.append(matchListAge)
                 matches.append(matchListGame)
+                matches.append(usernameDiscord)
+                matches.append(usernameSteam)
+                matches.append(usernameOrigin)
 
                 console.log(numOfMatches)
             }
