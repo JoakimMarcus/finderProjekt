@@ -1,4 +1,4 @@
-async function createUser(username, email, password, repeatPassword, games) {
+async function createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin) {
     const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
@@ -9,7 +9,11 @@ async function createUser(username, email, password, repeatPassword, games) {
             email: email,
             password: password,
             repeatPassword,
-            games: games
+            games: games,
+            usernameDiscord: usernameDiscord,
+            usernameSteam: usernameSteam,
+            usernameOrigin: usernameOrigin
+
         })
     })
     console.log(response)
@@ -70,9 +74,9 @@ form.addEventListener("submit", async(event) => {
     console.log(response.message)
     if (response.status == 200) {
         let data = await response.json()
-        let match = document.querySelector(".Match__Games")
+        let profile = document.querySelector(".Profile__Wrappe")
         let login = document.querySelector(".Log__Wrapper")
-        match.classList.toggle("Hidden")
+        profile.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
         window.localStorage.setItem("userId", data.userId)
@@ -80,6 +84,15 @@ form.addEventListener("submit", async(event) => {
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
+})
+
+let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
+profileUpdateBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let profile = document.querySelector(".Profile__Wrappe")
+    let updateProfile = document.querySelector(".Update-Profile")
+    profile.classList.toggle("Hidden")
+    updateProfile.classList.toggle("Hidden")
 })
 
 let createBtn = document.querySelector(".Create-Btn")
@@ -101,12 +114,12 @@ backBtn.addEventListener("click", async(event) => {
 })
 
 
-let profileBtn = document.querySelector(".Profiles__Button")
+let profileBtn = document.querySelector(".Match-Button")
 profileBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let profile = document.querySelector(".Update-Profile")
+    let profileMatch = document.querySelector(".Profile__Wrappe")
     let match = document.querySelector(".Match__Games")
-    profile.classList.toggle("Hidden")
+    profileMatch.classList.toggle("Hidden")
     match.classList.toggle("Hidden")
 })
 
@@ -133,9 +146,12 @@ function init() {
         const email = form.querySelector(".email").value
         const password = form.querySelector(".password").value
         const repeatPassword = form.querySelector(".repeat-password").value
-        const games = form.querySelector(".games").value
+        const games = form.querySelector(".gejms").value
+        const usernameDiscord = form.querySelector(".usernameDiscord").value
+        const usernameSteam = form.querySelector(".usernameSteam").value
+        const usernameOrigin = form.querySelector(".usernameOrigin").value
         const hidden = document.querySelector(".hidden")
-        const createUsers = await createUser(username, email, password, repeatPassword, games)
+        const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
     })
 }
 init()
@@ -152,16 +168,16 @@ async function getGames() {
 
 
 function renderGames(games) {
-    let select = document.querySelector(".games")
+    let select = document.querySelector(".gejms")
     for (let i = 0; i < games.length; i++) {
         let option = document.createElement("option")
-        option.innerHTML = games[i].game
+        option.innerHTML = games[i].gejms
         select.append(option)
 
     }
 }
 
-async function updateUser(age, city, gender) {
+async function updateUser(age, city, gender, discord, steam, origin) {
     const id = localStorage.getItem("userId")
     const response = await fetch('http://localhost:8080/users/' + id, {
         method: 'PATCH',
@@ -172,6 +188,9 @@ async function updateUser(age, city, gender) {
             age: age,
             city: city,
             gender: gender,
+            usernameDiscord: discord,
+            usernameSteam: steam,
+            usernameOrigin: origin
         })
     })
     console.log(response)
@@ -180,33 +199,22 @@ async function updateUser(age, city, gender) {
 }
 
 function updateUsersIndex() {
-    let form = document.querySelector(".Profile__Form")
-    console.log(form)
-    form.addEventListener("submit", async(event) => {
+    let updateProfileBtn = document.querySelector(".Profile-Right__Button")
+    console.log(updateProfileBtn)
+    updateProfileBtn.addEventListener("click", async(event) => {
         console.log("hej")
         event.preventDefault()
-        const age = form.querySelector(".age").value
-        const city = form.querySelector(".city").value
-        const gender = form.querySelector(".gender").value
+        const age = document.querySelector(".Age__Input").value
+        const city = document.querySelector(".City__Input").value
+        const gender = document.querySelector(".Gender__Input").value
+        const discord = document.querySelector(".Discord__Input").value
+        const steam = document.querySelector(".Steam__Input").value
+        const origin = document.querySelector(".Origin__Input").value
         const hidden = document.querySelector(".hidden")
-        const updateUsers = await updateUser(age, city, gender)
+        const updateUsers = await updateUser(age, city, gender, discord, steam, origin)
     })
 }
 updateUsersIndex()
-    // async function run() {
-    //     let games = await getGames()
-    //     renderGames(games)
-    //     getUsers()
-    // }
-    // run()
-    // async function getGejms() {
-    //     const request = await fetch('http://localhost:8080/games', {
-    //         method: 'GET'
-    //     })
-    //     const data = await request.json()
-    //     console.log(data.games)
-    //     return data.games
-    // }
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
@@ -235,7 +243,6 @@ function renderMatches(users) {
     let noMatch = document.createElement("h3")
 
     matchButton.addEventListener("click", async(event) => {
-
         matches.innerHTML = ""
         noMatch.innerHTML = ""
         let numOfMatches = []
@@ -244,19 +251,28 @@ function renderMatches(users) {
             let currentUser = users[j]
             if (currentUser.games == gejm) {
                 let matchListUsername = document.createElement("h3")
-                let matchListEmail = document.createElement("p")
+                let matchListAge = document.createElement("p")
                 let matchListGame = document.createElement("p")
+                let usernameDiscord = document.createElement("p")
+                let usernameSteam = document.createElement("p")
+                let usernameOrigin = document.createElement("p")
 
-                numOfMatches += matchListUsername, matchListEmail, matchListGame
+                numOfMatches += matchListUsername, matchListAge, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
                 matchListUsername.innerHTML = users[j].username
-                matchListEmail.innerHTML = users[j].email
-                matchListGame.innerHTML = users[j].games
+                matchListAge.innerHTML = "Ålder: " + users[j].age
+                matchListGame.innerHTML = "Spelar: " + users[j].games
+                usernameDiscord.innerHTML = "Discord: " + users[j].usernameDiscord
+                usernameSteam.innerHTML = "Steam: " + users[j].usernameSteam
+                usernameOrigin.innerHTML = "Origin: " + users[j].usernameOrigin
 
                 console.log(gejm)
 
                 matches.append(matchListUsername)
-                matches.append(matchListEmail)
+                matches.append(matchListAge)
                 matches.append(matchListGame)
+                matches.append(usernameDiscord)
+                matches.append(usernameSteam)
+                matches.append(usernameOrigin)
 
                 console.log(numOfMatches)
             }
