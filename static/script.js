@@ -1,4 +1,4 @@
-async function createUser(username, email, password, repeatPassword, games) {
+async function createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin) {
     const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
@@ -9,7 +9,11 @@ async function createUser(username, email, password, repeatPassword, games) {
             email: email,
             password: password,
             repeatPassword,
-            games: games
+            games: games,
+            usernameDiscord: usernameDiscord,
+            usernameSteam: usernameSteam,
+            usernameOrigin: usernameOrigin
+            
         })
     })
     console.log(response)
@@ -33,17 +37,17 @@ async function createUser(username, email, password, repeatPassword, games) {
                 case "ERROR_USER_ALREADY_EXISTS":
                     const hidden = document.querySelector(".Error")
                     hidden.classList.toggle("Hidden")
-                    hidden.innerHTML = "Username already exists!"
+                    hidden.innerHTML = "Användarnamnet existerar redan!"
                     break;
                 case "ERROR_EMAIL_ALREADY_EXISTS":
                     const hiddenEmail = document.querySelector(".Error__Email")
                     hiddenEmail.classList.toggle("Hidden__Email")
-                    hiddenEmail.innerHTML = "Email already exists!"
+                    hiddenEmail.innerHTML = "E-mail existerar redan!"
                     break;
                 case "ERROR_PASSWORD_MISMATCH":
                     const hiddenPassword = document.querySelector(".Error__Password")
                     hiddenPassword.classList.toggle("Hidden__Password")
-                    hiddenPassword.innerHTML = "Password mismatch"
+                    hiddenPassword.innerHTML = "Lösenordet matchar inte"
                     break;
             }
         }
@@ -51,23 +55,23 @@ async function createUser(username, email, password, repeatPassword, games) {
 }
 
 
-
-let form = document.querySelector("#Log-Form-1")
-form.addEventListener("submit", async event => {
+let form = document.querySelector(".Log-Form-1")
+form.addEventListener("submit", async(event) => {
     event.preventDefault();
     let username = form.querySelector(".username").value
     let password = form.querySelector(".password").value
     let response = await fetch('http://localhost:8080/login', {
-        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+        method: 'POST',
         body: JSON.stringify({
             username,
             password
         })
     })
     console.log(response.status)
+    console.log(response.message)
     if (response.status == 200) {
         let data = await response.json()
         let match = document.querySelector(".Match__Games")
@@ -75,11 +79,11 @@ form.addEventListener("submit", async event => {
         match.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
+        window.localStorage.setItem("userId", data.userId)
         secured()
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
-
 })
 
 let createBtn = document.querySelector(".Create-Btn")
@@ -100,6 +104,17 @@ backBtn.addEventListener("click", async(event) => {
     login.classList.toggle("Hidden")
 })
 
+
+let profileBtn = document.querySelector(".Profiles__Button")
+profileBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let profile = document.querySelector(".Update-Profile")
+    let match = document.querySelector(".Match__Games")
+    profile.classList.toggle("Hidden")
+    match.classList.toggle("Hidden")
+})
+
+
 async function secured() {
     const token = window.localStorage.getItem("token")
     let response = await fetch('http://localhost:8080/secured', {
@@ -108,9 +123,9 @@ async function secured() {
         }
     })
     let data = await response.json()
-    console.log(data)
+    console.log(data.message)
+    return data.message
 }
-
 
 
 
@@ -122,9 +137,12 @@ function init() {
         const email = form.querySelector(".email").value
         const password = form.querySelector(".password").value
         const repeatPassword = form.querySelector(".repeat-password").value
-        const games = form.querySelector(".games").value
+        const games = form.querySelector(".gejms").value
+        const usernameDiscord = form.querySelector(".usernameDiscord").value
+        const usernameSteam = form.querySelector(".usernameSteam").value
+        const usernameOrigin = form.querySelector(".usernameOrigin").value
         const hidden = document.querySelector(".hidden")
-        const createUsers = await createUser(username, email, password, repeatPassword, games)
+        const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
     })
 }
 init()
@@ -141,40 +159,71 @@ async function getGames() {
 
 
 function renderGames(games) {
-    let select = document.querySelector(".games")
-    for (let i = 0; i < games.length; i++) {
+    let select = document.querySelector(".gejms")
+    for (let i = 0; i < gejms.length; i++) {
         let option = document.createElement("option")
-        option.innerHTML = games[i].game
+        option.innerHTML = games[i].gejms
         select.append(option)
 
     }
 }
 
+async function updateUser(age, city, gender) {
+    const id = localStorage.getItem("userId")
+    const response = await fetch('http://localhost:8080/users/' + id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            age: age,
+            city: city,
+            gender: gender,
+        })
+    })
+    console.log(response)
+    const data = await response.json()
+    console.log(data)
+}
 
-// async function run() {
-//     let games = await getGames()
-//     renderGames(games)
-//     getUsers()
-// }
-// run()
-// async function getGejms() {
-//     const request = await fetch('http://localhost:8080/games', {
-//         method: 'GET'
-//     })
-//     const data = await request.json()
-//     console.log(data.games)
-//     return data.games
-// }
+function updateUsersIndex() {
+    let form = document.querySelector(".Profile__Form")
+    console.log(form)
+    form.addEventListener("submit", async(event) => {
+        console.log("hej")
+        event.preventDefault()
+        const age = form.querySelector(".age").value
+        const city = form.querySelector(".city").value
+        const gender = form.querySelector(".gender").value
+        const hidden = document.querySelector(".hidden")
+        const updateUsers = await updateUser(age, city, gender)
+    })
+}
+updateUsersIndex()
+    // async function run() {
+    //     let games = await getGames()
+    //     renderGames(games)
+    //     getUsers()
+    // }
+    // run()
+    // async function getGejms() {
+    //     const request = await fetch('http://localhost:8080/games', {
+    //         method: 'GET'
+    //     })
+    //     const data = await request.json()
+    //     console.log(data.games)
+    //     return data.games
+    // }
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
-    let select = document.querySelector(".gejms")
+    let select = document.querySelectorAll(".gejms")
     for (let i = 0; i < games.length; i++) {
-        let option = document.createElement("option")
-        option.innerHTML = games[i].game
-        select.append(option)
-
-
+        for (let j = 0; j < select.length; j++) {
+            let option = document.createElement("option")
+            option.innerHTML = games[i].game
+            select[j].append(option)
+        }
     }
 }
 async function getUsers() {
@@ -191,31 +240,39 @@ function renderMatches(users) {
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     let noMatch = document.createElement("h3")
-    
-    matchButton.addEventListener("click", async (event) => {
-    
+
+    matchButton.addEventListener("click", async(event) => {
         matches.innerHTML = ""
         noMatch.innerHTML = ""
         let numOfMatches = []
         let gejm = matchGames.querySelector(".gejms").value
         for (let j = 0; j < users.length; j++) {
             let currentUser = users[j]
-            if (currentUser.games == gejm) { 
+            if (currentUser.games == gejm) {
                 let matchListUsername = document.createElement("h3")
-                let matchListEmail = document.createElement("p")
+                let matchListAge = document.createElement("p")
                 let matchListGame = document.createElement("p")
+                let usernameDiscord = document.createElement("p")
+                let usernameSteam = document.createElement("p")
+                let usernameOrigin = document.createElement("p")
 
-                numOfMatches += matchListUsername, matchListEmail, matchListGame
+                numOfMatches += matchListUsername, matchListAge, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
                 matchListUsername.innerHTML = users[j].username
-                matchListEmail.innerHTML = users[j].email
-                matchListGame.innerHTML = users[j].games
-                
+                matchListAge.innerHTML = "Ålder: " + users[j].ålder
+                matchListGame.innerHTML = "Spelar: " + users[j].games
+                usernameDiscord.innerHTML = "Discord: " + users[j].usernameDiscord
+                usernameSteam.innerHTML = "Steam: " + users[j].usernameSteam
+                usernameOrigin.innerHTML = "Origin: " + users[j].usernameOrigin
+
                 console.log(gejm)
 
                 matches.append(matchListUsername)
-                matches.append(matchListEmail)
+                matches.append(matchListAge)
                 matches.append(matchListGame)
-        
+                matches.append(usernameDiscord)
+                matches.append(usernameSteam)
+                matches.append(usernameOrigin)
+
                 console.log(numOfMatches)
             }
         }
@@ -227,12 +284,15 @@ function renderMatches(users) {
 }
 async function run() {
     let games = await getGames()
-    renderGames(games)
     let users = await getUsers()
     renderMatches(users)
-        // let gejms = await getGejms()
     renderGejms(games)
-
+        // let secured = await secured()
+        // updateUser(users, secured)
 }
 
 run()
+
+// getGames()
+// getUsers()
+// getGejms()
