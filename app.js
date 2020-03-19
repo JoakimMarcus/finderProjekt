@@ -81,7 +81,15 @@ app.post("/register", async(req, res) => {
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
-                games: req.body.games
+                gender: "",
+                age: "",
+                city: "",
+                games: req.body.games,
+                usernameDiscord: req.body.usernameDiscord,
+                usernameSteam: req.body.usernameSteam,
+                usernameOrigin: req.body.usernameOrigin
+                
+                
             }
             if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)

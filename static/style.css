@@ -19,8 +19,17 @@ body {
     margin: auto;
     background-color: white;
     display: flex;
-    height: 600px;
+    min-height: 600px;
     width: 800px;
+}
+.Form__Input-Discord {
+    color: #9475b1;
+}
+.Form__Input-Steam {
+    color:#232388;
+}
+.Form__Input-Origin {
+    width: 20px;
 }
 
 .Reg__Item-Left,
@@ -51,6 +60,9 @@ body {
     flex-direction: column;
     width: 50%;
     margin: auto;
+}
+.Reg-Btn__Container {
+    display: flex;
 }
 
 .Reg-Btn,
