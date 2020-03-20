@@ -177,7 +177,7 @@ function renderGames(games) {
     }
 }
 
-async function updateUser(age, city, gender, discord, steam, origin) {
+async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = localStorage.getItem("userId")
     const response = await fetch('http://localhost:8080/users/' + id, {
         method: 'PATCH',
@@ -188,6 +188,7 @@ async function updateUser(age, city, gender, discord, steam, origin) {
             age: age,
             city: city,
             gender: gender,
+            games: games,
             usernameDiscord: discord,
             usernameSteam: steam,
             usernameOrigin: origin
@@ -199,7 +200,7 @@ async function updateUser(age, city, gender, discord, steam, origin) {
 }
 
 function updateUsersIndex() {
-    let updateProfileBtn = document.querySelector(".Profile-Right__Button")
+    let updateProfileBtn = document.querySelector(".Profile-Right__Update")
     console.log(updateProfileBtn)
     updateProfileBtn.addEventListener("click", async(event) => {
         console.log("hej")
@@ -210,11 +211,21 @@ function updateUsersIndex() {
         const discord = document.querySelector(".Discord__Input").value
         const steam = document.querySelector(".Steam__Input").value
         const origin = document.querySelector(".Origin__Input").value
+        const games = document.querySelector(".Profile-Right__Select-Game").value
         const hidden = document.querySelector(".hidden")
-        const updateUsers = await updateUser(age, city, gender, discord, steam, origin)
+        const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
     })
 }
 updateUsersIndex()
+
+let profileUpdateBackBtn = document.querySelector(".Profile-Right__Back")
+profileUpdateBackBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let updateProfile = document.querySelector(".Update-Profile")
+    let profile = document.querySelector(".Profile__Wrappe")
+    profile.classList.toggle("Hidden")
+    updateProfile.classList.toggle("Hidden")
+})
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
