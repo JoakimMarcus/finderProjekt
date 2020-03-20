@@ -13,7 +13,7 @@ async function createUser(username, email, password, repeatPassword, games, user
             usernameDiscord: usernameDiscord,
             usernameSteam: usernameSteam,
             usernameOrigin: usernameOrigin
-            
+
         })
     })
     console.log(response)
@@ -74,9 +74,9 @@ form.addEventListener("submit", async(event) => {
     console.log(response.message)
     if (response.status == 200) {
         let data = await response.json()
-        let match = document.querySelector(".Match__Games")
+        let profile = document.querySelector(".Profile__Wrappe")
         let login = document.querySelector(".Log__Wrapper")
-        match.classList.toggle("Hidden")
+        profile.classList.toggle("Hidden")
         login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
         window.localStorage.setItem("userId", data.userId)
@@ -84,6 +84,15 @@ form.addEventListener("submit", async(event) => {
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
+})
+
+let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
+profileUpdateBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let profile = document.querySelector(".Profile__Wrappe")
+    let updateProfile = document.querySelector(".Update-Profile")
+    profile.classList.toggle("Hidden")
+    updateProfile.classList.toggle("Hidden")
 })
 
 let createBtn = document.querySelector(".Create-Btn")
@@ -105,12 +114,12 @@ backBtn.addEventListener("click", async(event) => {
 })
 
 
-let profileBtn = document.querySelector(".Profiles__Button")
+let profileBtn = document.querySelector(".Match-Button")
 profileBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let profile = document.querySelector(".Update-Profile")
+    let profileMatch = document.querySelector(".Profile__Wrappe")
     let match = document.querySelector(".Match__Games")
-    profile.classList.toggle("Hidden")
+    profileMatch.classList.toggle("Hidden")
     match.classList.toggle("Hidden")
 })
 
@@ -160,7 +169,7 @@ async function getGames() {
 
 function renderGames(games) {
     let select = document.querySelector(".gejms")
-    for (let i = 0; i < gejms.length; i++) {
+    for (let i = 0; i < games.length; i++) {
         let option = document.createElement("option")
         option.innerHTML = games[i].gejms
         select.append(option)
@@ -168,7 +177,7 @@ function renderGames(games) {
     }
 }
 
-async function updateUser(age, city, gender) {
+async function updateUser(age, city, gender, discord, steam, origin) {
     const id = localStorage.getItem("userId")
     const response = await fetch('http://localhost:8080/users/' + id, {
         method: 'PATCH',
@@ -179,6 +188,9 @@ async function updateUser(age, city, gender) {
             age: age,
             city: city,
             gender: gender,
+            usernameDiscord: discord,
+            usernameSteam: steam,
+            usernameOrigin: origin
         })
     })
     console.log(response)
@@ -187,33 +199,22 @@ async function updateUser(age, city, gender) {
 }
 
 function updateUsersIndex() {
-    let form = document.querySelector(".Profile__Form")
-    console.log(form)
-    form.addEventListener("submit", async(event) => {
+    let updateProfileBtn = document.querySelector(".Profile-Right__Button")
+    console.log(updateProfileBtn)
+    updateProfileBtn.addEventListener("click", async(event) => {
         console.log("hej")
         event.preventDefault()
-        const age = form.querySelector(".age").value
-        const city = form.querySelector(".city").value
-        const gender = form.querySelector(".gender").value
+        const age = document.querySelector(".Age__Input").value
+        const city = document.querySelector(".City__Input").value
+        const gender = document.querySelector(".Gender__Input").value
+        const discord = document.querySelector(".Discord__Input").value
+        const steam = document.querySelector(".Steam__Input").value
+        const origin = document.querySelector(".Origin__Input").value
         const hidden = document.querySelector(".hidden")
-        const updateUsers = await updateUser(age, city, gender)
+        const updateUsers = await updateUser(age, city, gender, discord, steam, origin)
     })
 }
 updateUsersIndex()
-    // async function run() {
-    //     let games = await getGames()
-    //     renderGames(games)
-    //     getUsers()
-    // }
-    // run()
-    // async function getGejms() {
-    //     const request = await fetch('http://localhost:8080/games', {
-    //         method: 'GET'
-    //     })
-    //     const data = await request.json()
-    //     console.log(data.games)
-    //     return data.games
-    // }
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
