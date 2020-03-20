@@ -150,6 +150,7 @@ app.patch('/users/:id', async(req, res) => {
     console.log(req.params.id)
     res.json(result)
 })
+
 async function run() {
     try {
         await Database.connect()
