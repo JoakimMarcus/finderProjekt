@@ -81,6 +81,7 @@ form.addEventListener("submit", async(event) => {
         window.localStorage.setItem("token", data.token)
         window.localStorage.setItem("userId", data.userId)
         secured()
+        writeProfileInfo(data.user)
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
@@ -190,7 +191,7 @@ function renderGames(games) {
     }
 }
 
-async function updateUser(age, city, gender, discord, steam, origin) {
+async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = localStorage.getItem("userId")
     const response = await fetch('http://localhost:8080/users/' + id, {
         method: 'PATCH',
@@ -201,6 +202,7 @@ async function updateUser(age, city, gender, discord, steam, origin) {
             age: age,
             city: city,
             gender: gender,
+            games: games,
             usernameDiscord: discord,
             usernameSteam: steam,
             usernameOrigin: origin
@@ -212,7 +214,7 @@ async function updateUser(age, city, gender, discord, steam, origin) {
 }
 
 function updateUsersIndex() {
-    let updateProfileBtn = document.querySelector(".Profile-Right__Button")
+    let updateProfileBtn = document.querySelector(".Profile-Right__Update")
     console.log(updateProfileBtn)
     updateProfileBtn.addEventListener("click", async(event) => {
         console.log("hej")
@@ -223,12 +225,23 @@ function updateUsersIndex() {
         const discord = document.querySelector(".Discord__Input").value
         const steam = document.querySelector(".Steam__Input").value
         const origin = document.querySelector(".Origin__Input").value
+        const games = document.querySelector(".Profile-Right__Select-Game").value
         const hidden = document.querySelector(".hidden")
-        const updateUsers = await updateUser(age, city, gender, discord, steam, origin)
+        const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
     })
 }
 updateUsersIndex()
-    // testfunktion för matchning. Får ej att fungera med funktionen renderGames
+
+let profileUpdateBackBtn = document.querySelector(".Profile-Right__Back")
+profileUpdateBackBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    let updateProfile = document.querySelector(".Update-Profile")
+    let profile = document.querySelector(".Profile__Wrappe")
+    profile.classList.toggle("Hidden")
+    updateProfile.classList.toggle("Hidden")
+})
+
+// testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
     let select = document.querySelectorAll(".gejms")
     for (let i = 0; i < games.length; i++) {
@@ -300,6 +313,8 @@ function writeProfileInfo(users) {
     const id = localStorage.getItem("userId")
     for (let i = 0; i < users.length; i++) {
         if (id == users[i]._id) {
+            console.log(id)
+            console.log(users[i]._id)
             const profileUsername = document.querySelector(".Profile-Info__Username-Age").innerHTML = users[i].username + ", " + users[i].age
             const city = document.querySelector(".Profile-Info__City").innerHTML = users[i].city
             const discord = document.querySelector(".Profile-Info__Username-Discord").innerHTML = users[i].usernameDiscord
@@ -328,7 +343,7 @@ async function run() {
     let users = await getUsers()
     renderMatches(users)
     renderGejms(games)
-    writeProfileInfo(users)
+        // writeProfileInfo(users)
         // let secured = await secured()
         // updateUser(users, secured)
 }
