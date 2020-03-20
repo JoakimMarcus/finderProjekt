@@ -139,8 +139,8 @@ app.post('/login', async(req, res) => {
     }
     if (matchedUser) {
         const payload = { userId: matchedUser._id }
-        const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
-        res.json({ token, userId: matchedUser._id })
+        const token = jwt.sign(payload, "hej", { expiresIn: '1s' })
+        res.json({ token, userId: matchedUser._id, user })
     } else {
         res.status(403).json({ error: 'Invalid Credentials' })
     }
@@ -156,6 +156,7 @@ app.patch('/users/:id', async(req, res) => {
             "age": req.body.age,
             "city": req.body.city,
             "gender": req.body.gender,
+            "games": req.body.games,
             "usernameDiscord": req.body.usernameDiscord,
             "usernameSteam": req.body.usernameSteam,
             "usernameOrigin": req.body.usernameOrigin
@@ -164,6 +165,7 @@ app.patch('/users/:id', async(req, res) => {
     console.log(req.params.id)
     res.json(result)
 })
+
 async function run() {
     try {
         await Database.connect()
