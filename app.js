@@ -156,6 +156,7 @@ app.patch('/users/:id', async(req, res) => {
             "age": req.body.age,
             "city": req.body.city,
             "gender": req.body.gender,
+            "games": req.body.games,
             "usernameDiscord": req.body.usernameDiscord,
             "usernameSteam": req.body.usernameSteam,
             "usernameOrigin": req.body.usernameOrigin
