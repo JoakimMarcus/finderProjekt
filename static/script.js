@@ -258,7 +258,7 @@ function renderMatches(users) {
 
                 numOfMatches += matchListUsername, matchListAge, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
                 matchListUsername.innerHTML = users[j].username
-                matchListAge.innerHTML = "Ålder: " + users[j].ålder
+                matchListAge.innerHTML = "Ålder: " + users[j].age
                 matchListGame.innerHTML = "Spelar: " + users[j].games
                 usernameDiscord.innerHTML = "Discord: " + users[j].usernameDiscord
                 usernameSteam.innerHTML = "Steam: " + users[j].usernameSteam
