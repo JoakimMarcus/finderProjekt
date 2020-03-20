@@ -3,9 +3,12 @@
             "username": "nikeboy",
             "email": "nikeboy@gmail.com",
             "password": "hej",
-            "gender": "man",
-            "age": "16",
-            "city": "stockholm",
+            "gender": "Man",
+            "age": "32",
+            "city": "Stockholm",
+            "usernameDiscord": "nikeboy12",
+            "usernameSteam": "nikeboy",
+            "usernameOrigin": "nikeboy_88",
             "games": [
                 "Counter-Strike GO",
                 "Raft"
@@ -16,9 +19,12 @@
             "username": "frumppen",
             "email": "frumppen@hotmail.com",
             "password": "test",
-            "gender": "hen",
-            "age": "25",
-            "city": "Sydney",
+            "gender": "Man",
+            "age": "31",
+            "city": "Rimbo",
+            "usernameDiscord": "frumppen",
+            "usernameSteam": "frumppen",
+            "usernameOrigin": "frumppen45",
             "games": [
                 "Age of empire III",
                 "Raft"
@@ -28,6 +34,12 @@
             "username": "hawe",
             "email": "hawe@gmail.com",
             "password": "1234",
+            "gender": "Kvinna",
+            "age": "29",
+            "city": "Uppsala",
+            "usernameDiscord": "hawe30",
+            "usernameSteam": "hawe",
+            "usernameOrigin": "hawe",
             "games": [
                 "Team Fortress 2"
             ]
@@ -36,6 +48,12 @@
             "username": "knest",
             "email": "knest@outlook.com",
             "password": "rosa123",
+            "gender": "Man",
+            "age": "31",
+            "city": "Uppsala",
+            "usernameDiscord": "aram",
+            "usernameSteam": "knest",
+            "usernameOrigin": "knestis",
             "games": [
                 "Counter-Strike GO"
             ]
@@ -44,6 +62,12 @@
             "username": "carro",
             "email": "carro@webb.se",
             "password": "korr34",
+            "gender": "Kvinna",
+            "age": "23",
+            "city": "Stockholm",
+            "usernameDiscord": "carro",
+            "usernameSteam": "carro_girl",
+            "usernameOrigin": "kareo",
             "games": [
                 "Counter-Strike GO"
             ]
@@ -52,6 +76,12 @@
             "username": "mandypandy",
             "email": "mandypandy@gmail.com",
             "password": "hej",
+            "gender": "Kvinna",
+            "age": "29",
+            "city": "Södertälje",
+            "usernameDiscord": "mandy222",
+            "usernameSteam": "mandypandy",
+            "usernameOrigin": "mandypandy",
             "games": [
                 "Diablo II"
             ]
@@ -60,6 +90,12 @@
             "username": "elsa",
             "email": "elsa@gmail.com",
             "password": "kalle123",
+            "gender": "Man",
+            "age": "28",
+            "city": "Stockholm",
+            "usernameDiscord": "jonte",
+            "usernameSteam": "jontis",
+            "usernameOrigin": "elsa",
             "games": [
                 "Apex"
             ]
@@ -68,6 +104,12 @@
             "username": "bobox",
             "email": "bobox@hotmail.com",
             "password": "test234",
+            "gender": "Man",
+            "age": "17",
+            "city": "Jönköping",
+            "usernameDiscord": "bigbox",
+            "usernameSteam": "bigbox",
+            "usernameOrigin": "bobox",
             "games": [
                 "Counter-Strike GO",
                 "Battlefield V"
@@ -77,30 +119,26 @@
             "username": "arooma",
             "email": "arooma@outlook.com",
             "password": "password1234",
+            "gender": "Man",
+            "age": "16",
+            "city": "Karlstad",
+            "usernameDiscord": "aaaaaris",
+            "usernameSteam": "kitas",
+            "usernameOrigin": "kitas",
             "games": [
                 "Battlefield V"
-            ]
-        },
-        {
-            "username": "kalle",
-            "email": "kalle@evilcorp.com",
-            "password": "hej1234",
-            "games": [
-                "Pummel Party"
-            ]
-        },
-        {
-            "username": "bobshift",
-            "email": "bobshift@hotmail.com",
-            "password": "sprit123",
-            "games": [
-                "Counter-Strike GO"
             ]
         },
         {
             "username": "gamer_girl",
             "email": "gamer_girl@gmail.com",
             "password": "hellyeah",
+            "gender": "Kvinna",
+            "age": "13",
+            "city": "Gävle",
+            "usernameDiscord": "gamer_girl",
+            "usernameSteam": "gamer_girl12",
+            "usernameOrigin": "gamer_girl",
             "games": [
                 "FIFA 20"
             ]
