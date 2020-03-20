@@ -3,107 +3,124 @@
             "username": "nikeboy",
             "email": "nikeboy@gmail.com",
             "password": "hej",
-            "gender": "man",
-            "age": "16",
-            "city": "stockholm",
-            "games": [
-                "Counter-Strike GO",
-                "Raft"
-            ]
+            "gender": "Man",
+            "age": "32",
+            "city": "Stockholm",
+            "games": "Counter-Strike GO",
+            "usernameDiscord": "nikeboy12",
+            "usernameSteam": "nikeboy",
+            "usernameOrigin": "nikeboy_88"
+
 
         },
         {
             "username": "frumppen",
             "email": "frumppen@hotmail.com",
             "password": "test",
-            "gender": "hen",
-            "age": "25",
-            "city": "Sydney",
-            "games": [
-                "Age of empire III",
-                "Raft"
-            ]
+            "gender": "Man",
+            "age": "31",
+            "city": "Rimbo",
+            "games": "Age of empire III",
+            "usernameDiscord": "frumppen",
+            "usernameSteam": "frumppen",
+            "usernameOrigin": "frumppen45"
         },
         {
             "username": "hawe",
             "email": "hawe@gmail.com",
             "password": "1234",
-            "games": [
-                "Team Fortress 2"
-            ]
+            "gender": "Kvinna",
+            "age": "29",
+            "city": "Uppsala",
+            "games": "Team Fortress 2",
+            "usernameDiscord": "hawe30",
+            "usernameSteam": "hawe",
+            "usernameOrigin": "hawe"
         },
         {
             "username": "knest",
             "email": "knest@outlook.com",
             "password": "rosa123",
-            "games": [
-                "Counter-Strike GO"
-            ]
+            "gender": "Man",
+            "age": "31",
+            "city": "Uppsala",
+            "games": "Counter-Strike GO",
+            "usernameDiscord": "aram",
+            "usernameSteam": "knest",
+            "usernameOrigin": "knestis"
         },
         {
             "username": "carro",
             "email": "carro@webb.se",
             "password": "korr34",
-            "games": [
-                "Counter-Strike GO"
-            ]
+            "gender": "Kvinna",
+            "age": "23",
+            "city": "Stockholm",
+            "games": "Counter-Strike GO",
+            "usernameDiscord": "carro",
+            "usernameSteam": "carro_girl",
+            "usernameOrigin": "kareo"
         },
         {
             "username": "mandypandy",
             "email": "mandypandy@gmail.com",
             "password": "hej",
-            "games": [
-                "Diablo II"
-            ]
+            "gender": "Kvinna",
+            "age": "29",
+            "city": "Södertälje",
+            "games": "Diablo II",
+            "usernameDiscord": "mandy222",
+            "usernameSteam": "mandypandy",
+            "usernameOrigin": "mandypandy"
         },
         {
             "username": "elsa",
             "email": "elsa@gmail.com",
             "password": "kalle123",
-            "games": [
-                "Apex"
-            ]
+            "gender": "Man",
+            "age": "28",
+            "city": "Stockholm",
+            "games": "Apex",
+            "usernameDiscord": "jonte",
+            "usernameSteam": "jontis",
+            "usernameOrigin": "elsa"
         },
         {
             "username": "bobox",
             "email": "bobox@hotmail.com",
             "password": "test234",
-            "games": [
-                "Counter-Strike GO",
-                "Battlefield V"
-            ]
+            "gender": "Man",
+            "age": "17",
+            "city": "Jönköping",
+            "games": "Battlefield V",
+            "usernameDiscord": "bigbox",
+            "usernameSteam": "bigbox",
+            "usernameOrigin": "bobox"
+
         },
         {
             "username": "arooma",
             "email": "arooma@outlook.com",
             "password": "password1234",
-            "games": [
-                "Battlefield V"
-            ]
-        },
-        {
-            "username": "kalle",
-            "email": "kalle@evilcorp.com",
-            "password": "hej1234",
-            "games": [
-                "Pummel Party"
-            ]
-        },
-        {
-            "username": "bobshift",
-            "email": "bobshift@hotmail.com",
-            "password": "sprit123",
-            "games": [
-                "Counter-Strike GO"
-            ]
+            "gender": "Man",
+            "age": "16",
+            "city": "Karlstad",
+            "games": "Battlefield V",
+            "usernameDiscord": "aaaaaris",
+            "usernameSteam": "kitas",
+            "usernameOrigin": "kitas"
         },
         {
             "username": "gamer_girl",
             "email": "gamer_girl@gmail.com",
             "password": "hellyeah",
-            "games": [
-                "FIFA 20"
-            ]
+            "gender": "Kvinna",
+            "age": "13",
+            "city": "Gävle",
+            "games": "FIFA 20",
+            "usernameDiscord": "gamer_girl",
+            "usernameSteam": "gamer_girl12",
+            "usernameOrigin": "gamer_girl"
         }
 
     ]
