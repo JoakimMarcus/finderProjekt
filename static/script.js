@@ -21,10 +21,8 @@ async function createUser(username, email, password, repeatPassword, games, user
     if (response.status == 200) {
         console.log(data.message)
         if (data.message == "SUCCESS") {
-            console.log("Great")
             let Success = document.querySelector(".Success")
             Success.innerHTML = "Användare skapad!"
-            alert("Användare skapad!")
         }
     } else {
         const data = await response.json()
@@ -183,6 +181,7 @@ function init() {
         const usernameOrigin = form.querySelector(".usernameOrigin").value
         const hidden = document.querySelector(".hidden")
         const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
+        toggling([".Log__Wrapper"])
     })
 }
 init()
