@@ -152,15 +152,7 @@ app.get('/secured', auth, (req, res) => {
 
 app.patch('/users/:id', async(req, res) => {
     const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
-        $set: {
-            "age": req.body.age,
-            "city": req.body.city,
-            "gender": req.body.gender,
-            "games": req.body.games,
-            "usernameDiscord": req.body.usernameDiscord,
-            "usernameSteam": req.body.usernameSteam,
-            "usernameOrigin": req.body.usernameOrigin
-        }
+        $set: req.body
     })
     console.log(req.params.id)
     res.json(result)
