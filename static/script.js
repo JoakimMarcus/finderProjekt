@@ -137,9 +137,23 @@ function toggling(ids) {
     for (let j = 0; j < ids.length; j++) {
         let element = document.querySelector(ids[j])
         element.classList.toggle("Hidden")
+        let currentPage = window.localStorage.setItem("currentPage", ids[j])
     }
 }
 
+window.addEventListener('load', async(event) => {
+    let currentPage = window.localStorage.getItem("currentPage")
+    if (currentPage) {
+        let user = window.localStorage.getItem("userId")
+        let ids = currentPage.split(",")
+        toggling(ids)
+            // getUsers()
+        let users = await getUsers()
+        writeProfileInfo(users)
+    } else {
+        toggling([".Log__Wrapper"])
+    }
+});
 
 async function secured() {
     const token = window.localStorage.getItem("token")
@@ -231,8 +245,8 @@ function updateUsersIndex() {
         const games = document.querySelector(".Profile-Right__Select-Game").value
         const hidden = document.querySelector(".hidden")
         const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
-        toggling([".Profile__Wrappe"])
         window.location.reload(true)
+        toggling([".Profile__Wrappe"])
     })
 }
 updateUsersIndex()
