@@ -250,7 +250,6 @@ function updateUsersIndex() {
 }
 updateUsersIndex()
 
-
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
     let select = document.querySelectorAll(".gejms")
@@ -287,14 +286,18 @@ function renderMatches(users) {
             if (currentUser.games == gejm) {
                 let matchListUsername = document.createElement("h3")
                 let matchListAge = document.createElement("p")
+                let matchListGender = document.createElement("p")
+                let matchListCity = document.createElement("p")
                 let matchListGame = document.createElement("p")
                 let usernameDiscord = document.createElement("p")
                 let usernameSteam = document.createElement("p")
                 let usernameOrigin = document.createElement("p")
 
-                numOfMatches += matchListUsername, matchListAge, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
+                numOfMatches += matchListUsername, matchListAge, matchListGender, matchListCity, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
                 matchListUsername.innerHTML = users[j].username
                 matchListAge.innerHTML = "Ålder: " + users[j].age
+                matchListGender.innerHTML = "Kön: " + users[j].gender
+                matchListCity.innerHTML = "Stad: " + users[j].city
                 matchListGame.innerHTML = "Spelar: " + users[j].games
                 usernameDiscord.innerHTML = "Discord: " + users[j].usernameDiscord
                 usernameSteam.innerHTML = "Steam: " + users[j].usernameSteam
@@ -304,6 +307,8 @@ function renderMatches(users) {
 
                 matches.append(matchListUsername)
                 matches.append(matchListAge)
+                matches.append(matchListGender)
+                matches.append(matchListCity)
                 matches.append(matchListGame)
                 matches.append(usernameDiscord)
                 matches.append(usernameSteam)
@@ -334,32 +339,32 @@ function writeProfileInfo(users) {
         }
     }
 }
-// behöver ta bort i klassen i index
-// let profileGender = document.querySelector(".Profile-Info__Personal")
-// let icon = document.querySelector("i")
-// if(gender == "man" || "Man" || "kille" || "Kille") {
-// icon.innerHTML = "<i class="fas fa-mars"></i>
-// profileGender.append(icon)
-// }else if(gender == "kvinna" || "Kvinna" || "tjej" || "Tjej"){
-// icon.innerHTML = "<i class="fas fa-venus></i>
-// profileGender.append(icon)
-// }else{
-// icon.innerHTML = "<i class="fas fa-transgender"></i>
-// profileGender.append(icon)
-// }
+
+// Gör att fälten i redigera profil är ifyllda med användarens uppgifter.
+function prePopulateForm(users) {
+    const id = localStorage.getItem("userId")
+    for(let i = 0; i < users.length; i++) {
+        if(id == users[i]._id) {
+            const age = document.querySelector(".Age__Input").value = users[i].age
+            const city = document.querySelector(".City__Input").value = users[i].city
+            const gender = document.querySelector(".Gender__Input").value = users[i].gender
+            const discord = document.querySelector(".Discord__Input").value = users[i].usernameDiscord
+            const steam = document.querySelector(".Steam__Input").value = users[i].usernameSteam
+            const origin = document.querySelector(".Origin__Input").value = users[i].usernameOrigin
+            const games = document.querySelector(".Profile-Right__Select-Game").value = users[i].games
+        }
+    }
+}
+
 
 async function run() {
     let games = await getGames()
     let users = await getUsers()
     renderMatches(users)
     renderGejms(games)
-        // writeProfileInfo(users)
+    prePopulateForm(users)
         // let secured = await secured()
         // updateUser(users, secured)
 }
 
 run()
-
-// getGames()
-// getUsers()
-// getGejms()
