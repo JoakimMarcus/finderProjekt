@@ -88,8 +88,6 @@ app.post("/register", async(req, res) => {
                 usernameDiscord: req.body.usernameDiscord,
                 usernameSteam: req.body.usernameSteam,
                 usernameOrigin: req.body.usernameOrigin
-                
-                
             }
             if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
@@ -130,7 +128,6 @@ const auth = (req, res, next) => {
 
 app.post('/login', async(req, res) => {
     user = await collectionsNEDB.users.find({})
-    console.log(req.body)
     let matchedUser
     for (let i = 0; i < user.length; i++) {
         console.log(user[i].username)
@@ -142,8 +139,8 @@ app.post('/login', async(req, res) => {
     }
     if (matchedUser) {
         const payload = { userId: matchedUser._id }
-        const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
-        res.json({ token, userId: matchedUser._id })
+        const token = jwt.sign(payload, "hej", { expiresIn: '1s' })
+        res.json({ token, userId: matchedUser._id, user })
     } else {
         res.status(403).json({ error: 'Invalid Credentials' })
     }
@@ -154,10 +151,13 @@ app.get('/secured', auth, (req, res) => {
 })
 
 app.patch('/users/:id', async(req, res) => {
-    const result = await collectionsNEDB.users.update({ _id: req.params.id }, { $set: { "age": req.body.age, "city": req.body.city, "gender": req.body.gender } })
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+        $set: req.body
+    })
     console.log(req.params.id)
     res.json(result)
 })
+
 async function run() {
     try {
         await Database.connect()

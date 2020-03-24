@@ -13,7 +13,7 @@ async function createUser(username, email, password, repeatPassword, games, user
             usernameDiscord: usernameDiscord,
             usernameSteam: usernameSteam,
             usernameOrigin: usernameOrigin
-            
+
         })
     })
     console.log(response)
@@ -21,10 +21,8 @@ async function createUser(username, email, password, repeatPassword, games, user
     if (response.status == 200) {
         console.log(data.message)
         if (data.message == "SUCCESS") {
-            console.log("Great")
             let Success = document.querySelector(".Success")
             Success.innerHTML = "Användare skapad!"
-            alert("Användare skapad!")
         }
     } else {
         const data = await response.json()
@@ -74,46 +72,86 @@ form.addEventListener("submit", async(event) => {
     console.log(response.message)
     if (response.status == 200) {
         let data = await response.json()
-        let match = document.querySelector(".Match__Games")
-        let login = document.querySelector(".Log__Wrapper")
-        match.classList.toggle("Hidden")
-        login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
         window.localStorage.setItem("userId", data.userId)
+        toggling([".Profile__Wrappe"])
         secured()
+        writeProfileInfo(data.user)
     } else {
         console.log("HANDLE ERROR ON LOGIN")
     }
 })
 
+
+let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
+profileUpdateBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    toggling([".Update-Profile"])
+})
+
 let createBtn = document.querySelector(".Create-Btn")
 createBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let reg = document.querySelector(".Reg__Wrapper")
-    let login = document.querySelector(".Log__Wrapper")
-    reg.classList.toggle("Hidden")
-    login.classList.toggle("Hidden")
+    toggling([".Reg__Wrapper"])
 })
 
 let backBtn = document.querySelector(".Back-Btn")
 backBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let reg = document.querySelector(".Reg__Wrapper")
-    let login = document.querySelector(".Log__Wrapper")
-    reg.classList.toggle("Hidden")
-    login.classList.toggle("Hidden")
+    toggling([".Log__Wrapper"])
 })
 
 
-let profileBtn = document.querySelector(".Profiles__Button")
+let profileBtn = document.querySelector(".Match-Button")
 profileBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let profile = document.querySelector(".Update-Profile")
-    let match = document.querySelector(".Match__Games")
-    profile.classList.toggle("Hidden")
-    match.classList.toggle("Hidden")
+    toggling([".Match__Games"])
 })
 
+
+let logoutBtn = document.querySelector(".Profile-Button__Logout")
+logoutBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    window.localStorage.removeItem("token")
+    window.localStorage.removeItem("userId")
+    toggling([".Log__Wrapper"])
+
+})
+
+let profileUpdateBackBtn = document.querySelector(".Profile-Right__Back")
+profileUpdateBackBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    toggling([".Profile__Wrappe"])
+})
+
+function toggling(ids) {
+    let hideable = document.querySelectorAll(".hideable")
+    for (let i = 0; i < hideable.length; i++) {
+        let element = hideable[i]
+        if (!element.classList.contains("Hidden")) {
+            element.classList.toggle("Hidden")
+        }
+    }
+    for (let j = 0; j < ids.length; j++) {
+        let element = document.querySelector(ids[j])
+        element.classList.toggle("Hidden")
+        let currentPage = window.localStorage.setItem("currentPage", ids[j])
+    }
+}
+
+window.addEventListener('load', async(event) => {
+    let currentPage = window.localStorage.getItem("currentPage")
+    if (currentPage) {
+        let user = window.localStorage.getItem("userId")
+        let ids = currentPage.split(",")
+        toggling(ids)
+            // getUsers()
+        let users = await getUsers()
+        writeProfileInfo(users)
+    } else {
+        toggling([".Log__Wrapper"])
+    }
+});
 
 async function secured() {
     const token = window.localStorage.getItem("token")
@@ -143,6 +181,7 @@ function init() {
         const usernameOrigin = form.querySelector(".usernameOrigin").value
         const hidden = document.querySelector(".hidden")
         const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
+        toggling([".Log__Wrapper"])
     })
 }
 init()
@@ -157,10 +196,10 @@ async function getGames() {
     return data.games
 }
 
-
+// 
 function renderGames(games) {
     let select = document.querySelector(".gejms")
-    for (let i = 0; i < gejms.length; i++) {
+    for (let i = 0; i < games.length; i++) {
         let option = document.createElement("option")
         option.innerHTML = games[i].gejms
         select.append(option)
@@ -168,7 +207,7 @@ function renderGames(games) {
     }
 }
 
-async function updateUser(age, city, gender) {
+async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = localStorage.getItem("userId")
     const response = await fetch('http://localhost:8080/users/' + id, {
         method: 'PATCH',
@@ -179,6 +218,10 @@ async function updateUser(age, city, gender) {
             age: age,
             city: city,
             gender: gender,
+            games: games,
+            usernameDiscord: discord,
+            usernameSteam: steam,
+            usernameOrigin: origin
         })
     })
     console.log(response)
@@ -187,33 +230,25 @@ async function updateUser(age, city, gender) {
 }
 
 function updateUsersIndex() {
-    let form = document.querySelector(".Profile__Form")
-    console.log(form)
-    form.addEventListener("submit", async(event) => {
+    let updateProfileBtn = document.querySelector(".Profile-Right__Update")
+    console.log(updateProfileBtn)
+    updateProfileBtn.addEventListener("click", async(event) => {
         console.log("hej")
         event.preventDefault()
-        const age = form.querySelector(".age").value
-        const city = form.querySelector(".city").value
-        const gender = form.querySelector(".gender").value
+        const age = document.querySelector(".Age__Input").value
+        const city = document.querySelector(".City__Input").value
+        const gender = document.querySelector(".Gender__Input").value
+        const discord = document.querySelector(".Discord__Input").value
+        const steam = document.querySelector(".Steam__Input").value
+        const origin = document.querySelector(".Origin__Input").value
+        const games = document.querySelector(".Profile-Right__Select-Game").value
         const hidden = document.querySelector(".hidden")
-        const updateUsers = await updateUser(age, city, gender)
+        const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
+        window.location.reload(true)
+        toggling([".Profile__Wrappe"])
     })
 }
 updateUsersIndex()
-    // async function run() {
-    //     let games = await getGames()
-    //     renderGames(games)
-    //     getUsers()
-    // }
-    // run()
-    // async function getGejms() {
-    //     const request = await fetch('http://localhost:8080/games', {
-    //         method: 'GET'
-    //     })
-    //     const data = await request.json()
-    //     console.log(data.games)
-    //     return data.games
-    // }
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
@@ -231,7 +266,7 @@ async function getUsers() {
         method: 'GET'
     })
     const usersData = await usersRequest.json()
-    console.log(usersData.matchList)
+        //console.log(usersData.matchList)
     return usersData.matchList
 }
 
@@ -251,14 +286,18 @@ function renderMatches(users) {
             if (currentUser.games == gejm) {
                 let matchListUsername = document.createElement("h3")
                 let matchListAge = document.createElement("p")
+                let matchListGender = document.createElement("p")
+                let matchListCity = document.createElement("p")
                 let matchListGame = document.createElement("p")
                 let usernameDiscord = document.createElement("p")
                 let usernameSteam = document.createElement("p")
                 let usernameOrigin = document.createElement("p")
 
-                numOfMatches += matchListUsername, matchListAge, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
+                numOfMatches += matchListUsername, matchListAge, matchListGender, matchListCity, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
                 matchListUsername.innerHTML = users[j].username
-                matchListAge.innerHTML = "Ålder: " + users[j].ålder
+                matchListAge.innerHTML = "Ålder: " + users[j].age
+                matchListGender.innerHTML = "Kön: " + users[j].gender
+                matchListCity.innerHTML = "Stad: " + users[j].city
                 matchListGame.innerHTML = "Spelar: " + users[j].games
                 usernameDiscord.innerHTML = "Discord: " + users[j].usernameDiscord
                 usernameSteam.innerHTML = "Steam: " + users[j].usernameSteam
@@ -268,6 +307,8 @@ function renderMatches(users) {
 
                 matches.append(matchListUsername)
                 matches.append(matchListAge)
+                matches.append(matchListGender)
+                matches.append(matchListCity)
                 matches.append(matchListGame)
                 matches.append(usernameDiscord)
                 matches.append(usernameSteam)
@@ -282,17 +323,48 @@ function renderMatches(users) {
         }
     })
 }
+
+function writeProfileInfo(users) {
+    const id = localStorage.getItem("userId")
+    for (let i = 0; i < users.length; i++) {
+        if (id == users[i]._id) {
+            console.log(id)
+            console.log(users[i]._id)
+            const profileUsername = document.querySelector(".Profile-Info__Username-Age").innerHTML = users[i].username + ", " + users[i].age
+            const city = document.querySelector(".Profile-Info__City").innerHTML = users[i].city
+            const discord = document.querySelector(".Profile-Info__Username-Discord").innerHTML = users[i].usernameDiscord
+            const steam = document.querySelector(".Profile-Info__Username-Steam").innerHTML = users[i].usernameSteam
+            const origin = document.querySelector(".Profile-Info__Username-Origin").innerHTML = users[i].usernameOrigin
+                // const gender = document.querySelector(".Gender__Input").value
+        }
+    }
+}
+
+// Gör att fälten i redigera profil är ifyllda med användarens uppgifter.
+function prePopulateForm(users) {
+    const id = localStorage.getItem("userId")
+    for(let i = 0; i < users.length; i++) {
+        if(id == users[i]._id) {
+            const age = document.querySelector(".Age__Input").value = users[i].age
+            const city = document.querySelector(".City__Input").value = users[i].city
+            const gender = document.querySelector(".Gender__Input").value = users[i].gender
+            const discord = document.querySelector(".Discord__Input").value = users[i].usernameDiscord
+            const steam = document.querySelector(".Steam__Input").value = users[i].usernameSteam
+            const origin = document.querySelector(".Origin__Input").value = users[i].usernameOrigin
+            const games = document.querySelector(".Profile-Right__Select-Game").value = users[i].games
+        }
+    }
+}
+
+
 async function run() {
     let games = await getGames()
     let users = await getUsers()
     renderMatches(users)
     renderGejms(games)
+    prePopulateForm(users)
         // let secured = await secured()
         // updateUser(users, secured)
 }
 
 run()
-
-// getGames()
-// getUsers()
-// getGejms()
