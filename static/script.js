@@ -21,10 +21,8 @@ async function createUser(username, email, password, repeatPassword, games, user
     if (response.status == 200) {
         console.log(data.message)
         if (data.message == "SUCCESS") {
-            console.log("Great")
             let Success = document.querySelector(".Success")
             Success.innerHTML = "Användare skapad!"
-            alert("Användare skapad!")
         }
     } else {
         const data = await response.json()
@@ -137,9 +135,23 @@ function toggling(ids) {
     for (let j = 0; j < ids.length; j++) {
         let element = document.querySelector(ids[j])
         element.classList.toggle("Hidden")
+        let currentPage = window.localStorage.setItem("currentPage", ids[j])
     }
 }
 
+window.addEventListener('load', async(event) => {
+    let currentPage = window.localStorage.getItem("currentPage")
+    if (currentPage) {
+        let user = window.localStorage.getItem("userId")
+        let ids = currentPage.split(",")
+        toggling(ids)
+            // getUsers()
+        let users = await getUsers()
+        writeProfileInfo(users)
+    } else {
+        toggling([".Log__Wrapper"])
+    }
+});
 
 async function secured() {
     const token = window.localStorage.getItem("token")
@@ -169,6 +181,7 @@ function init() {
         const usernameOrigin = form.querySelector(".usernameOrigin").value
         const hidden = document.querySelector(".hidden")
         const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
+        toggling([".Log__Wrapper"])
     })
 }
 init()
@@ -231,8 +244,8 @@ function updateUsersIndex() {
         const games = document.querySelector(".Profile-Right__Select-Game").value
         const hidden = document.querySelector(".hidden")
         const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
-        toggling([".Profile__Wrappe"])
         window.location.reload(true)
+        toggling([".Profile__Wrappe"])
     })
 }
 updateUsersIndex()
@@ -326,20 +339,6 @@ function writeProfileInfo(users) {
         }
     }
 }
-
-// behöver ta bort i klassen i index
-// let profileGender = document.querySelector(".Profile-Info__Personal")
-// let icon = document.querySelector("i")
-// if(gender == "man" || "Man" || "kille" || "Kille") {
-// icon.innerHTML = "<i class="fas fa-mars"></i>
-// profileGender.append(icon)
-// }else if(gender == "kvinna" || "Kvinna" || "tjej" || "Tjej"){
-// icon.innerHTML = "<i class="fas fa-venus></i>
-// profileGender.append(icon)
-// }else{
-// icon.innerHTML = "<i class="fas fa-transgender"></i>
-// profileGender.append(icon)
-// }
 
 // Gör att fälten i redigera profil är ifyllda med användarens uppgifter.
 function prePopulateForm(users) {
