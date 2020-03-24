@@ -74,12 +74,9 @@ form.addEventListener("submit", async(event) => {
     console.log(response.message)
     if (response.status == 200) {
         let data = await response.json()
-        let profile = document.querySelector(".Profile__Wrappe")
-        let login = document.querySelector(".Log__Wrapper")
-        profile.classList.toggle("Hidden")
-        login.classList.toggle("Hidden")
         window.localStorage.setItem("token", data.token)
         window.localStorage.setItem("userId", data.userId)
+        toggling([".Profile__Wrappe"])
         secured()
         writeProfileInfo(data.user)
     } else {
@@ -87,41 +84,30 @@ form.addEventListener("submit", async(event) => {
     }
 })
 
+
 let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
 profileUpdateBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let profile = document.querySelector(".Profile__Wrappe")
-    let updateProfile = document.querySelector(".Update-Profile")
-    profile.classList.toggle("Hidden")
-    updateProfile.classList.toggle("Hidden")
+    toggling([".Update-Profile"])
 })
 
 let createBtn = document.querySelector(".Create-Btn")
 createBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let reg = document.querySelector(".Reg__Wrapper")
-    let login = document.querySelector(".Log__Wrapper")
-    reg.classList.toggle("Hidden")
-    login.classList.toggle("Hidden")
+    toggling([".Reg__Wrapper"])
 })
 
 let backBtn = document.querySelector(".Back-Btn")
 backBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let reg = document.querySelector(".Reg__Wrapper")
-    let login = document.querySelector(".Log__Wrapper")
-    reg.classList.toggle("Hidden")
-    login.classList.toggle("Hidden")
+    toggling([".Log__Wrapper"])
 })
 
 
 let profileBtn = document.querySelector(".Match-Button")
 profileBtn.addEventListener("click", async(event) => {
     event.preventDefault()
-    let profileMatch = document.querySelector(".Profile__Wrappe")
-    let match = document.querySelector(".Match__Games")
-    profileMatch.classList.toggle("Hidden")
-    match.classList.toggle("Hidden")
+    toggling([".Match__Games"])
 })
 
 
@@ -130,12 +116,29 @@ logoutBtn.addEventListener("click", async(event) => {
     event.preventDefault()
     window.localStorage.removeItem("token")
     window.localStorage.removeItem("userId")
-    let profile = document.querySelector(".Profile__Wrappe")
-    let login = document.querySelector(".Log__Wrapper")
-    profile.classList.toggle("Hidden")
-    login.classList.toggle("Hidden")
+    toggling([".Log__Wrapper"])
+
 })
 
+let profileUpdateBackBtn = document.querySelector(".Profile-Right__Back")
+profileUpdateBackBtn.addEventListener("click", async(event) => {
+    event.preventDefault()
+    toggling([".Profile__Wrappe"])
+})
+
+function toggling(ids) {
+    let hideable = document.querySelectorAll(".hideable")
+    for (let i = 0; i < hideable.length; i++) {
+        let element = hideable[i]
+        if (!element.classList.contains("Hidden")) {
+            element.classList.toggle("Hidden")
+        }
+    }
+    for (let j = 0; j < ids.length; j++) {
+        let element = document.querySelector(ids[j])
+        element.classList.toggle("Hidden")
+    }
+}
 
 
 async function secured() {
@@ -180,7 +183,7 @@ async function getGames() {
     return data.games
 }
 
-
+// 
 function renderGames(games) {
     let select = document.querySelector(".gejms")
     for (let i = 0; i < games.length; i++) {
@@ -228,18 +231,11 @@ function updateUsersIndex() {
         const games = document.querySelector(".Profile-Right__Select-Game").value
         const hidden = document.querySelector(".hidden")
         const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
+        toggling([".Profile__Wrappe"])
+        window.location.reload(true)
     })
 }
 updateUsersIndex()
-
-let profileUpdateBackBtn = document.querySelector(".Profile-Right__Back")
-profileUpdateBackBtn.addEventListener("click", async(event) => {
-    event.preventDefault()
-    let updateProfile = document.querySelector(".Update-Profile")
-    let profile = document.querySelector(".Profile__Wrappe")
-    profile.classList.toggle("Hidden")
-    updateProfile.classList.toggle("Hidden")
-})
 
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
@@ -330,19 +326,20 @@ function writeProfileInfo(users) {
         }
     }
 }
+
 // behöver ta bort i klassen i index
 // let profileGender = document.querySelector(".Profile-Info__Personal")
 // let icon = document.querySelector("i")
 // if(gender == "man" || "Man" || "kille" || "Kille") {
-//icon.innerHTML = "<i class="fas fa-mars"></i>
-//profileGender.append(icon)
-//}else if(gender == "kvinna" || "Kvinna" || "tjej" || "Tjej"){
-//icon.innerHTML = "<i class="fas fa-venus></i>
-//profileGender.append(icon)
-//}else{
-//icon.innerHTML = "<i class="fas fa-transgender"></i>
-//profileGender.append(icon)
-//}
+// icon.innerHTML = "<i class="fas fa-mars"></i>
+// profileGender.append(icon)
+// }else if(gender == "kvinna" || "Kvinna" || "tjej" || "Tjej"){
+// icon.innerHTML = "<i class="fas fa-venus></i>
+// profileGender.append(icon)
+// }else{
+// icon.innerHTML = "<i class="fas fa-transgender"></i>
+// profileGender.append(icon)
+// }
 
 // Gör att fälten i redigera profil är ifyllda med användarens uppgifter.
 function prePopulateForm(users) {
