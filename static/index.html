@@ -11,7 +11,7 @@
 
 <body>
     <!-- Body class?-->
-    <div class="Reg__Wrapper Hidden">
+    <div class="Reg__Wrapper Hidden hideable">
         <div class="Reg__Items">
             <div class="Reg__Item-Left">
                 <img class="Reg__Image" src="./img/image1.png">
@@ -61,8 +61,8 @@
                         </div>
                         <p class="Error__Password Hidden__Password"></p>
                         <div class="Reg-Btn__Container">
-                            <button class="Back-Btn" type="submit">Tillbaka</button>
-                            <button class="Reg-Btn" type="submit">Skapa</button>
+                            <button class="Back-Btn nav-link" type="submit">Tillbaka</button>
+                            <button class="Reg-Btn nav-link" type="submit">Skapa</button>
                         </div>
                     </form>
                 </div>
@@ -72,7 +72,7 @@
 
 
     <!--Matchning-->
-    <div class="Match__Games Hidden">
+    <div class="Match__Games Hidden hideable">
         <button class="Match__Button">Börja matcha</button>
         <select class="gejms" name="gejms">
                 <option class="disabled" value="" disabled selected>Välj ett spel!</option>
@@ -83,7 +83,7 @@
         </div>
     </div>
     <!-- Log in -->
-    <div class="Log__Wrapper">
+    <div class="Log__Wrapper hideable">
         <div class="Log__Items">
             <div class="Log__Item-Left">
                 <img class="Log__Image" src="./img/loginpage.png">
@@ -105,8 +105,8 @@
                             <input type="password" name="password" placeholder="Lösenord" class="password">
                         </div>
                         <p class="Error__Password Hidden__Password"></p>
-                        <button class="Log-Btn" type="submit">Logga in</button>
-                        <button class="Create-Btn" type="submit">Registrera</button>
+                        <button class="Log-Btn nav-link" type="submit">Logga in</button>
+                        <button class="Create-Btn nav-link" type="submit">Registrera</button>
                     </form>
                 </div>
             </div>
@@ -114,7 +114,7 @@
     </div>
     <!-- End of Log in code -->
 
-    <div class="Update-Profile Hidden">
+    <div class="Update-Profile Hidden hideable">
         <div class="Update-Profile__Heading">
             <h1>Redigera din finderprofil</h1>
         </div>
@@ -158,14 +158,14 @@
                         </select>
                 </div>
                 <div class="Profil-Right__Button-div">
-                    <button type="submit" class="Profile-Right__Back">Tillbaka</button>
-                    <button type="submit" class="Profile-Right__Update">Uppdatera</button>
+                    <button type="submit" class="Profile-Right__Back nav-link">Tillbaka</button>
+                    <button type="submit" class="Profile-Right__Update nav-link">Uppdatera</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="Profile__Wrappe Hidden">
+    <div class="Profile__Wrappe Hidden hideable">
         <div class="Profile__Background">
             <div class="Profile-Picture__Wrapper">
                 <div class="Profile__Picture">
@@ -194,7 +194,7 @@
                 </div>
             </div>
             <div class="Profile__Button">
-                <p class="Profile-Button__Update">Redigera profil</p>
+                <p class="Profile-Button__Update nav-link">Redigera profil</p>
                 <p class="Profile-Button__Logout">Logga ut</p>
             </div>
         </div>
