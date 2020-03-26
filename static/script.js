@@ -23,7 +23,6 @@ async function createUser(username, email, password, repeatPassword, games, user
         if (data.message == "SUCCESS") {
             let Success = document.querySelector(".Success")
             Success.innerHTML = "Användare skapad!"
-                // alert("Användare skapad!")
         }
     } else {
         const data = await response.json()
@@ -88,6 +87,9 @@ let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
 profileUpdateBtn.addEventListener("click", async(event) => {
     event.preventDefault()
     toggling([".Update-Profile"])
+    let users = await getUsers()
+    writeProfileInfo(users)
+    prePopulateForm(users)
 })
 
 let createBtn = document.querySelector(".Create-Btn")
@@ -251,7 +253,6 @@ function updateUsersIndex() {
 }
 updateUsersIndex()
 
-
 // testfunktion för matchning. Får ej att fungera med funktionen renderGames
 function renderGejms(games) {
     let select = document.querySelectorAll(".gejms")
@@ -273,50 +274,30 @@ async function getUsers() {
 }
 
 function renderMatches(users) {
+    let bigDiv = document.querySelector(".bigDiv")
     let matches = document.querySelector(".Match__List")
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
-    let noMatch = document.createElement("h3")
-
     matchButton.addEventListener("click", async(event) => {
-        matches.innerHTML = ""
-        noMatch.innerHTML = ""
-        let numOfMatches = []
-        let gejm = matchGames.querySelector(".gejms").value
+        bigDiv.innerHTML = ""
         for (let j = 0; j < users.length; j++) {
+            let newClone = matches.cloneNode(true)
             let currentUser = users[j]
+            let gejm = matchGames.querySelector(".gejms").value
             if (currentUser.games == gejm) {
-                let matchListUsername = document.createElement("h3")
-                let matchListAge = document.createElement("p")
-                let matchListGame = document.createElement("p")
-                let usernameDiscord = document.createElement("p")
-                let usernameSteam = document.createElement("p")
-                let usernameOrigin = document.createElement("p")
-
-                numOfMatches += matchListUsername, matchListAge, matchListGame, usernameDiscord, usernameSteam, usernameOrigin
-                matchListUsername.innerHTML = users[j].username
-                matchListAge.innerHTML = "Ålder: " + users[j].age
-                matchListGame.innerHTML = "Spelar: " + users[j].games
-                usernameDiscord.innerHTML = "Discord: " + users[j].usernameDiscord
-                usernameSteam.innerHTML = "Steam: " + users[j].usernameSteam
-                usernameOrigin.innerHTML = "Origin: " + users[j].usernameOrigin
-
-                console.log(gejm)
-
-                matches.append(matchListUsername)
-                matches.append(matchListAge)
-                matches.append(matchListGame)
-                matches.append(usernameDiscord)
-                matches.append(usernameSteam)
-                matches.append(usernameOrigin)
-
-                console.log(numOfMatches)
+                newClone.querySelector(".Match-Username").innerHTML = currentUser.username
+                newClone.querySelector('.Match-Age').innerHTML = currentUser.age
+                newClone.querySelector('.Match-Gender').innerHTML = currentUser.gender
+                newClone.querySelector('.Match-City').innerHTML = currentUser.city
+                newClone.querySelector('.Match-Game').innerHTML = currentUser.games
+                newClone.querySelector('.Match-Discord').innerHTML = currentUser.usernameDiscord
+                newClone.querySelector('.Match-Steam').innerHTML = currentUser.usernameSteam
+                newClone.querySelector('.Match-Origin').innerHTML = currentUser.usernameOrigin
+                newClone.classList.remove("Prototype")
+                bigDiv.append(newClone)
             }
         }
-        if (numOfMatches.length == 0) {
-            noMatch.innerHTML = "No matches found"
-            matches.append(noMatch)
-        }
+
     })
 }
 
@@ -335,32 +316,32 @@ function writeProfileInfo(users) {
         }
     }
 }
-// behöver ta bort i klassen i index
-// let profileGender = document.querySelector(".Profile-Info__Personal")
-// let icon = document.querySelector("i")
-// if(gender == "man" || "Man" || "kille" || "Kille") {
-// icon.innerHTML = "<i class="fas fa-mars"></i>
-// profileGender.append(icon)
-// }else if(gender == "kvinna" || "Kvinna" || "tjej" || "Tjej"){
-// icon.innerHTML = "<i class="fas fa-venus></i>
-// profileGender.append(icon)
-// }else{
-// icon.innerHTML = "<i class="fas fa-transgender"></i>
-// profileGender.append(icon)
-// }
+
+// Gör att fälten i redigera profil är ifyllda med användarens uppgifter.
+function prePopulateForm(users) {
+    const id = localStorage.getItem("userId")
+    for (let i = 0; i < users.length; i++) {
+        if (id == users[i]._id) {
+            const age = document.querySelector(".Age__Input").value = users[i].age
+            const city = document.querySelector(".City__Input").value = users[i].city
+            const gender = document.querySelector(".Gender__Input").value = users[i].gender
+            const discord = document.querySelector(".Discord__Input").value = users[i].usernameDiscord
+            const steam = document.querySelector(".Steam__Input").value = users[i].usernameSteam
+            const origin = document.querySelector(".Origin__Input").value = users[i].usernameOrigin
+            const games = document.querySelector(".Profile-Right__Select-Game").value = users[i].games
+        }
+    }
+}
+
 
 async function run() {
     let games = await getGames()
     let users = await getUsers()
     renderMatches(users)
     renderGejms(games)
-        // writeProfileInfo(users)
+        // prePopulateForm(users)
         // let secured = await secured()
         // updateUser(users, secured)
 }
 
 run()
-
-// getGames()
-// getUsers()
-// getGejms()
