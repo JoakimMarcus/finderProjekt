@@ -11,6 +11,8 @@
 
 <body>
     <!-- Body class?-->
+
+    <!-- Register Page -->
     <div class="Reg__Wrapper Hidden hideable">
         <div class="Reg__Items">
             <div class="Reg__Item-Left">
@@ -18,7 +20,7 @@
             </div>
             <div class="Reg__Item-Right">
                 <div class="Reg__Logo">
-                    <img src="./img/LogoFinderV21.svg">
+                    <img src="./img/LogoFinderV21.png">
                 </div>
                 <div class="Form__Container">
                     <form class="Reg-Form-1" id="Reg-Form-1">
@@ -69,19 +71,54 @@
             </div>
         </div>
     </div>
+    <!-- End of Register Page -->
 
-
-    <!--Matchning-->
+    <!-- Matchning Page -->
     <div class="Match__Games Hidden hideable">
-        <button class="Match__Button">Börja matcha</button>
-        <select class="gejms" name="gejms">
-                <option class="disabled" value="" disabled selected>Välj ett spel!</option>
-          </select>
+        <div class="Match-Games__Logo-Button">
+            <div class="Logo-Button__Logo">
+                <img src="./img/LogoFinderV21.png" alt="">
+            </div>
+            <div class="Logo-Button__Button">
+                <p class="Button__GoToProfile">Gå till profil</p>
+            </div>
+        </div>
+        <div class="Match-Games__Matching">
+            <div class="Matching__Heading">
+                <h3>Välj spel som ska matchas i realtid med en partner</h3>
+            </div>
+            <div class="Matching__Games-Button">
+                <select class="gejms Games-Button__Button" name="gejms">
+                        <option class="disabled" value="" disabled selected>Välj ett spel!</option>
+                  </select>
+                <div class="Match__Button">
+                    <p>Börja matcha</p>
+                </div>
+            </div>
+        </div>
         <!--Matchningslistan ska skrivas ut när man klickar på börja matcha efter man loggat in-->
-        <div class="Match__List">
-
+        <div class="TheBigDiv">
+            <article class="Match__List Prototype">
+                <div class="Match-List__Image-Username">
+                    <img class="Image-Username__Image" src="./img/greta.jpg" alt="">
+                    <h3 class="Match-Username">Greta</h3>
+                </div>
+                <div class="Match-List__Info">
+                    <div class="Info">
+                        <p class="Match-Age">Ålder:12</p>
+                        <p class="Match-Gender">Kön: Hen</p>
+                        <p class="Match-City">Stad: Oslo</p>
+                        <p class="Match-Game">Spel: Båt-spelet</p>
+                        <p class="Match-Discord">Discord: Greta_12</p>
+                        <p class="Match-Steam">Steam: Greta_55</p>
+                        <p class="Match-Origin">Origin: Gretish</p>
+                    </div>
+                </div>
+            </article>
         </div>
     </div>
+    <!-- End of Matchning Page -->
+
     <!-- Log in -->
     <div class="Log__Wrapper Hidden hideable">
         <div class="Log__Items">
@@ -90,7 +127,7 @@
             </div>
             <div class="Log__Item-Right">
                 <div class="Log__Logo">
-                    <img src="./img/LogoFinderV21.svg">
+                    <img src="./img/LogoFinderV21.png">
                 </div>
                 <p class="Success"></p>
                 <div class="Log__Container">
@@ -114,6 +151,7 @@
     </div>
     <!-- End of Log in code -->
 
+    <!-- Update Profile -->
     <div class="Update-Profile Hidden hideable">
         <div class="Update-Profile__Heading">
             <h1>Redigera din finderprofil</h1>
@@ -124,7 +162,7 @@
                     Profilbild
                 </h2>
                 <div class="Profil__Picture-Button">
-                    <img src="./img/LogoFinderV21.svg" alt="" class="Profile__Profile-Picture">
+                    <img src="./img/LogoFinderV21.png" alt="" class="Profile__Profile-Picture">
                     <button type="submit" class="Profiles__Button">Ladda upp profilbild</button>
                 </div>
                 <div class="Profile__Gender">
@@ -164,7 +202,9 @@
             </div>
         </div>
     </div>
+    <!-- End of Update Profile -->
 
+    <!-- Profile Page -->
     <div class="Profile__Wrappe Hidden hideable">
         <div class="Profile__Background">
             <div class="Profile-Picture__Wrapper">
@@ -174,7 +214,6 @@
             </div>
             <div class="Profile__Info">
                 <div class="Profile-Info__Personal">
-                    <i class="fas fa-mars"></i>
                     <div class="Personal__Username-City">
                         <h1 class="Profile-Info__Username-Age"></h1>
                         <p class="Profile-Info__City"></p>
@@ -204,12 +243,14 @@
                     <p>Börja matcha</p>
                 </div>
             </div>
-            <div class="Profile__MatchList">
+            <!-- <div class="Profile__MatchList">
                 <img src="./img/LogoFinderV21.svg" alt="" class="MatchList__Logo">
                 <h2 class="MatchList__Heading">Mina matchningar</h2>
-            </div>
+            </div> -->
         </div>
     </div>
+    <!-- End of Profile Page -->
+
     <script src=" ./script.js "></script>
 </body>
 
