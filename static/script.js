@@ -256,7 +256,7 @@ function renderMatches(users) {
             let gejm = matchGames.querySelector(".gejms").value
             if (currentUser.games == gejm) {
                 numOfMatches.push(currentUser)
-                newClone.querySelector(".Match-Username").innerHTML = currentUser.username
+                newClone.querySelector('.Match-Username').innerHTML = currentUser.username
                 newClone.querySelector('.Match-Age').innerHTML = "Ålder:" + " " + currentUser.age
                 newClone.querySelector('.Match-Gender').innerHTML = "Kön:" + " " + currentUser.gender
                 newClone.querySelector('.Match-City').innerHTML = "Stad:" + " " + currentUser.city
@@ -368,6 +368,9 @@ async function run() {
     let users = await getUsers()
     renderMatches(users)
     renderGejms(games)
+        // prePopulateForm(users)
+        // let secured = await secured()
+        // updateUser(users, secured)
 }
 
 run()

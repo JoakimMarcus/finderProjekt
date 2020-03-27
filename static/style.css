@@ -4,6 +4,7 @@
 }
 
 body {
+    /* background-image: linear-gradient(to right, white, grey); */
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
