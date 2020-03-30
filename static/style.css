@@ -145,6 +145,8 @@ option {
 /* Redigera finderprofil */
 
 .Update-Profile {
+    display: flex;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -158,7 +160,6 @@ option {
     width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     min-height: 450px;
     margin-left: 100px;
 }
@@ -166,6 +167,7 @@ option {
 .Update-Profile__Content {
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .Profile__Profile-Picture {
@@ -178,6 +180,8 @@ option {
 .Profil__Picture-Button {
     display: flex;
     align-items: center;
+    margin-left: 50px;
+    margin-bottom: 50px;
 }
 
 .Profile__Button {
@@ -186,7 +190,7 @@ option {
 }
 
 .Profile__Heading {
-    margin-left: 50px;
+    margin-left: 100px;
 }
 
 .Profile__Gender {
@@ -197,22 +201,20 @@ option {
     margin-right: 30px;
 }
 
-.Gender__Checkbox {
-    margin-top: 25px;
-}
-
-.Gender__Man {
-    margin-top: 23px;
-}
-
-.Gender__Women {
-    margin-right: 20px;
-    margin-top: 23px;
+.Profiles__Button {
+    margin-left: 50px;
 }
 
 .Profile__Age,
 .Profile__City {
     display: flex;
+    margin-top: 30px;
+}
+
+.Gender__Input {
+    height: 30px;
+    margin-top: 14px;
+    text-align: center;
 }
 
 .Age__Input {
@@ -225,7 +227,7 @@ option {
 .City__Input {
     height: 30px;
     margin-top: 14px;
-    margin-left: 30px;
+    margin-left: 28px;
     text-align: center;
 }
 
@@ -233,6 +235,7 @@ option {
 .Profile__Steam,
 .Profile__Origin {
     display: flex;
+    margin-top: 30px;
 }
 
 .Discord__Input {
@@ -262,6 +265,11 @@ option {
     width: 50%;
 }
 
+.Profile-Right__Heading {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .Profile-Right__Select {
     display: flex;
     flex-direction: column;
@@ -269,18 +277,26 @@ option {
     margin-bottom: 40px;
 }
 
-.Profile-Right__Button {
+.Profile-Right__Update {
     height: 40px;
+    width: 80px;
     margin-left: 50px;
+}
+
+.Profile-Right__Back {
+    height: 40px;
+    width: 80px;
 }
 
 .Profil-Right__Button-div {
     display: flex;
+    justify-content: center;
+    width: 50%;
     height: 250px;
-    align-items: flex-end;
-    margin-bottom: 50px;
-    margin-left: 80px;
 }
+
+
+/* ProfilSidan!  */
 
 .Profile__Background {
     background-image: url("./img/finderBackgroundDots.jpg");
@@ -361,7 +377,10 @@ option {
     height: auto;
 }
 
-.Profile-Info__Username {
+.Profile-Info__Username,
+.Profile-Info__Username-Discord,
+.Profile-Info__Username-Steam,
+.Profile-Info__Username-Origin {
     color: white;
     font-size: 20px;
     margin-left: 20px;

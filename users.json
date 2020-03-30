@@ -6,13 +6,11 @@
             "gender": "Man",
             "age": "32",
             "city": "Stockholm",
+            "games": "Counter-Strike GO",
             "usernameDiscord": "nikeboy12",
             "usernameSteam": "nikeboy",
-            "usernameOrigin": "nikeboy_88",
-            "games": [
-                "Counter-Strike GO",
-                "Raft"
-            ]
+            "usernameOrigin": "nikeboy_88"
+
 
         },
         {
@@ -22,13 +20,10 @@
             "gender": "Man",
             "age": "31",
             "city": "Rimbo",
+            "games": "Age of empire III",
             "usernameDiscord": "frumppen",
             "usernameSteam": "frumppen",
-            "usernameOrigin": "frumppen45",
-            "games": [
-                "Age of empire III",
-                "Raft"
-            ]
+            "usernameOrigin": "frumppen45"
         },
         {
             "username": "hawe",
@@ -37,12 +32,10 @@
             "gender": "Kvinna",
             "age": "29",
             "city": "Uppsala",
+            "games": "Team Fortress 2",
             "usernameDiscord": "hawe30",
             "usernameSteam": "hawe",
-            "usernameOrigin": "hawe",
-            "games": [
-                "Team Fortress 2"
-            ]
+            "usernameOrigin": "hawe"
         },
         {
             "username": "knest",
@@ -51,12 +44,10 @@
             "gender": "Man",
             "age": "31",
             "city": "Uppsala",
+            "games": "Counter-Strike GO",
             "usernameDiscord": "aram",
             "usernameSteam": "knest",
-            "usernameOrigin": "knestis",
-            "games": [
-                "Counter-Strike GO"
-            ]
+            "usernameOrigin": "knestis"
         },
         {
             "username": "carro",
@@ -65,12 +56,10 @@
             "gender": "Kvinna",
             "age": "23",
             "city": "Stockholm",
+            "games": "Counter-Strike GO",
             "usernameDiscord": "carro",
             "usernameSteam": "carro_girl",
-            "usernameOrigin": "kareo",
-            "games": [
-                "Counter-Strike GO"
-            ]
+            "usernameOrigin": "kareo"
         },
         {
             "username": "mandypandy",
@@ -79,12 +68,10 @@
             "gender": "Kvinna",
             "age": "29",
             "city": "Södertälje",
+            "games": "Diablo II",
             "usernameDiscord": "mandy222",
             "usernameSteam": "mandypandy",
-            "usernameOrigin": "mandypandy",
-            "games": [
-                "Diablo II"
-            ]
+            "usernameOrigin": "mandypandy"
         },
         {
             "username": "elsa",
@@ -93,12 +80,10 @@
             "gender": "Man",
             "age": "28",
             "city": "Stockholm",
+            "games": "Apex",
             "usernameDiscord": "jonte",
             "usernameSteam": "jontis",
-            "usernameOrigin": "elsa",
-            "games": [
-                "Apex"
-            ]
+            "usernameOrigin": "elsa"
         },
         {
             "username": "bobox",
@@ -107,13 +92,11 @@
             "gender": "Man",
             "age": "17",
             "city": "Jönköping",
+            "games": "Battlefield V",
             "usernameDiscord": "bigbox",
             "usernameSteam": "bigbox",
-            "usernameOrigin": "bobox",
-            "games": [
-                "Counter-Strike GO",
-                "Battlefield V"
-            ]
+            "usernameOrigin": "bobox"
+
         },
         {
             "username": "arooma",
@@ -122,12 +105,10 @@
             "gender": "Man",
             "age": "16",
             "city": "Karlstad",
+            "games": "Battlefield V",
             "usernameDiscord": "aaaaaris",
             "usernameSteam": "kitas",
-            "usernameOrigin": "kitas",
-            "games": [
-                "Battlefield V"
-            ]
+            "usernameOrigin": "kitas"
         },
         {
             "username": "gamer_girl",
@@ -136,12 +117,10 @@
             "gender": "Kvinna",
             "age": "13",
             "city": "Gävle",
+            "games": "FIFA 20",
             "usernameDiscord": "gamer_girl",
             "usernameSteam": "gamer_girl12",
-            "usernameOrigin": "gamer_girl",
-            "games": [
-                "FIFA 20"
-            ]
+            "usernameOrigin": "gamer_girl"
         }
 
     ]
