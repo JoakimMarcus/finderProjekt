@@ -24,40 +24,6 @@ app.use(express.static("static"))
 app.use(express.json())
 
 
-app.get("/games", async(req, res) => {
-    // let games = db.collection("games")
-    let games
-    if (process.env.NODE_ENV == "development") {
-        games = await collectionsNEDB.games.find({})
-        if (games.length > 0) {
-            res.json({ "games": games })
-        } else {
-            res.status(404).json("error")
-        }
-    } else {
-        let cursor = await Database.collections.games.find({})
-        games = await cursor.toArray()
-        if (games.length > 0) {
-            res.json({ "games": games })
-        } else {
-            res.status(404).json("error")
-        }
-    }
-})
-
-app.get("/users", async(req, res) => {
-    let matchList
-    if (process.env.NODE_ENV == "development") {
-        matchList = await collectionsNEDB.users.find({})
-        res.json({ "matchList": matchList })
-
-    } else {
-        let cursor = await Database.collections.users.find({})
-        matchList = await cursor.toArray()
-    }
-
-})
-
 app.post("/register", async(req, res) => {
 
     // let collections = db.collection('users')
@@ -111,6 +77,7 @@ app.post("/register", async(req, res) => {
     }
 })
 
+
 const auth = (req, res, next) => {
     try {
         if (req.headers.authorization) {
@@ -152,18 +119,45 @@ app.get('/secured', auth, (req, res) => {
 
 app.patch('/users/:id', async(req, res) => {
     const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
-        $set: {
-            "age": req.body.age,
-            "city": req.body.city,
-            "gender": req.body.gender,
-            "games": req.body.games,
-            "usernameDiscord": req.body.usernameDiscord,
-            "usernameSteam": req.body.usernameSteam,
-            "usernameOrigin": req.body.usernameOrigin
-        }
+        $set: req.body
     })
     console.log(req.params.id)
     res.json(result)
+})
+
+
+app.get("/users", async(req, res) => {
+    let matchList
+    if (process.env.NODE_ENV == "development") {
+        matchList = await collectionsNEDB.users.find({})
+        res.json({ "matchList": matchList })
+
+    } else {
+        let cursor = await Database.collections.users.find({})
+        matchList = await cursor.toArray()
+    }
+
+})
+
+app.get("/games", async(req, res) => {
+    // let games = db.collection("games")
+    let games
+    if (process.env.NODE_ENV == "development") {
+        games = await collectionsNEDB.games.find({})
+        if (games.length > 0) {
+            res.json({ "games": games })
+        } else {
+            res.status(404).json("error")
+        }
+    } else {
+        let cursor = await Database.collections.games.find({})
+        games = await cursor.toArray()
+        if (games.length > 0) {
+            res.json({ "games": games })
+        } else {
+            res.status(404).json("error")
+        }
+    }
 })
 
 async function run() {
