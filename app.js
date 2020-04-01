@@ -53,7 +53,9 @@ app.post("/register", async(req, res) => {
                 games: req.body.games,
                 usernameDiscord: req.body.usernameDiscord,
                 usernameSteam: req.body.usernameSteam,
-                usernameOrigin: req.body.usernameOrigin
+                usernameOrigin: req.body.usernameOrigin,
+                match: []
+
             }
             if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
@@ -97,8 +99,6 @@ app.post('/login', async(req, res) => {
     user = await collectionsNEDB.users.find({})
     let matchedUser
     for (let i = 0; i < user.length; i++) {
-        console.log(user[i].username)
-        console.log(user[i]._id)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
             matchedUser = user[i]
             break
@@ -120,6 +120,21 @@ app.get('/secured', auth, (req, res) => {
 app.patch('/users/:id', async(req, res) => {
     const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
         $set: req.body
+    })
+    res.json(result)
+})
+
+app.patch('/match/:id', async(req, res) => {
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+        $push: { "match": req.body.match }
+    })
+    console.log(req.params.id)
+    res.json(result)
+})
+
+app.delete('/delete/:id', async(req, res) => {
+    const result = await collectionsNEDB.users.remove({ _id: req.params.id }, {
+        { "match": req.body.match }
     })
     console.log(req.params.id)
     res.json(result)
