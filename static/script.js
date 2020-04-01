@@ -86,6 +86,8 @@ form.addEventListener("submit", async(event) => {
 let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
 profileUpdateBtn.addEventListener("click", async(event) => {
     event.preventDefault()
+    let users = await getUsers()
+    prePopulateForm(users)
     toggling([".Update-Profile"])
 })
 
@@ -343,8 +345,8 @@ function writeProfileInfo(users) {
 // Gör att fälten i redigera profil är ifyllda med användarens uppgifter.
 function prePopulateForm(users) {
     const id = localStorage.getItem("userId")
-    for(let i = 0; i < users.length; i++) {
-        if(id == users[i]._id) {
+    for (let i = 0; i < users.length; i++) {
+        if (id == users[i]._id) {
             const age = document.querySelector(".Age__Input").value = users[i].age
             const city = document.querySelector(".City__Input").value = users[i].city
             const gender = document.querySelector(".Gender__Input").value = users[i].gender
@@ -362,7 +364,6 @@ async function run() {
     let users = await getUsers()
     renderMatches(users)
     renderGejms(games)
-    prePopulateForm(users)
         // let secured = await secured()
         // updateUser(users, secured)
 }
