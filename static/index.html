@@ -98,20 +98,21 @@
         </div>
         <!--Matchningslistan ska skrivas ut när man klickar på börja matcha efter man loggat in-->
         <div class="TheBigDiv">
-            <article class="Match__List Prototype">
-                <div class="Match-List__Image-Username">
+            <article class="Match__Lis Prototype">
+                <div class=" Match-List__Image-Username">
                     <img class="Image-Username__Image" src="./img/greta.jpg" alt="">
-                    <h3 class="Match-Username">Greta</h3>
+                    <div class="Match-Info">
+                        <h3 class="Match-Username">Greta</h3>
+                        <p class="Match-Age">Ålder:12</p>
+                    </div>
                 </div>
                 <div class="Match-List__Info">
                     <div class="Info">
-                        <p class="Match-Age">Ålder:12</p>
-                        <p class="Match-Gender">Kön: Hen</p>
-                        <p class="Match-City">Stad: Oslo</p>
                         <p class="Match-Game">Spel: Båt-spelet</p>
-                        <p class="Match-Discord">Discord: Greta_12</p>
-                        <p class="Match-Steam">Steam: Greta_55</p>
-                        <p class="Match-Origin">Origin: Gretish</p>
+                    </div>
+                    <div class="thumbs__Buttons">
+                        <i class="far fa-thumbs-up likeBtn"></i>
+                        <i class="far fa-thumbs-down dislikeBtn"></i>
                     </div>
                 </div>
             </article>
@@ -121,6 +122,7 @@
 
     <!-- Log in -->
     <div class="Log__Wrapper Hidden hideable">
+        <button class="likeBtn"></button>
         <div class="Log__Items">
             <div class="Log__Item-Left">
                 <img class="Log__Image" src="./img/loginpage.png">
@@ -243,15 +245,25 @@
                     <p>Börja matcha</p>
                 </div>
             </div>
-            <!-- <div class="Profile__MatchList">
-                <img src="./img/LogoFinderV21.svg" alt="" class="MatchList__Logo">
+            <div class="Profile__MatchList">
                 <h2 class="MatchList__Heading">Mina matchningar</h2>
-            </div> -->
+                <div class="Append">
+                    <div class="User__match">
+                        <div class="flex">
+                            <p class="c">Username</p>
+                            <div class="center">
+                                <i class="fas fa-user-times deleteBtn"></i>
+                            </div>
+                        </div>
+                        <div class="Line"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End of Profile Page -->
 
-    <script src=" ./script.js "></script>
+    <script src=" ./script.js"></script>
 </body>
 
 </html>

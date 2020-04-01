@@ -136,6 +136,7 @@ function writeProfileInfo(users) {
     for (let i = 0; i < users.length; i++) {
         if (id == users[i]._id) {
             console.log(id)
+            console.log(users[i].match.length)
             console.log(users[i]._id)
             const profileUsername = document.querySelector(".Profile-Info__Username-Age").innerHTML = users[i].username + ", " + users[i].age
             const city = document.querySelector(".Profile-Info__City").innerHTML = users[i].city
@@ -143,6 +144,30 @@ function writeProfileInfo(users) {
             const steam = document.querySelector(".Profile-Info__Username-Steam").innerHTML = users[i].usernameSteam
             const origin = document.querySelector(".Profile-Info__Username-Origin").innerHTML = users[i].usernameOrigin
                 // const gender = document.querySelector(".Gender__Input").value
+            for (let j = 0; j < users[i].match.length; j++) {
+                let div = document.querySelector(".Append")
+                let userMatch = document.querySelector(".User__match")
+                let newClone = userMatch.cloneNode(true)
+                newClone.querySelector(".c").innerHTML = users[i].match[j]
+                console.log(users[i].match[j])
+                newClone.classList.remove("Prototype")
+                div.append(newClone)
+            }
+            let deleteBtn = document.querySelector(".deleteBtn")
+            console.log(users)
+            deleteBtn.addEventListener("click", async(event) => {
+                console.log("hej")
+                event.preventDefault()
+                const response = await fetch('http://localhost:8080/delete/' + id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        match: users[i].username.match
+                    })
+                })
+            })
         }
     }
 }
@@ -164,10 +189,10 @@ profileBtn.addEventListener("click", async(event) => {
 let logoutBtn = document.querySelector(".Profile-Button__Logout")
 logoutBtn.addEventListener("click", async(event) => {
     event.preventDefault()
+    window.location.reload(true)
     window.localStorage.removeItem("token")
     window.localStorage.removeItem("userId")
     toggling([".Log__Wrapper"])
-
 })
 
 
@@ -246,38 +271,149 @@ function renderMatches(users) {
     let matchGames = document.querySelector(".Match__Games")
     let matchButton = document.querySelector(".Match__Button")
     let noMatch = document.createElement("h3")
+
     matchButton.addEventListener("click", async(event) => {
-        bigDiv.innerHTML = ""
-        let numOfMatches = []
-        bigDiv.style = ""
-        for (let j = 0; j < users.length; j++) {
-            let newClone = matches.cloneNode(true)
-            let currentUser = users[j]
-            let gejm = matchGames.querySelector(".gejms").value
-            if (currentUser.games == gejm) {
-                numOfMatches.push(currentUser)
-                newClone.querySelector('.Match-Username').innerHTML = currentUser.username
-                newClone.querySelector('.Match-Age').innerHTML = "Ålder:" + " " + currentUser.age
-                newClone.querySelector('.Match-Gender').innerHTML = "Kön:" + " " + currentUser.gender
-                newClone.querySelector('.Match-City').innerHTML = "Stad:" + " " + currentUser.city
-                newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + currentUser.games
-                newClone.querySelector('.Match-Discord').innerHTML = "Discord:" + " " + currentUser.usernameDiscord
-                newClone.querySelector('.Match-Steam').innerHTML = "Steam:" + " " + currentUser.usernameSteam
-                newClone.querySelector('.Match-Origin').innerHTML = "Origin:" + " " + currentUser.usernameOrigin
-                newClone.classList.remove("Prototype")
-                bigDiv.append(newClone)
-            }
-        }
-        if (numOfMatches.length >= 3) {
-            bigDiv.style = "overflow-y: scroll;"
-        }
-        if (numOfMatches.length == 0) {
-            noMatch.innerHTML = "No matches found"
-            bigDiv.append(noMatch)
-        }
+        hanna(users)
 
+        // let numOfMatches = []
+
+        // let newClone = matches.cloneNode(true)
+        // bigDiv.style = ""
+        // for (let j = 0; j < users.length; j++) {
+        //     let currentUser = users[j]
+        //     let UserID = currentUser._id
+        //     let gejm = matchGames.querySelector(".gejms").value
+        //     if (currentUser.games == gejm) {
+        //         console.log(currentUser._id)
+        //         numOfMatches.push(currentUser)
+
+        //     }
+
+        // }
+        // if (numOfMatches.length == 0) {
+        //     noMatch.innerHTML = "No matches found"
+        //     bigDiv.append(noMatch)
+        // } else {
+        //     let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
+
+        //     newClone.querySelector('.Match-Username').innerHTML = randomUser.username
+        //     newClone.querySelector('.Match-Age').innerHTML = randomUser.age
+        //     newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
+        //     newClone.classList.remove("Prototype")
+        //     bigDiv.append(newClone)
+
+        //     likeUser(randomUser)
+        // }
     })
+}
 
+
+function randomMatches(numOfMatches, users) {
+    let bigDiv = document.querySelector(".TheBigDiv")
+    let matches = document.querySelector(".Match__Lis")
+    console.log("numOfMatches:", numOfMatches)
+
+    bigDiv.innerHTML = ""
+    console.log("Funkar här")
+    let newClone = matches.cloneNode(true)
+    let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
+
+    newClone.querySelector('.Match-Username').innerHTML = randomUser.username
+    newClone.querySelector('.Match-Age').innerHTML = randomUser.age
+    newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
+    newClone.classList.remove("Prototype")
+    bigDiv.append(newClone)
+
+    likeUser(randomUser, users)
+}
+
+
+function hanna(users) {
+    console.log(users)
+    let numOfMatches = []
+    let matchGames = document.querySelector(".Match__Games")
+    let matches = document.querySelector(".Match__Lis")
+    let bigDiv = document.querySelector(".TheBigDiv")
+    let noMatch = document.createElement("h3")
+    for (let j = 0; j < users.length; j++) {
+        let currentUser = users[j]
+        let UserID = currentUser._id
+        let gejm = matchGames.querySelector(".gejms").value
+        if (currentUser.games == gejm) {
+            console.log("users:", currentUser)
+            console.log(currentUser._id)
+            numOfMatches.push(currentUser)
+            console.log("hej")
+            randomMatches(numOfMatches, users)
+
+        }
+    }
+    if (numOfMatches.length == 0) {
+        noMatch.innerHTML = "No matches found"
+        bigDiv.append(noMatch)
+    }
+
+
+}
+
+
+// function joakim(users) {
+//     let numOfMatches = []
+//     let matches = document.querySelector(".Match__List")
+//     let matchGames = document.querySelector(".Match__Games")
+//     let bigDiv = document.querySelector(".TheBigDiv")
+//     let noMatch = document.createElement("h3")
+//     let newClone = matches.cloneNode(true)
+//     bigDiv.style = ""
+//     for (let j = 0; j < users.length; j++) {
+//         let currentUser = users[j]
+//         let UserID = currentUser._id
+//         let gejm = matchGames.querySelector(".gejms").value
+//         if (currentUser.games == gejm) {
+//             console.log(currentUser._id)
+//             numOfMatches.push(currentUser)
+
+//         }
+
+//     }
+//     if (numOfMatches.length == 0) {
+//         noMatch.innerHTML = "No matches found"
+//         bigDiv.append(noMatch)
+//     } else {
+//         let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
+
+//         newClone.querySelector('.Match-Username').innerHTML = randomUser.username
+//         newClone.querySelector('.Match-Age').innerHTML = randomUser.age
+//         newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
+//         newClone.classList.remove("Prototype")
+//         bigDiv.append(newClone)
+
+//         likeUser(randomUser)
+//     }
+// }
+
+async function likeUser(currentUser, users) {
+    let likeBtn = document.querySelector(".likeBtn")
+    let match = document.querySelector(".Match__List")
+    let profileMatchList = document.querySelector(".User__Match")
+    let userNaaame = document.querySelector(".c")
+    likeBtn.addEventListener("click", async(event) => {
+        event.preventDefault()
+        const id = localStorage.getItem("userId")
+        const response = await fetch('http://localhost:8080/match/' + id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                match: currentUser.username
+            })
+        })
+        console.log(currentUser)
+        currentUser
+        userNaaame.innerHTML = currentUser.username
+        hanna(users)
+    })
 }
 
 let goToProfile = document.querySelector(".Button__GoToProfile")
@@ -366,11 +502,15 @@ window.addEventListener('load', async(event) => {
 async function run() {
     let games = await getGames()
     let users = await getUsers()
+        // joakim(users)
+        // hanna(users)
+    writeProfileInfo(users)
     renderMatches(users)
     renderGejms(games)
-        // prePopulateForm(users)
-        // let secured = await secured()
-        // updateUser(users, secured)
+
+    // prePopulateForm(users)
+    // let secured = await secured()
+    // updateUser(users, secured)
 }
 
 run()

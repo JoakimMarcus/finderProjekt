@@ -6,7 +6,6 @@
 body {
     /* background-image: linear-gradient(to right, white, grey); */
     margin: 0;
-    font-family: 'Roboto', sans-serif;
 }
 
 
@@ -16,7 +15,7 @@ body {
 .Log__Wrapper {
     background-image: linear-gradient(to right, white, grey);
     width: 100%;
-    min-height: 800px;
+    min-height: 900px;
     display: flex;
 }
 
@@ -25,7 +24,7 @@ body {
     margin: auto;
     background-color: white;
     display: flex;
-    min-height: 600px;
+    min-height: 630px;
     width: 800px;
 }
 
@@ -162,12 +161,14 @@ option {
     display: flex;
     justify-content: center;
     font-size: 25px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .Content__Profile {
     display: flex;
     flex-direction: column;
     min-height: 450px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .Update-Profile__Content {
@@ -445,7 +446,39 @@ option {
 .Profile__Wrappe {
     background-image: linear-gradient(to right, white, grey);
     margin: 0;
-    height: 800px;
+    min-height: 900px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.Append {
+    width: 30%;
+}
+
+.User__match {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.fa-user-times {
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Line {
+    border-bottom: solid black 2px;
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
 }
 
 
@@ -455,7 +488,8 @@ option {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: white;
+    background: #ac74d975;
+    min-height: 1200px;
 }
 
 .Match-Games__Logo-Button {
@@ -464,6 +498,7 @@ option {
     background-image: url("./img/finderBlue.png");
     background-repeat: no-repeat;
     background-size: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 .Logo-Button__Logo {
@@ -484,6 +519,7 @@ option {
 .Match-Games__Matching {
     margin-top: 50px;
     margin-bottom: 30px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .Matching__Heading {
@@ -518,36 +554,42 @@ option {
 
 .TheBigDiv {
     display: flex;
-    width: 50%;
+    width: 40%;
     flex-direction: column;
     align-items: center;
-    max-height: 600px;
-    /* overflow-y: scroll; */
+    max-height: 880px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .Match__List {
     display: flex;
-    width: 100%;
-    min-height: 300px;
-    border-bottom: 1px gray solid;
-    border-top: 1px gray solid;
-    background: white;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    height: 700px;
     margin-bottom: 20px;
     background: #f5f5f5;
+    border-radius: 24px;
+    justify-content: center;
 }
 
 .Match-List__Image-Username {
     display: flex;
-    width: 50%;
-    justify-content: center;
+    width: 90%;
+    justify-content: flex-start;
     align-items: center;
+    flex-direction: column;
+}
+
+.Match-Info {
+    display: flex;
+    width: 72%;
 }
 
 .Image-Username__Image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 30px;
+    width: 90%;
+    height: 90%;
+    border-radius: 10px
 }
 
 .Button__GoToProfile {
@@ -576,4 +618,24 @@ option {
 .Hidden,
 .Prototype {
     display: none;
+}
+
+.Match-Age {
+    margin-top: 23px;
+}
+
+.thumbs__Buttons {
+    font-size: 40px;
+}
+
+.fa-thumbs-up {
+    color: #58ff66;
+    margin: 14px;
+    cursor: pointer;
+}
+
+.fa-thumbs-down {
+    color: #D97474;
+    margin: 14px;
+    cursor: pointer;
 }
