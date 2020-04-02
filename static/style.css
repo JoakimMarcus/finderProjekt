@@ -446,8 +446,39 @@ option {
 .Profile__Wrappe {
     background-image: linear-gradient(to right, white, grey);
     margin: 0;
-    height: 900px;
+    min-height: 900px;
     font-family: 'Roboto', sans-serif;
+}
+
+.Append {
+    width: 30%;
+}
+
+.User__match {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.fa-user-times {
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Line {
+    border-bottom: solid black 2px;
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
 }
 
 
@@ -458,7 +489,7 @@ option {
     flex-direction: column;
     align-items: center;
     background: #ac74d975;
-    min-height: 800px;
+    min-height: 1200px;
 }
 
 .Match-Games__Logo-Button {
@@ -530,7 +561,7 @@ option {
     font-family: 'Roboto', sans-serif;
 }
 
-.Match__List {
+.Match__Lis {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -600,9 +631,11 @@ option {
 .fa-thumbs-up {
     color: #58FF66;
     margin: 14px;
+    cursor: pointer;
 }
 
 .fa-thumbs-down {
     color: #D97474;
     margin: 14px;
+    cursor: pointer;
 }

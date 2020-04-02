@@ -65,7 +65,6 @@ async function createUser(username, email, password, repeatPassword, games, user
             usernameDiscord: usernameDiscord,
             usernameSteam: usernameSteam,
             usernameOrigin: usernameOrigin
-
         })
     })
     console.log(response)
@@ -130,6 +129,7 @@ backBtn.addEventListener("click", async(event) => {
 })
 
 
+
 // Profil Sidan
 function writeProfileInfo(users) {
     const id = localStorage.getItem("userId")
@@ -153,18 +153,19 @@ function writeProfileInfo(users) {
                 console.log(users[i].match[j])
                 newClone.classList.remove("Prototype")
                 div.append(newClone)
-                dsetroyBtn = newClone.querySelector(".deleteBtn")
+                destroyBtn = newClone.querySelector(".deleteBtn")
+                    // destroyBtn.addEventListener("click", () => newClone.remove())
                 destroyBtn.addEventListener("click", async(event) => {
                     newClone.remove()
-                    const id = localStorage.getItem("userID")
+                    const id = localStorage.getItem("userId")
                     console.log("vem tar vi bort:", users[i].match[j])
-                    const response = await fetch("http://localhost:8080/delete/", id, {
+                    const response = await fetch('http://localhost:8080/delete/' + id, {
                         method: 'PATCH',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            match: users[i.match[j]]
+                            match: users[i].match[j]
                         })
                     })
                 })
@@ -172,41 +173,6 @@ function writeProfileInfo(users) {
         }
     }
 }
-
-// function deleteClone() {
-//     this.parentNode.remove()
-// }
-
-
-// function createDeleteButton(counter) {
-//     let deleteElem = document.createElement("div")
-//     deleteElem.type = "i"
-//         // deleteElem.value = "Delete"
-//     deleteElem.addEventListener("click", deleteClone)
-//     return deleteElem
-// }
-
-
-
-// console.log(users)
-// deleteBtn.addEventListener("click", async(event) => {
-//     console.log("hej")
-//     event.preventDefault()
-//     const response = await fetch('http://localhost:8080/delete/' + id, {
-//         method: 'DELETE',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             match: users[i].username.match
-//         })
-//     })
-// })
-
-
-
-
-
 
 let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
 profileUpdateBtn.addEventListener("click", async(event) => {
@@ -230,6 +196,8 @@ logoutBtn.addEventListener("click", async(event) => {
     window.localStorage.removeItem("userId")
     toggling([".Log__Wrapper"])
 })
+
+
 
 
 // Uppdatera Profil
@@ -291,7 +259,6 @@ function prePopulateForm(users) {
     }
 }
 
-
 let profileUpdateBackBtn = document.querySelector(".Profile-Right__Back")
 profileUpdateBackBtn.addEventListener("click", async(event) => {
     event.preventDefault()
@@ -331,44 +298,37 @@ function renderMatches(users) {
         //     bigDiv.append(noMatch)
         // } else {
         //     let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-
         //     newClone.querySelector('.Match-Username').innerHTML = randomUser.username
         //     newClone.querySelector('.Match-Age').innerHTML = randomUser.age
         //     newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
         //     newClone.classList.remove("Prototype")
         //     bigDiv.append(newClone)
-
         //     likeUser(randomUser)
         // }
     })
 }
 
-
 function randomMatches(numOfMatches, users) {
     let bigDiv = document.querySelector(".TheBigDiv")
     let matches = document.querySelector(".Match__Lis")
     console.log("numOfMatches:", numOfMatches)
-
     bigDiv.innerHTML = ""
     console.log("Funkar här")
     let newClone = matches.cloneNode(true)
     let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-
     newClone.querySelector('.Match-Username').innerHTML = randomUser.username
     newClone.querySelector('.Match-Age').innerHTML = randomUser.age
     newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
     newClone.classList.remove("Prototype")
     bigDiv.append(newClone)
-
     likeUser(randomUser, users)
 }
-
 
 function hanna(users) {
     console.log(users)
     let numOfMatches = []
     let matchGames = document.querySelector(".Match__Games")
-    let matches = document.querySelector(".Match__Lis")
+    let matches = document.querySelector(".Match__List")
     let bigDiv = document.querySelector(".TheBigDiv")
     let noMatch = document.createElement("h3")
     for (let j = 0; j < users.length; j++) {
@@ -381,17 +341,13 @@ function hanna(users) {
             numOfMatches.push(currentUser)
             console.log("hej")
             randomMatches(numOfMatches, users)
-
         }
     }
     if (numOfMatches.length == 0) {
         noMatch.innerHTML = "No matches found"
         bigDiv.append(noMatch)
     }
-
-
 }
-
 
 // function joakim(users) {
 //     let numOfMatches = []
@@ -408,22 +364,18 @@ function hanna(users) {
 //         if (currentUser.games == gejm) {
 //             console.log(currentUser._id)
 //             numOfMatches.push(currentUser)
-
 //         }
-
 //     }
 //     if (numOfMatches.length == 0) {
 //         noMatch.innerHTML = "No matches found"
 //         bigDiv.append(noMatch)
 //     } else {
 //         let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-
 //         newClone.querySelector('.Match-Username').innerHTML = randomUser.username
 //         newClone.querySelector('.Match-Age').innerHTML = randomUser.age
 //         newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
 //         newClone.classList.remove("Prototype")
 //         bigDiv.append(newClone)
-
 //         likeUser(randomUser)
 //     }
 // }
@@ -455,14 +407,13 @@ async function likeUser(currentUser, users) {
 let goToProfile = document.querySelector(".Button__GoToProfile")
 goToProfile.addEventListener("click", async(event) => {
     event.preventDefault()
+    window.location.reload(true)
     toggling([".Profile__Wrappe"])
 })
 
 
 
 // Övrigt
-
-
 async function getUsers() {
     const usersRequest = await fetch('http://localhost:8080/users', {
         method: 'GET'
@@ -471,7 +422,6 @@ async function getUsers() {
         //console.log(usersData.matchList)
     return usersData.matchList
 }
-
 async function getGames() {
     const request = await fetch('http://localhost:8080/games', {
         method: 'GET'
@@ -506,7 +456,6 @@ function toggling(ids) {
         let currentPage = window.localStorage.setItem("currentPage", ids[j])
     }
 }
-
 window.addEventListener('load', async(event) => {
     let currentPage = window.localStorage.getItem("currentPage")
     if (currentPage) {
@@ -514,16 +463,12 @@ window.addEventListener('load', async(event) => {
         let ids = currentPage.split(",")
         toggling(ids)
             // getUsers()
-        let users = await getUsers()
-        writeProfileInfo(users)
+            // let users = await getUsers()
+            // writeProfileInfo(users)
     } else {
         toggling([".Log__Wrapper"])
     }
 });
-
-
-
-
 // 
 // function renderGames(games) {
 //     let select = document.querySelector(".gejms")
@@ -531,12 +476,8 @@ window.addEventListener('load', async(event) => {
 //         let option = document.createElement("option")
 //         option.innerHTML = games[i].gejms
 //         select.append(option)
-
 //     }
 // }
-
-
-
 async function run() {
     let games = await getGames()
     let users = await getUsers()
@@ -545,10 +486,8 @@ async function run() {
     writeProfileInfo(users)
     renderMatches(users)
     renderGejms(games)
-
-    // prePopulateForm(users)
-    // let secured = await secured()
-    // updateUser(users, secured)
+        // prePopulateForm(users)
+        // let secured = await secured()
+        // updateUser(users, secured)
 }
-
 run()
