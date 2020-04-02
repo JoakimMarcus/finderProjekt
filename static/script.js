@@ -148,29 +148,65 @@ function writeProfileInfo(users) {
                 let div = document.querySelector(".Append")
                 let userMatch = document.querySelector(".User__match")
                 let newClone = userMatch.cloneNode(true)
+                    // let deleteBtn = document.querySelector(".deleteBtn")
                 newClone.querySelector(".c").innerHTML = users[i].match[j]
                 console.log(users[i].match[j])
                 newClone.classList.remove("Prototype")
                 div.append(newClone)
-            }
-            let deleteBtn = document.querySelector(".deleteBtn")
-            console.log(users)
-            deleteBtn.addEventListener("click", async(event) => {
-                console.log("hej")
-                event.preventDefault()
-                const response = await fetch('http://localhost:8080/delete/' + id, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        match: users[i].username.match
+                dsetroyBtn = newClone.querySelector(".deleteBtn")
+                destroyBtn.addEventListener("click", async(event) => {
+                    newClone.remove()
+                    const id = localStorage.getItem("userID")
+                    console.log("vem tar vi bort:", users[i].match[j])
+                    const response = await fetch("http://localhost:8080/delete/", id, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            match: users[i.match[j]]
+                        })
                     })
                 })
-            })
+            }
         }
     }
 }
+
+// function deleteClone() {
+//     this.parentNode.remove()
+// }
+
+
+// function createDeleteButton(counter) {
+//     let deleteElem = document.createElement("div")
+//     deleteElem.type = "i"
+//         // deleteElem.value = "Delete"
+//     deleteElem.addEventListener("click", deleteClone)
+//     return deleteElem
+// }
+
+
+
+// console.log(users)
+// deleteBtn.addEventListener("click", async(event) => {
+//     console.log("hej")
+//     event.preventDefault()
+//     const response = await fetch('http://localhost:8080/delete/' + id, {
+//         method: 'DELETE',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//             match: users[i].username.match
+//         })
+//     })
+// })
+
+
+
+
+
 
 let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
 profileUpdateBtn.addEventListener("click", async(event) => {
@@ -484,6 +520,8 @@ window.addEventListener('load', async(event) => {
         toggling([".Log__Wrapper"])
     }
 });
+
+
 
 
 // 
