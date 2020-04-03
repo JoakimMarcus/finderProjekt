@@ -98,24 +98,27 @@
         </div>
         <!--Matchningslistan ska skrivas ut när man klickar på börja matcha efter man loggat in-->
         <div class="TheBigDiv">
-            <article class="Match__Lis Prototype">
-                <div class=" Match-List__Image-Username">
-                    <img class="Image-Username__Image" src="./img/greta.jpg" alt="">
-                    <div class="Match-Info">
-                        <h3 class="Match-Username">Greta</h3>
-                        <p class="Match-Age">Ålder:12</p>
+            <div class="Inner__Div">
+                <article class="Match__Lis Prototype">
+                    <div class=" Match-List__Image-Username">
+                        <img class="Image-Username__Image" src="./img/boy-sitting.jpg" alt="">
+                        <div class="Match-Info">
+                            <h3 class="Match-Username">Greta</h3>
+                            <p class="Match-Age">Ålder:12</p>
+                        </div>
                     </div>
-                </div>
-                <div class="Match-List__Info">
-                    <div class="Info">
-                        <p class="Match-Game">Spel: Båt-spelet</p>
+                    <div class="Match-List__Info">
+                        <div class="Game-Div">
+                            <p class="Match-Game">Spel: Båt-spelet</p>
+                        </div>
+
+                        <div class="thumbs__Buttons">
+                            <i class="far fa-thumbs-up likeBtn"></i>
+                            <i class="far fa-thumbs-down dislikeBtn"></i>
+                        </div>
                     </div>
-                    <div class="thumbs__Buttons">
-                        <i class="far fa-thumbs-up likeBtn"></i>
-                        <i class="far fa-thumbs-down dislikeBtn"></i>
-                    </div>
-                </div>
-            </article>
+                </article>
+            </div>
         </div>
     </div>
     <!-- End of Matchning Page -->
@@ -163,10 +166,13 @@
                 <h2 class="Profile__Heading">
                     Profilbild
                 </h2>
+
                 <div class="Profil__Picture-Button">
                     <img src="./img/LogoFinderV21.png" alt="" class="Profile__Profile-Picture">
                     <button type="submit" class="Profiles__Button">Ladda upp profilbild</button>
                 </div>
+
+
                 <div class="Profile__Gender">
                     <h3 class="Gender__Heading">Kön</h3>
                     <input type="text" name="gender" class="Gender__Input" placeholder="Kön">
@@ -263,18 +269,37 @@
     </div>
     <!-- End of Profile Page -->
 
-    <div class="testSkit Hidden hideable">
-        <div class="clone Prototype">
-            <p class="q">hej</p>
-            <p class="w">hej</p>
-            <p class="e">hej</p>
-            <p class="r">nej</p>
-            <p class="t">pay</p>
-            <p class="y">say</p>
-            <p class="u">day</p>
-            <p class="i">cay</p>
+    <!-- User Profile Page for visitors -->
+    <div class="Match__Games Hidden hideable">
+        <div class="Match-Games__Logo-Button">
+            <div class="Logo-Button__Logo">
+                <img src="./img/LogoFinderV21.png" alt="">
+            </div>
+            <div class="Logo-Button__Button">
+                <p class="Button__GoToProfile">Gå till profil</p>
+            </div>
         </div>
     </div>
+    <div class="TheBigDiv">
+        <div class="Inner__Div">
+            <article class="Match__List Prototype">
+                <div class=" Match-List__Image-Username">
+                    <img class="Image-Username__Image" src="./img/boy-sitting.jpg" alt="">
+                    <div class="Match-Info">
+                        <h3 class="Match-Username">Greta</h3>
+                        <p class="Match-Age">Ålder:12</p>
+                    </div>
+                </div>
+                <div class="Match-List__Info">
+                    <div class="Game-Div">
+                        <p class="Match-Game">Spel: Båt-spelet</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    </div>
+    <!-- End of User Profile Page for visitors -->
 
     <script src=" ./script.js"></script>
 </body>
