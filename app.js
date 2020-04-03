@@ -132,6 +132,15 @@ app.patch('/match/:id', async(req, res) => {
     res.json(result)
 })
 
+app.patch('/delete/:id', async(req, res) => {
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+        $pull: { match: req.body.match }
+    })
+    console.log(req.params.id)
+    res.json(result)
+})
+
+
 app.get("/users", async(req, res) => {
     let matchList
     if (process.env.NODE_ENV == "development") {
