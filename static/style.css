@@ -29,11 +29,11 @@ body {
 }
 
 .Form__Input-Discord {
-    color: #9475b1;
+    color: #9475B1;
 }
 
 .Form__Input-Steam {
-    color: #2a475e;
+    color: #2A475E;
 }
 
 .Form__Input-Origin {
@@ -142,7 +142,7 @@ option {
 }
 
 .Success {
-    color: #b494b9;
+    color: #B494B9;
     text-align: center;
     font-size: 20px;
 }
@@ -368,7 +368,7 @@ option {
 }
 
 .Profile__Steam-Logo {
-    color: #66c0f4;
+    color: #66C0F4;
     font-size: 50px;
 }
 
@@ -408,7 +408,7 @@ option {
 }
 
 .Match-Button {
-    background: #ac74d9;
+    background: #AC74D9;
     width: 192px;
     height: 67px;
     border-radius: 10px;
@@ -476,6 +476,10 @@ option {
     width: 100%;
 }
 
+.c {
+    cursor: pointer;
+}
+
 .flex {
     display: flex;
     width: 100%;
@@ -534,7 +538,7 @@ option {
 }
 
 .Match__Button {
-    background: #ac74d9;
+    background: #AC74D9;
     width: 140px;
     height: 30px;
     border-radius: 10px;
@@ -561,14 +565,14 @@ option {
     font-family: 'Roboto', sans-serif;
 }
 
-.Match__List {
+.Match__Lis {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 60%;
     height: 700px;
     margin-bottom: 20px;
-    background: #f5f5f5;
+    background: #F5F5F5;
     border-radius: 24px;
     justify-content: center;
 }
@@ -629,7 +633,7 @@ option {
 }
 
 .fa-thumbs-up {
-    color: #58ff66;
+    color: #58FF66;
     margin: 14px;
     cursor: pointer;
 }
