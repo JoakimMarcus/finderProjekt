@@ -24,40 +24,6 @@ app.use(express.static("static"))
 app.use(express.json())
 
 
-app.get("/games", async(req, res) => {
-    // let games = db.collection("games")
-    let games
-    if (process.env.NODE_ENV == "development") {
-        games = await collectionsNEDB.games.find({})
-        if (games.length > 0) {
-            res.json({ "games": games })
-        } else {
-            res.status(404).json("error")
-        }
-    } else {
-        let cursor = await Database.collections.games.find({})
-        games = await cursor.toArray()
-        if (games.length > 0) {
-            res.json({ "games": games })
-        } else {
-            res.status(404).json("error")
-        }
-    }
-})
-
-app.get("/users", async(req, res) => {
-    let matchList
-    if (process.env.NODE_ENV == "development") {
-        matchList = await collectionsNEDB.users.find({})
-        res.json({ "matchList": matchList })
-
-    } else {
-        let cursor = await Database.collections.users.find({})
-        matchList = await cursor.toArray()
-    }
-
-})
-
 app.post("/register", async(req, res) => {
 
     // let collections = db.collection('users')
@@ -87,7 +53,9 @@ app.post("/register", async(req, res) => {
                 games: req.body.games,
                 usernameDiscord: req.body.usernameDiscord,
                 usernameSteam: req.body.usernameSteam,
-                usernameOrigin: req.body.usernameOrigin
+                usernameOrigin: req.body.usernameOrigin,
+                match: []
+
             }
             if (process.env.NODE_ENV == "development") {
                 const result = await collectionsNEDB.users.insert(newUser)
@@ -111,6 +79,7 @@ app.post("/register", async(req, res) => {
     }
 })
 
+
 const auth = (req, res, next) => {
     try {
         if (req.headers.authorization) {
@@ -130,8 +99,6 @@ app.post('/login', async(req, res) => {
     user = await collectionsNEDB.users.find({})
     let matchedUser
     for (let i = 0; i < user.length; i++) {
-        console.log(user[i].username)
-        console.log(user[i]._id)
         if (req.body.username == user[i].username && req.body.password == user[i].password) {
             matchedUser = user[i]
             break
@@ -139,8 +106,8 @@ app.post('/login', async(req, res) => {
     }
     if (matchedUser) {
         const payload = { userId: matchedUser._id }
-        const token = jwt.sign(payload, "hej", { expiresIn: '20m' })
-        res.json({ token, userId: matchedUser._id })
+        const token = jwt.sign(payload, "hej", { expiresIn: '1s' })
+        res.json({ token, userId: matchedUser._id, user })
     } else {
         res.status(403).json({ error: 'Invalid Credentials' })
     }
@@ -152,19 +119,62 @@ app.get('/secured', auth, (req, res) => {
 
 app.patch('/users/:id', async(req, res) => {
     const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
-        $set: {
-            "age": req.body.age,
-            "city": req.body.city,
-            "gender": req.body.gender,
-            "games": req.body.games,
-            "usernameDiscord": req.body.usernameDiscord,
-            "usernameSteam": req.body.usernameSteam,
-            "usernameOrigin": req.body.usernameOrigin
-        }
+        $set: req.body
+    })
+    res.json(result)
+})
+
+app.patch('/match/:id', async(req, res) => {
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+        $push: { "match": req.body.match }
     })
     console.log(req.params.id)
     res.json(result)
 })
+
+app.patch('/delete/:id', async(req, res) => {
+    const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+        $pull: { match: req.body.match }
+    })
+    console.log(req.params.id)
+    res.json(result)
+})
+
+
+app.get("/users", async(req, res) => {
+    let matchList
+    if (process.env.NODE_ENV == "development") {
+        matchList = await collectionsNEDB.users.find({})
+        res.json({ "matchList": matchList })
+
+    } else {
+        let cursor = await Database.collections.users.find({})
+        matchList = await cursor.toArray()
+    }
+
+})
+
+app.get("/games", async(req, res) => {
+    // let games = db.collection("games")
+    let games
+    if (process.env.NODE_ENV == "development") {
+        games = await collectionsNEDB.games.find({})
+        if (games.length > 0) {
+            res.json({ "games": games })
+        } else {
+            res.status(404).json("error")
+        }
+    } else {
+        let cursor = await Database.collections.games.find({})
+        games = await cursor.toArray()
+        if (games.length > 0) {
+            res.json({ "games": games })
+        } else {
+            res.status(404).json("error")
+        }
+    }
+})
+
 async function run() {
     try {
         await Database.connect()
