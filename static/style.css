@@ -559,8 +559,18 @@ option {
     align-items: center;
     max-height: 880px;
     font-family: 'Roboto', sans-serif;
+    background-color: black;
+    border-radius: 25px;
+    margin: 0;
 }
-
+.Inner__Div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
 .Match__List {
     display: flex;
     flex-direction: column;
@@ -639,3 +649,6 @@ option {
     margin: 14px;
     cursor: pointer;
 }
+
+/* Profile Page for visitors */
+
