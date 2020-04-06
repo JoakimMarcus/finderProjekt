@@ -140,6 +140,15 @@ app.patch('/delete/:id', async(req, res) => {
     res.json(result)
 })
 
+app.delete('/deleteAccount/:id', async(req, res) => {
+    const findOne = await collectionsNEDB.users.findOne({ _id: req.params.id })
+    console.log(req.body.deletePassword)
+    if (req.body.deletePassword == findOne.password) {
+        const result = await collectionsNEDB.users.remove({ _id: req.params.id })
+        console.log(req.params.id)
+        res.status(200).json({ message: "Deleted" })
+    }
+})
 
 app.get("/users", async(req, res) => {
     let matchList

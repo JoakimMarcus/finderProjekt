@@ -156,6 +156,7 @@ option {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    /* filter: blur(2px); */
 }
 
 .Update-Profile__Heading {
@@ -301,6 +302,81 @@ option {
     justify-content: center;
     width: 50%;
     height: 250px;
+}
+
+.Delete__Button {
+    cursor: pointer;
+}
+
+.Delete-Account__Close {
+    display: flex;
+}
+
+.Close__Close-Button {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+
+.Close__Heading {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    font-size: 20px;
+}
+
+.Delete-Account {
+    width: 500px;
+    height: 250px;
+    background: white;
+    position: fixed;
+    left: 637px;
+    bottom: 350px;
+}
+
+.Delete {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Delete-Account__Close {
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Delete-Account__Input {
+    display: flex;
+    justify-content: center;
+}
+
+.Delete-Account__Password {
+    margin-top: 15px;
+    margin-left: 10px;
+    height: 20px;
+}
+
+.Delete-Account__Button-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+}
+
+.Delete-Account__Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+    background: red;
+    font-size: 20px;
+    color: white;
+    border-radius: 10px;
 }
 
 
@@ -477,7 +553,8 @@ option {
     width: 100%;
 }
 
-.c {
+.c,
+.User__Back {
     cursor: pointer;
 }
 
@@ -489,7 +566,8 @@ option {
 
 /* Match */
 
-.Match__Games {
+.Match__Games,
+.Match__User {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -497,7 +575,8 @@ option {
     min-height: 1200px;
 }
 
-.Match-Games__Logo-Button {
+.Match-Games__Logo-Button,
+.Match-User__Logo-Button {
     display: flex;
     width: 100%;
     background-image: url("./img/finderBlue.png");
@@ -521,7 +600,8 @@ option {
     font-size: 18px;
 }
 
-.Match-Games__Matching {
+.Match-Games__Matching,
+.Match-User__Matching {
     margin-top: 50px;
     margin-bottom: 30px;
     font-family: 'Roboto', sans-serif;
@@ -531,7 +611,6 @@ option {
     display: flex;
     justify-content: center;
 }
-
 
 .Matching__Games-Button {
     display: flex;
@@ -559,19 +638,22 @@ option {
     height: 30px;
     color: #847F7F;
 }
+
 .Matching__Heading h3 {
     font-size: 24px;
     font-weight: 200;
 }
 
-.TheBigDiv {
+.TheBigDiv,
+.TheBigDiv2 {
     display: flex;
     width: 35%;
     flex-direction: column;
     align-items: center;
     max-height: 880px;
     font-family: 'Roboto', sans-serif;
-    background-color:#f5f5f5;;
+    background-color: #f5f5f5;
+    ;
     border-radius: 25px;
     margin: 0;
 }
@@ -585,7 +667,8 @@ option {
     transform: translate(-50%, -50%);
 }
 
-.Match__Lis {
+.Match__Lis,
+.Match__List2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -609,24 +692,24 @@ option {
     display: flex;
     width: 110%;
     font-size: 22px;
-    overflow: auto; 
+    overflow: auto;
 }
 
 .Image-Username__Image {
     width: 350px;
     height: 300px;
-    object-fit:cover;
+    object-fit: cover;
     border-radius: 10px;
 }
 
 h3.Match-Username {
     text-transform: capitalize;
 }
+
 .Button__GoToProfile {
     cursor: pointer;
     color: white;
 }
-
 
 .Match-List__Info {
     display: flex;
@@ -637,9 +720,11 @@ h3.Match-Username {
     color: #4A4949;
     font-size: 20px;
 }
+
 .Game-Div {
     overflow: auto;
 }
+
 .Hidden,
 .Prototype {
     display: none;
@@ -665,6 +750,5 @@ h3.Match-Username {
     cursor: pointer;
 }
 
+
 /* Profile Page for visitors */
-
-

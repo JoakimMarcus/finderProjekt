@@ -166,33 +166,41 @@ function writeProfileInfo(users) {
                         })
                     })
                 })
-                clone = document.querySelector(".clone")
-                testSkit = document.querySelector(".testSkit")
+                clone = document.querySelector(".Match__List2")
+                TheBigDiv = document.querySelector(".TheBigDiv2")
                 usernameBtn = newClone.querySelector(".c")
                 usernameBtn.addEventListener("click", async(event) => {
+                    TheBigDiv.innerHTML = ""
                     console.log("Hej", users[i].match[j], "!")
                     let currentUserClicked = users[i].match[j]
                     for (let k = 0; k < users.length; k++) {
                         let currentUser = users[k]
                         if (currentUser.username == currentUserClicked) {
                             let newClone = clone.cloneNode(true)
-                            newClone.querySelector(".q").innerHTML = currentUser.username
-                            newClone.querySelector(".w").innerHTML = currentUser.usernameDiscord
-                            newClone.querySelector(".e").innerHTML = currentUser.usernameSteam
-                            newClone.querySelector(".r").innerHTML = currentUser.usernameOrigin
+                            newClone.querySelector(".Match-Username").innerHTML = currentUser.username
+                            newClone.querySelector(".Match-Age").innerHTML = currentUser.age
+                            newClone.querySelector(".Match-Game").innerHTML = currentUser.games
+                            newClone.querySelector(".Match-Discord").innerHTML = currentUser.usernameDiscord
+                            newClone.querySelector(".Match-Steam").innerHTML = currentUser.usernameSteam
+                            newClone.querySelector(".Match-Origin").innerHTML = currentUser.usernameOrigin
                             newClone.classList.remove("Prototype")
-                            testSkit.append(newClone)
-                            toggling([".testSkit"])
+                            TheBigDiv.append(newClone)
+                            toggling([".Match__User"])
 
                         }
                     }
-
 
                 })
             }
         }
     }
 }
+
+let userBack = document.querySelector(".User__Back")
+userBack.addEventListener("click", async(event) => {
+    event.preventDefault()
+    toggling([".Profile__Wrappe"])
+})
 
 let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
 profileUpdateBtn.addEventListener("click", async(event) => {
@@ -284,6 +292,63 @@ profileUpdateBackBtn.addEventListener("click", async(event) => {
     event.preventDefault()
     toggling([".Profile__Wrappe"])
 })
+
+
+let openDeleteAccountBtn = document.querySelector(".Delete__Button")
+openDeleteAccountBtn.addEventListener("click", async(event) => {
+    deleteAccount = document.querySelector(".Delete-Account")
+    updateProfile = document.querySelector(".Update-Profile")
+    event.preventDefault()
+    updateProfile.style.filter = "blur(2px)"
+    deleteAccount.classList.toggle("Hidden")
+})
+
+
+let closeDeleteAccountBtn = document.querySelector(".Delete-Account__Close")
+closeDeleteAccountBtn.addEventListener("click", async(event) => {
+    deleteAccount = document.querySelector(".Delete-Account")
+    updateProfile = document.querySelector(".Update-Profile")
+    event.preventDefault()
+    updateProfile.style.filter = "none"
+    deleteAccount.classList.toggle("Hidden")
+})
+
+
+async function deleteAccountFunction(deletePassword) {
+    const id = localStorage.getItem("userId")
+    const response = await fetch('http://localhost:8080/deleteAccount/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            deletePassword: deletePassword,
+        })
+    })
+
+    const data = await response.json()
+    console.log(data)
+    if (data.message == "Deleted") {
+        window.location.reload(true)
+        window.localStorage.removeItem("token")
+        window.localStorage.removeItem("userId")
+        toggling([".Log__Wrapper"])
+    }
+
+}
+
+function deleteAccountIndex() {
+    let deleteAccountBtn = document.querySelector(".Delete-Account__Button")
+    deleteAccountBtn.addEventListener("click", async(event) => {
+        console.log("hej")
+        event.preventDefault()
+        const deletePassword = document.querySelector(".Delete-Account__Password").value
+        const deleteAccounts = await deleteAccountFunction(deletePassword)
+    })
+}
+deleteAccountIndex()
+
+
 
 
 // Match Sidan
@@ -506,7 +571,7 @@ async function run() {
     writeProfileInfo(users)
     renderMatches(users)
     renderGejms(games)
-        // prePopulateForm(users)
+    prePopulateForm(users)
         // let secured = await secured()
         // updateUser(users, secured)
 }
