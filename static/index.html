@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/bd7880edd1.js"></script>
-    <title>Document</title>
+    <title>Finder</title>
+    <link class="logo__icon" rel="icon" href="img/LogoFinderV213.png">
 </head>
 
 <body>
@@ -97,7 +98,7 @@
             </div>
         </div>
         <!--Matchningslistan ska skrivas ut när man klickar på börja matcha efter man loggat in-->
-        <div class="TheBigDiv">
+        <div class="Match-User">
             <div class="Inner__Div">
                 <article class="Match__Lis Prototype">
                     <div class=" Match-List__Image-Username">
@@ -228,6 +229,7 @@
             <p class="Input__Confirm">Bekräfta ditt lösenord:</p>
             <input type="password" name="delete-password" class="Delete-Account__Password" placeholder="Skriv in ditt lösenord">
         </div>
+        <p class="Input__Error"></p>
         <div class="Delete-Account__Button-wrap">
             <div class="Delete-Account__Button">Delete</div>
         </div>
@@ -276,8 +278,8 @@
                 <h2 class="MatchList__Heading">Mina matchningar</h2>
                 <div class="Append">
                     <div class="User__match Prototype">
-                        <div class="flex">
-                            <p class="c">Username</p>
+                        <div class="MatchList__Info">
+                            <p class="MatchList__Username">Username</p>
                             <div class="center">
                                 <i class="fas fa-user-times deleteBtn"></i>
                             </div>
@@ -300,8 +302,7 @@
                 <p class="User__Back">Gå till profil</p>
             </div>
         </div>
-        <div class="TheBigDiv2">
-            <!-- <div class="Inner__Div"> -->
+        <div class="Match-User__Info">
             <article class="Match__List2 Prototype">
                 <div class="Match-List__Image-Username">
                     <img class="Image-Username__Image" src="./img/boy-sitting.jpg" alt="">
@@ -319,7 +320,6 @@
                     </div>
                 </div>
             </article>
-            <!-- </div> -->
         </div>
     </div>
     <!-- End of User Profile Page for visitors -->
