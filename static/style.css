@@ -328,7 +328,7 @@ option {
 
 .Delete-Account {
     width: 500px;
-    height: 250px;
+    height: 300px;
     background: white;
     position: fixed;
     left: 637px;
@@ -377,6 +377,11 @@ option {
     font-size: 20px;
     color: white;
     border-radius: 10px;
+}
+
+.Input__Error {
+    text-align: center;
+    color: red;
 }
 
 
@@ -517,7 +522,7 @@ option {
 }
 
 .MatchList__Heading {
-    margin: 0;
+    margin-top: 50px;
 }
 
 .Profile__Wrappe {
@@ -553,12 +558,16 @@ option {
     width: 100%;
 }
 
-.c,
-.User__Back {
+.MatchList__Username {
     cursor: pointer;
 }
 
-.flex {
+.User__Back {
+    cursor: pointer;
+    color: white;
+}
+
+.MatchList__Info {
     display: flex;
     width: 100%;
 }
@@ -644,8 +653,8 @@ option {
     font-weight: 200;
 }
 
-.TheBigDiv,
-.TheBigDiv2 {
+.Match-User,
+.Match-User__Info {
     display: flex;
     width: 35%;
     flex-direction: column;
@@ -653,9 +662,9 @@ option {
     max-height: 880px;
     font-family: 'Roboto', sans-serif;
     background-color: #f5f5f5;
-    ;
     border-radius: 25px;
-    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 .Inner__Div {
@@ -693,6 +702,7 @@ option {
     width: 110%;
     font-size: 22px;
     overflow: auto;
+    align-items: center;
 }
 
 .Image-Username__Image {
@@ -704,6 +714,7 @@ option {
 
 h3.Match-Username {
     text-transform: capitalize;
+    margin-right: 10px;
 }
 
 .Button__GoToProfile {
@@ -731,7 +742,7 @@ h3.Match-Username {
 }
 
 .Match-Age {
-    margin-top: 23px;
+    margin-top: 25px;
 }
 
 .thumbs__Buttons {
