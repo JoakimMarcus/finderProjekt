@@ -155,12 +155,12 @@ function writeProfileInfo(users) {
                         let currentUser = users[k]
                         if (currentUser.username == currentUserClicked) {
                             let newClone = clone.cloneNode(true)
-                            newClone.querySelector('.Match-Username').innerHTML = 'Användarnamn:' + ' ' + currentUser.username
-                            newClone.querySelector('.Match-Age').innerHTML = 'Ålder:' + ' ' + currentUser.age
-                            newClone.querySelector('.Match-Game').innerHTML = 'Spelar:' + ' ' + currentUser.games
-                            newClone.querySelector('.Match-Discord').innerHTML = 'Discord:' + ' ' + currentUser.usernameDiscord
-                            newClone.querySelector('.Match-Steam').innerHTML = 'Steam:' + ' ' + currentUser.usernameSteam
-                            newClone.querySelector('.Match-Origin').innerHTML = 'Origin:' + ' ' + currentUser.usernameOrigin
+                            newClone.querySelector('.Match-Username').innerHTML = currentUser.username
+                            newClone.querySelector('.Match-Age').innerHTML = currentUser.age
+                            newClone.querySelector('.Match-Game').innerHTML = currentUser.games
+                            newClone.querySelector('.Match-Discord').innerHTML = currentUser.usernameDiscord
+                            newClone.querySelector('.Match-Steam').innerHTML = currentUser.usernameSteam
+                            newClone.querySelector('.Match-Origin').innerHTML = currentUser.usernameOrigin
                             newClone.classList.remove('Prototype')
                             MatchUserInfo.append(newClone)
                             toggling(['.Match__User'])
@@ -251,13 +251,22 @@ function buttons() {
     let changePassBtn = document.querySelector('.Change-Password__Button')
     changePassBtn.addEventListener('click', async(event) => {
         event.preventDefault()
-        toggling(['.Change__Password'])
+        let changePassword = document.querySelector('.Change__Password')
+        let updateProfile = document.querySelector('.Update-Profile')
+        updateProfile.style.filter = 'blur(2px)'
+        changePassword.classList.toggle('Hidden')
+
+        // toggling(['.Change__Password'])
     })
 
     let changeBackBtn = document.querySelector('.Change__Back-Btn')
     changeBackBtn.addEventListener('click', async(event) => {
         event.preventDefault()
-        toggling(['.Update-Profile'])
+        let changePassword = document.querySelector('.Change__Password')
+        let updateProfile = document.querySelector('.Update-Profile')
+        updateProfile.style.filter = 'none'
+        changePassword.classList.toggle('Hidden')
+            // toggling(['.Update-Profile'])
     })
 }
 buttons()
@@ -426,8 +435,11 @@ function renderMatches(users) {
     })
 }
 
+
+
 async function likeUser(currentUser, users) {
     let likeBtn = document.querySelector('.likeBtn')
+    let dislikeBtn = document.querySelector('.dislikeBtn')
     let matchButton = document.querySelector('.Match__Button')
     likeBtn.addEventListener('click', async(event) => {
         event.preventDefault()
@@ -450,6 +462,14 @@ async function likeUser(currentUser, users) {
     })
 }
 
+function dislike(users) {
+    let dislikeBtn = document.querySelector('.dislikeBtn')
+    dislikeBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        hanna(users)
+    })
+}
+
 function hanna(users) {
     let numOfMatches = []
     let matchGames = document.querySelector('.Match__Games')
@@ -464,12 +484,13 @@ function hanna(users) {
             numOfMatches.push(currentUser)
             randomMatches(numOfMatches, users)
         }
-        
+
     }
     if (numOfMatches.length == 0) {
         noMatch.innerHTML = 'No matches found'
         matchUser.append(noMatch)
     }
+
 }
 
 function randomMatches(numOfMatches, users) {
@@ -480,10 +501,11 @@ function randomMatches(numOfMatches, users) {
     let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
     newClone.querySelector('.Match-Username').innerHTML = randomUser.username
     newClone.querySelector('.Match-Age').innerHTML = randomUser.age
-    newClone.querySelector('.Match-Game').innerHTML = 'Spelar:' + ' ' + randomUser.games
+    newClone.querySelector('.Info__Game-Text').innerHTML = randomUser.games
     newClone.classList.remove('Prototype')
     matchUser.append(newClone)
     likeUser(randomUser, users)
+    dislike(users)
 }
 
 // Övrigt

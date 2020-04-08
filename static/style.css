@@ -92,7 +92,7 @@ body {
 .Form__Input-Wrap {
     width: 100%;
     overflow: hidden;
-    font-size: 20px;
+    font-size: 18px;
     border-bottom: 1px solid black;
 }
 
@@ -339,6 +339,18 @@ option {
     bottom: 350px;
 }
 
+.Change__Password {
+    width: 500px;
+    min-height: 300px;
+    background: white;
+    position: fixed;
+    left: 637px;
+    bottom: 300px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px
+}
+
 .Delete {
     width: 100%;
     display: flex;
@@ -399,7 +411,7 @@ option {
 }
 
 .Change-Password__Item {
-    width: 50%;
+    width: 85%;
 }
 
 .Change-Password__Form {
@@ -759,6 +771,7 @@ option {
     font-size: 22px;
     overflow: auto;
     align-items: center;
+    justify-content: center;
 }
 
 .Image-Username__Image {
@@ -781,7 +794,7 @@ h3.Match-Username {
 .Match-List__Info {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 100%;
     justify-content: center;
     align-items: center;
     color: #4A4949;
@@ -790,6 +803,19 @@ h3.Match-Username {
 
 .Game-Div {
     overflow: auto;
+    width: 100%;
+}
+
+.Info__Game {
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Info__Game-Text {
+    margin-left: 20px;
 }
 
 .Hidden,
@@ -819,3 +845,18 @@ h3.Match-Username {
 
 
 /* Profile Page for visitors */
+
+.Match-Origin,
+.Match-Steam,
+.Match-Discord,
+.Match-Game {
+    margin-left: 20px;
+}
+
+.Logo-Div {
+    width: 15%;
+}
+
+.logoGame {
+    font-size: 35px;
+}
