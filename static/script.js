@@ -379,6 +379,7 @@ async function changePassword(oldP, newP, confirmP) {
     if (data.confirm == 'Lösen ändrat') {
         window.location.reload(true)
         toggling(['.Profile__Wrappe'])
+        alert(data.confirm)
     } else {
         alert(data.error)
     }
