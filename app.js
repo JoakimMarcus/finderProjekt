@@ -124,22 +124,40 @@ app.patch('/users/:id', async(req, res) => {
     res.json(result)
 })
 
+// app.get('/match', async(req, res) => {
+    
+// })
+
 app.patch('/match/:id', async(req, res) => {
-    const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
-        $push: { "match": req.body.match }
-    })
-    console.log(req.params.id)
-    res.json(result)
+
+    // add check for existance in list if else
+    // hur ska add next fungera
+    //Lägg till ny req som är get till match, ta emot vilket spel som anv ska matcha mot
+    // leta upp nästa användare som matchar, som inte redan är likead
+    // skicka sedan tillbaka till klienten 
+    const matchResult = await collectionsNEDB.users.findOne({ match: req.body.match})
+    // console.log(matchResult.match)
+        if(matchResult.match !== req.body.match) { 
+            const result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+                $push: { "match": req.body.match }
+            })
+            console.log(matchResult.match)
+            res.json(result) 
+        }else{
+            res.status(400).json({ error: error })
+        }
+    
+    
 })
 
 app.delete('/delete/:id', async(req, res) => {
-    const result = await collectionsNEDB.users.remove({ _id: req.params.id }, {
+    const result = await collectionsNEDB.users.remove({ _id: req.params.id }, 
         { "match": req.body.match }
-    })
+    
+    )
     console.log(req.params.id)
     res.json(result)
 })
-
 
 app.get("/users", async(req, res) => {
     let matchList

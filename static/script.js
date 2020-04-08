@@ -273,7 +273,32 @@ function renderMatches(users) {
     let noMatch = document.createElement("h3")
 
     matchButton.addEventListener("click", async(event) => {
-        hanna(users)
+        let numOfMatches = []
+        let matchGames = document.querySelector(".Match__Games")
+        let matches = document.querySelector(".Match__Lis")
+        let bigDiv = document.querySelector(".TheBigDiv")
+        let noMatch = document.createElement("h3")
+        for (let j = 0; j < users.length; j++) {
+            let currentUser = users[j]
+            let currentId = currentUser._id
+            let gejm = matchGames.querySelector(".gejms").value
+            if (currentUser.games == gejm) {
+                console.log("users:", currentUser)
+                console.log(currentUser._id)
+                numOfMatches.push(currentUser)
+                
+                
+                console.log("hej")
+                
+
+            }
+            
+        }
+        if (numOfMatches.length == 0) {
+            noMatch.innerHTML = "No matches found"
+            bigDiv.append(noMatch)
+        }
+        randomMatches(numOfMatches, users)
 
         // let numOfMatches = []
 
@@ -306,29 +331,37 @@ function renderMatches(users) {
         // }
     })
 }
-
-
-function randomMatches(numOfMatches, users) {
-    let bigDiv = document.querySelector(".TheBigDiv")
-    let matches = document.querySelector(".Match__Lis")
-    console.log("numOfMatches:", numOfMatches)
-
-    bigDiv.innerHTML = ""
-    console.log("Funkar här")
-    let newClone = matches.cloneNode(true)
-    let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-
-    newClone.querySelector('.Match-Username').innerHTML = randomUser.username
-    newClone.querySelector('.Match-Age').innerHTML = randomUser.age
-    newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
-    newClone.classList.remove("Prototype")
-    bigDiv.append(newClone)
-
-    likeUser(randomUser, users)
+async function likeUser(currentUser, users) {
+    let likeBtn = document.querySelector(".likeBtn")
+    let match = document.querySelector(".Match__List")
+    let profileMatchList = document.querySelector(".User__Match")
+    let userNaaame = document.querySelector(".c")
+    likeBtn.addEventListener("click", async(event) => {
+        event.preventDefault()
+        const id = localStorage.getItem("userId")
+        // for (let i = 0; i < users.length; i++) {
+            // let currentId = users[i]
+            // if (id == users[i]._id) {
+                const response = await fetch('http://localhost:8080/match/' + id, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        match: currentUser.username
+                    })
+                })
+                const data = await response.json()
+                console.log(data)
+                console.log(currentUser)
+                
+            // }
+        // }
+        console.log(filtered)
+        hanna(users, currentId)
+    })
 }
-
-
-function hanna(users) {
+function hanna(users, currentId) {
     console.log(users)
     let numOfMatches = []
     let matchGames = document.querySelector(".Match__Games")
@@ -343,18 +376,63 @@ function hanna(users) {
             console.log("users:", currentUser)
             console.log(currentUser._id)
             numOfMatches.push(currentUser)
+            
+            
             console.log("hej")
-            randomMatches(numOfMatches, users)
+            
 
         }
+        
     }
     if (numOfMatches.length == 0) {
         noMatch.innerHTML = "No matches found"
         bigDiv.append(noMatch)
     }
+    randomMatches(numOfMatches, users, currentId)
 
 
 }
+
+function randomMatches(numOfMatches, users) {
+    let bigDiv = document.querySelector(".TheBigDiv")
+    let matches = document.querySelector(".Match__Lis")
+    let UserId = localStorage.getItem("userId")
+    let filtered = []
+    for(let k = 0; k < users.length; k++) {
+        if(UserId === users[k]._id) {
+            for(let i = 0; i < numOfMatches.length; i++) {
+                for (let j = 0; j < users[k].match.length; j++) {
+                    let matchUser = users[k].match[j]
+                    if (numOfMatches[i].username !== matchUser) {
+                        filtered.push(numOfMatches[i])
+                        console.log("YES!", filtered)
+                        // hanna(users, filtered)
+                    }
+                }
+            }
+        }
+    }
+
+    // console.log("filteredMatches: ", filteredMatches)
+    console.log(numOfMatches)
+    // let filteredMatches = numOfMatches.filter(function(x) { return x !== filtered})
+    bigDiv.innerHTML = ""
+    console.log("Funkar här")
+    
+    let newClone = matches.cloneNode(true)
+
+    let randomUser = filtered[Math.floor(Math.random() * filtered.length)]
+    newClone.querySelector('.Match-Username').innerHTML = randomUser.username
+    newClone.querySelector('.Match-Age').innerHTML = randomUser.age
+    newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
+    newClone.classList.remove("Prototype")
+    bigDiv.append(newClone)
+
+    likeUser(randomUser, users)
+}
+
+
+
 
 
 // function joakim(users) {
@@ -392,33 +470,37 @@ function hanna(users) {
 //     }
 // }
 
-async function likeUser(currentUser, users) {
-    let likeBtn = document.querySelector(".likeBtn")
-    let match = document.querySelector(".Match__List")
-    let profileMatchList = document.querySelector(".User__Match")
-    let userNaaame = document.querySelector(".c")
-    likeBtn.addEventListener("click", async(event) => {
-        event.preventDefault()
-        const id = localStorage.getItem("userId")
-        const response = await fetch('http://localhost:8080/match/' + id, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                match: currentUser.username
-            })
-        })
-        console.log(currentUser)
-        currentUser
-        userNaaame.innerHTML = currentUser.username
-        hanna(users)
-    })
-}
+
+
+
+// async function likeUser(currentUser, users) {
+//     let likeBtn = document.querySelector(".likeBtn")
+//     let match = document.querySelector(".Match__List")
+//     let profileMatchList = document.querySelector(".User__Match")
+//     let userNaaame = document.querySelector(".c")
+//     likeBtn.addEventListener("click", async(event) => {
+//         event.preventDefault()
+//         const id = localStorage.getItem("userId")
+//         const response = await fetch('http://localhost:8080/match/' + id, {
+//             method: 'PATCH',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//                 match: currentUser.username
+//             })
+//         })
+//         console.log(currentUser)
+//         currentUser
+//         userNaaame.innerHTML = currentUser.username
+//         hanna(users)
+//     })
+// }
 
 let goToProfile = document.querySelector(".Button__GoToProfile")
 goToProfile.addEventListener("click", async(event) => {
     event.preventDefault()
+    window.location.reload(true)
     toggling([".Profile__Wrappe"])
 })
 
