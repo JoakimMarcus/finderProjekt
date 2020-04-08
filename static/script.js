@@ -1,10 +1,10 @@
 // Login koder
 
-let form = document.querySelector(".Log-Form-1")
-form.addEventListener("submit", async(event) => {
+let form = document.querySelector('.Log-Form-1')
+form.addEventListener('submit', async(event) => {
     event.preventDefault();
-    let username = form.querySelector(".username").value
-    let password = form.querySelector(".password").value
+    let username = form.querySelector('.username').value
+    let password = form.querySelector('.password').value
     let response = await fetch('http://localhost:8080/login', {
         headers: {
             'Content-Type': 'application/json'
@@ -15,38 +15,30 @@ form.addEventListener("submit", async(event) => {
             password
         })
     })
-    console.log(response.status)
-    console.log(response.message)
+
+    let data = await response.json()
     if (response.status == 200) {
-        let data = await response.json()
-        window.localStorage.setItem("token", data.token)
-        window.localStorage.setItem("userId", data.userId)
-        toggling([".Profile__Wrappe"])
+        window.sessionStorage.setItem('token', data.token)
+        window.sessionStorage.setItem('userId', data.userId)
+        toggling(['.Profile__Wrappe'])
+        window.location.reload(true)
         secured()
-        writeProfileInfo(data.user)
     } else {
-        console.log("HANDLE ERROR ON LOGIN")
+        document.querySelector('.Success').innerHTML = 'Lösenord eller användarnamn finns ej'
+        console.log('HANDLE ERROR ON LOGIN')
     }
 })
 
-let createBtn = document.querySelector(".Create-Btn")
-createBtn.addEventListener("click", async(event) => {
-    event.preventDefault()
-    toggling([".Reg__Wrapper"])
-})
-
 async function secured() {
-    const token = window.localStorage.getItem("token")
+    const token = window.sessionStorage.getItem('token')
     let response = await fetch('http://localhost:8080/secured', {
         headers: {
             'Authorization': token
         }
     })
     let data = await response.json()
-    console.log(data.message)
     return data.message
 }
-
 
 // Registrerar sidan
 
@@ -65,39 +57,35 @@ async function createUser(username, email, password, repeatPassword, games, user
             usernameDiscord: usernameDiscord,
             usernameSteam: usernameSteam,
             usernameOrigin: usernameOrigin
-
         })
     })
-    console.log(response)
     const data = await response.json()
     if (response.status == 200) {
-        console.log(data.message)
-        if (data.message == "SUCCESS") {
-            let Success = document.querySelector(".Success")
-            Success.innerHTML = "Användare skapad!"
+        if (data.message == 'SUCCESS') {
+            let Success = document.querySelector('.Success')
+            Success.innerHTML = 'Användare skapad!'
         }
     } else {
         const data = await response.json()
-        const p = document.querySelector("p")
-        p.innerHTML = ""
+        const p = document.querySelector('p')
+        p.innerHTML = ''
         for (let i = 0; i < data.errors.length; i++) {
             const error = data.errors[i]
-            console.log(data.errors)
             switch (error) {
-                case "ERROR_USER_ALREADY_EXISTS":
-                    const hidden = document.querySelector(".Error")
-                    hidden.classList.toggle("Hidden")
-                    hidden.innerHTML = "Användarnamnet existerar redan!"
+                case 'ERROR_USER_ALREADY_EXISTS':
+                    const hidden = document.querySelector('.Error')
+                    hidden.classList.toggle('Hidden')
+                    hidden.innerHTML = 'Användarnamnet existerar redan!'
                     break;
-                case "ERROR_EMAIL_ALREADY_EXISTS":
-                    const hiddenEmail = document.querySelector(".Error__Email")
-                    hiddenEmail.classList.toggle("Hidden__Email")
-                    hiddenEmail.innerHTML = "E-mail existerar redan!"
+                case 'ERROR_EMAIL_ALREADY_EXISTS':
+                    const hiddenEmail = document.querySelector('.Error__Email')
+                    hiddenEmail.classList.toggle('Hidden__Email')
+                    hiddenEmail.innerHTML = 'E-mail existerar redan!'
                     break;
-                case "ERROR_PASSWORD_MISMATCH":
-                    const hiddenPassword = document.querySelector(".Error__Password")
-                    hiddenPassword.classList.toggle("Hidden__Password")
-                    hiddenPassword.innerHTML = "Lösenordet matchar inte"
+                case 'ERROR_PASSWORD_MISMATCH':
+                    const hiddenPassword = document.querySelector('.Error__Password')
+                    hiddenPassword.classList.toggle('Hidden__Password')
+                    hiddenPassword.innerHTML = 'Lösenordet matchar inte'
                     break;
             }
         }
@@ -105,101 +93,188 @@ async function createUser(username, email, password, repeatPassword, games, user
 }
 
 function init() {
-    let form = document.querySelector("#Reg-Form-1")
-    form.addEventListener("submit", async(event) => {
+    let form = document.querySelector('#Reg-Form-1')
+    form.addEventListener('submit', async(event) => {
         event.preventDefault()
-        const username = form.querySelector(".username").value
-        const email = form.querySelector(".email").value
-        const password = form.querySelector(".password").value
-        const repeatPassword = form.querySelector(".repeat-password").value
-        const games = form.querySelector(".gejms").value
-        const usernameDiscord = form.querySelector(".usernameDiscord").value
-        const usernameSteam = form.querySelector(".usernameSteam").value
-        const usernameOrigin = form.querySelector(".usernameOrigin").value
-        const hidden = document.querySelector(".hidden")
+        const username = form.querySelector('.username').value
+        const email = form.querySelector('.email').value
+        const password = form.querySelector('.password').value
+        const repeatPassword = form.querySelector('.repeat-password').value
+        const games = form.querySelector('.gejms').value
+        const usernameDiscord = form.querySelector('.usernameDiscord').value
+        const usernameSteam = form.querySelector('.usernameSteam').value
+        const usernameOrigin = form.querySelector('.usernameOrigin').value
+        const hidden = document.querySelector('.hidden')
         const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
-        toggling([".Log__Wrapper"])
+        toggling(['.Log__Wrapper'])
     })
 }
 init()
 
-let backBtn = document.querySelector(".Back-Btn")
-backBtn.addEventListener("click", async(event) => {
-    event.preventDefault()
-    toggling([".Log__Wrapper"])
-})
-
-
 // Profil Sidan
 function writeProfileInfo(users) {
-    const id = localStorage.getItem("userId")
+    const id = sessionStorage.getItem('userId')
     for (let i = 0; i < users.length; i++) {
         if (id == users[i]._id) {
-            console.log(id)
-            console.log(users[i].match.length)
-            console.log(users[i]._id)
-            const profileUsername = document.querySelector(".Profile-Info__Username-Age").innerHTML = users[i].username + ", " + users[i].age
-            const city = document.querySelector(".Profile-Info__City").innerHTML = users[i].city
-            const discord = document.querySelector(".Profile-Info__Username-Discord").innerHTML = users[i].usernameDiscord
-            const steam = document.querySelector(".Profile-Info__Username-Steam").innerHTML = users[i].usernameSteam
-            const origin = document.querySelector(".Profile-Info__Username-Origin").innerHTML = users[i].usernameOrigin
-                // const gender = document.querySelector(".Gender__Input").value
+            const profileUsername = document.querySelector('.Profile-Info__Username-Age').innerHTML = users[i].username + ', ' + users[i].age
+            const city = document.querySelector('.Profile-Info__City').innerHTML = users[i].city
+            const discord = document.querySelector('.Profile-Info__Username-Discord').innerHTML = users[i].usernameDiscord
+            const steam = document.querySelector('.Profile-Info__Username-Steam').innerHTML = users[i].usernameSteam
+            const origin = document.querySelector('.Profile-Info__Username-Origin').innerHTML = users[i].usernameOrigin
             for (let j = 0; j < users[i].match.length; j++) {
-                let div = document.querySelector(".Append")
-                let userMatch = document.querySelector(".User__match")
+                let div = document.querySelector('.Append')
+                let userMatch = document.querySelector('.User__match')
                 let newClone = userMatch.cloneNode(true)
-                newClone.querySelector(".c").innerHTML = users[i].match[j]
-                console.log(users[i].match[j])
-                newClone.classList.remove("Prototype")
+                newClone.querySelector('.MatchList__Username').innerHTML = users[i].match[j]
+                newClone.classList.remove('Prototype')
                 div.append(newClone)
-            }
-            let deleteBtn = document.querySelector(".deleteBtn")
-            console.log(users)
-            deleteBtn.addEventListener("click", async(event) => {
-                console.log("hej")
-                event.preventDefault()
-                const response = await fetch('http://localhost:8080/delete/' + id, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        match: users[i].username.match
+                destroyBtn = newClone.querySelector('.deleteBtn')
+                destroyBtn.addEventListener('click', async(event) => {
+                    newClone.remove()
+                    const id = sessionStorage.getItem('userId')
+                    console.log('vem tar vi bort:', users[i].match[j])
+                    let userName = users[i].match[j]
+                    const response = await fetch('http://localhost:8080/delete', {
+                        method: 'PATCH',
+                        headers: {
+                            'Authorization': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            match: users[i].match[j]
+                        })
                     })
                 })
-            })
+                clone = document.querySelector('.Match__List2')
+                MatchUserInfo = document.querySelector('.Match-User__Info')
+                usernameBtn = newClone.querySelector('.MatchList__Username')
+                usernameBtn.addEventListener('click', async(event) => {
+                    MatchUserInfo.innerHTML = ''
+                    let currentUserClicked = users[i].match[j]
+                    for (let k = 0; k < users.length; k++) {
+                        let currentUser = users[k]
+                        if (currentUser.username == currentUserClicked) {
+                            let newClone = clone.cloneNode(true)
+                            newClone.querySelector('.Match-Username').innerHTML = currentUser.username
+                            newClone.querySelector('.Match-Age').innerHTML = currentUser.age
+                            newClone.querySelector('.Match-Game').innerHTML = currentUser.games
+                            newClone.querySelector('.Match-Discord').innerHTML = currentUser.usernameDiscord
+                            newClone.querySelector('.Match-Steam').innerHTML = currentUser.usernameSteam
+                            newClone.querySelector('.Match-Origin').innerHTML = currentUser.usernameOrigin
+                            newClone.classList.remove('Prototype')
+                            MatchUserInfo.append(newClone)
+                            toggling(['.Match__User'])
+
+                        }
+                    }
+
+                })
+            }
         }
     }
 }
 
-let profileUpdateBtn = document.querySelector(".Profile-Button__Update")
-profileUpdateBtn.addEventListener("click", async(event) => {
-    event.preventDefault()
-    toggling([".Update-Profile"])
-    let users = await getUsers()
-    prePopulateForm(users)
-})
+function buttons() {
 
-let profileBtn = document.querySelector(".Match-Button")
-profileBtn.addEventListener("click", async(event) => {
-    event.preventDefault()
-    toggling([".Match__Games"])
-})
+    let userBack = document.querySelector('.User__Back')
+    userBack.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Profile__Wrappe'])
+    })
 
-let logoutBtn = document.querySelector(".Profile-Button__Logout")
-logoutBtn.addEventListener("click", async(event) => {
-    event.preventDefault()
-    window.location.reload(true)
-    window.localStorage.removeItem("token")
-    window.localStorage.removeItem("userId")
-    toggling([".Log__Wrapper"])
-})
+    let profileUpdateBtn = document.querySelector('.Profile-Button__Update')
+    profileUpdateBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        let users = await getUsers()
+        prePopulateForm(users)
+        toggling(['.Update-Profile'])
+    })
 
+    let profileBtn = document.querySelector('.Match-Button')
+    profileBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Match__Games'])
+    })
+
+    let logoutBtn = document.querySelector('.Profile-Button__Logout')
+    logoutBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        window.location.reload(true)
+            // window.sessionStorage.removeItem('token')
+            // window.sessionStorage.removeItem('userId')
+        toggling(['.Log__Wrapper'])
+    })
+
+    let backBtn = document.querySelector('.Back-Btn')
+    backBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Log__Wrapper'])
+    })
+
+    let createBtn = document.querySelector('.Create-Btn')
+    createBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Reg__Wrapper'])
+    })
+
+    let profileUpdateBackBtn = document.querySelector('.Profile-Right__Back')
+    profileUpdateBackBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Profile__Wrappe'])
+    })
+
+    let openDeleteAccountBtn = document.querySelector('.Delete__Button')
+    openDeleteAccountBtn.addEventListener('click', async(event) => {
+        deleteAccount = document.querySelector('.Delete-Account')
+        updateProfile = document.querySelector('.Update-Profile')
+        event.preventDefault()
+        updateProfile.style.filter = 'blur(2px)'
+        deleteAccount.classList.toggle('Hidden')
+    })
+
+    let closeDeleteAccountBtn = document.querySelector('.Delete-Account__Close')
+    closeDeleteAccountBtn.addEventListener('click', async(event) => {
+        deleteAccount = document.querySelector('.Delete-Account')
+        updateProfile = document.querySelector('.Update-Profile')
+        event.preventDefault()
+        updateProfile.style.filter = 'none'
+        deleteAccount.classList.toggle('Hidden')
+    })
+
+    let goToProfile = document.querySelector('.Button__GoToProfile')
+    goToProfile.addEventListener('click', async(event) => {
+        event.preventDefault()
+        window.location.reload(true)
+        toggling(['.Profile__Wrappe'])
+    })
+
+    let changePassBtn = document.querySelector('.Change-Password__Button')
+    changePassBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        let changePassword = document.querySelector('.Change__Password')
+        let updateProfile = document.querySelector('.Update-Profile')
+        updateProfile.style.filter = 'blur(2px)'
+        changePassword.classList.toggle('Hidden')
+
+        // toggling(['.Change__Password'])
+    })
+
+    let changeBackBtn = document.querySelector('.Change__Back-Btn')
+    changeBackBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        let changePassword = document.querySelector('.Change__Password')
+        let updateProfile = document.querySelector('.Update-Profile')
+        updateProfile.style.filter = 'none'
+        changePassword.classList.toggle('Hidden')
+            // toggling(['.Update-Profile'])
+    })
+}
+buttons()
 
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
-    const id = localStorage.getItem("userId")
-    const response = await fetch('http://localhost:8080/users/' + id, {
+    const id = sessionStorage.getItem('userId')
+    const response = await fetch('http://localhost:8080/users', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -214,242 +289,246 @@ async function updateUser(age, city, gender, games, discord, steam, origin) {
             usernameOrigin: origin
         })
     })
-    console.log(response)
     const data = await response.json()
-    console.log(data)
 }
 
 function updateUsersIndex() {
-    let updateProfileBtn = document.querySelector(".Profile-Right__Update")
-    console.log(updateProfileBtn)
-    updateProfileBtn.addEventListener("click", async(event) => {
-        console.log("hej")
+    let updateProfileBtn = document.querySelector('.Profile-Right__Update')
+    updateProfileBtn.addEventListener('click', async(event) => {
         event.preventDefault()
-        const age = document.querySelector(".Age__Input").value
-        const city = document.querySelector(".City__Input").value
-        const gender = document.querySelector(".Gender__Input").value
-        const discord = document.querySelector(".Discord__Input").value
-        const steam = document.querySelector(".Steam__Input").value
-        const origin = document.querySelector(".Origin__Input").value
-        const games = document.querySelector(".Profile-Right__Select-Game").value
-        const hidden = document.querySelector(".hidden")
+        const age = document.querySelector('.Age__Input').value
+        const city = document.querySelector('.City__Input').value
+        const gender = document.querySelector('.Gender__Input').value
+        const discord = document.querySelector('.Discord__Input').value
+        const steam = document.querySelector('.Steam__Input').value
+        const origin = document.querySelector('.Origin__Input').value
+        const games = document.querySelector('.Profile-Right__Select-Game').value
+        const hidden = document.querySelector('.hidden')
         const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
         window.location.reload(true)
-        toggling([".Profile__Wrappe"])
+        toggling(['.Profile__Wrappe'])
     })
 }
 updateUsersIndex()
 
 function prePopulateForm(users) {
-    const id = localStorage.getItem("userId")
+    const id = sessionStorage.getItem('userId')
     for (let i = 0; i < users.length; i++) {
         if (id == users[i]._id) {
-            const age = document.querySelector(".Age__Input").value = users[i].age
-            const city = document.querySelector(".City__Input").value = users[i].city
-            const gender = document.querySelector(".Gender__Input").value = users[i].gender
-            const discord = document.querySelector(".Discord__Input").value = users[i].usernameDiscord
-            const steam = document.querySelector(".Steam__Input").value = users[i].usernameSteam
-            const origin = document.querySelector(".Origin__Input").value = users[i].usernameOrigin
-            const games = document.querySelector(".Profile-Right__Select-Game").value = users[i].games
+            const age = document.querySelector('.Age__Input').value = users[i].age
+            const city = document.querySelector('.City__Input').value = users[i].city
+            const gender = document.querySelector('.Gender__Input').value = users[i].gender
+            const discord = document.querySelector('.Discord__Input').value = users[i].usernameDiscord
+            const steam = document.querySelector('.Steam__Input').value = users[i].usernameSteam
+            const origin = document.querySelector('.Origin__Input').value = users[i].usernameOrigin
+            const games = document.querySelector('.Profile-Right__Select-Game').value = users[i].games
         }
     }
 }
 
+async function deleteAccountFunction(deletePassword) {
+    const response = await fetch('http://localhost:8080/deleteAccount/', {
+        method: 'DELETE',
+        headers: {
+            'Authorization': sessionStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            deletePassword: deletePassword,
+        })
+    })
 
-let profileUpdateBackBtn = document.querySelector(".Profile-Right__Back")
-profileUpdateBackBtn.addEventListener("click", async(event) => {
-    event.preventDefault()
-    toggling([".Profile__Wrappe"])
-})
+    const data = await response.json()
+    if (data.message == 'Deleted') {
+        window.location.reload(true)
+            // window.sessionStorage.removeItem('token')
+            // window.sessionStorage.removeItem('userId')
+        toggling(['.Log__Wrapper'])
+    } else {
+        document.querySelector('.Input__Error').innerHTML = 'Lösenordet stämmer ej'
+    }
+}
 
+function deleteAccountIndex() {
+    let deleteAccountBtn = document.querySelector('.Delete-Account__Button')
+    deleteAccountBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        const deletePassword = document.querySelector('.Delete-Account__Password').value
+        const deleteAccounts = await deleteAccountFunction(deletePassword)
+    })
+}
+deleteAccountIndex()
+
+async function changePasswordValue() {
+    let changePasswordBtn = document.querySelector('.Change__Password-Btn')
+    changePasswordBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        var oldP = document.querySelector(".oldPassword").value
+        var newP = document.querySelector(".newPassword").value
+        var confirmP = document.querySelector(".confirmPassword").value
+        let change = await changePassword(oldP, newP, confirmP)
+    })
+}
+changePasswordValue()
+
+async function changePassword(oldP, newP, confirmP) {
+    const response = await fetch('http://localhost:8080/updatePassword', {
+        method: 'PATCH',
+        headers: {
+            'Authorization': sessionStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            oldPassword: oldP,
+            newPassword: newP,
+            confirmPassword: confirmP,
+        })
+    })
+    let data = await response.json()
+    if (data.confirm == 'Lösen ändrat') {
+        window.location.reload(true)
+        toggling(['.Profile__Wrappe'])
+        alert(data.confirm)
+    } else {
+        alert(data.error)
+    }
+}
 
 // Match Sidan
 
 function renderMatches(users) {
-    let bigDiv = document.querySelector(".TheBigDiv")
-    let matches = document.querySelector(".Match__List")
-    let matchGames = document.querySelector(".Match__Games")
-    let matchButton = document.querySelector(".Match__Button")
-    let noMatch = document.createElement("h3")
+    let matchUser = document.querySelector('.Match-User')
+    let matches = document.querySelector('.Match__List')
+    let matchGames = document.querySelector('.Match__Games')
+    let matchButton = document.querySelector('.Match__Button')
+    let noMatch = document.createElement('h3')
 
-    matchButton.addEventListener("click", async(event) => {
+    matchButton.addEventListener('click', async(event) => {
         hanna(users)
 
         // let numOfMatches = []
 
         // let newClone = matches.cloneNode(true)
-        // bigDiv.style = ""
+        // bigDiv.style = ''
         // for (let j = 0; j < users.length; j++) {
         //     let currentUser = users[j]
         //     let UserID = currentUser._id
-        //     let gejm = matchGames.querySelector(".gejms").value
+        //     let gejm = matchGames.querySelector('.gejms').value
         //     if (currentUser.games == gejm) {
-        //         console.log(currentUser._id)
         //         numOfMatches.push(currentUser)
 
         //     }
 
         // }
         // if (numOfMatches.length == 0) {
-        //     noMatch.innerHTML = "No matches found"
+        //     noMatch.innerHTML = 'No matches found'
         //     bigDiv.append(noMatch)
         // } else {
         //     let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-
         //     newClone.querySelector('.Match-Username').innerHTML = randomUser.username
         //     newClone.querySelector('.Match-Age').innerHTML = randomUser.age
-        //     newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
-        //     newClone.classList.remove("Prototype")
+        //     newClone.querySelector('.Match-Game').innerHTML = 'Spelar:' + ' ' + randomUser.games
+        //     newClone.classList.remove('Prototype')
         //     bigDiv.append(newClone)
-
         //     likeUser(randomUser)
         // }
     })
 }
 
 
-function randomMatches(numOfMatches, users) {
-    let bigDiv = document.querySelector(".TheBigDiv")
-    let matches = document.querySelector(".Match__Lis")
-    console.log("numOfMatches:", numOfMatches)
-
-    bigDiv.innerHTML = ""
-    console.log("Funkar här")
-    let newClone = matches.cloneNode(true)
-    let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-
-    newClone.querySelector('.Match-Username').innerHTML = randomUser.username
-    newClone.querySelector('.Match-Age').innerHTML = randomUser.age
-    newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
-    newClone.classList.remove("Prototype")
-    bigDiv.append(newClone)
-
-    likeUser(randomUser, users)
-}
-
-
-function hanna(users) {
-    console.log(users)
-    let numOfMatches = []
-    let matchGames = document.querySelector(".Match__Games")
-    let matches = document.querySelector(".Match__Lis")
-    let bigDiv = document.querySelector(".TheBigDiv")
-    let noMatch = document.createElement("h3")
-    for (let j = 0; j < users.length; j++) {
-        let currentUser = users[j]
-        let UserID = currentUser._id
-        let gejm = matchGames.querySelector(".gejms").value
-        if (currentUser.games == gejm) {
-            console.log("users:", currentUser)
-            console.log(currentUser._id)
-            numOfMatches.push(currentUser)
-            console.log("hej")
-            randomMatches(numOfMatches, users)
-
-        }
-    }
-    if (numOfMatches.length == 0) {
-        noMatch.innerHTML = "No matches found"
-        bigDiv.append(noMatch)
-    }
-
-
-}
-
-
-// function joakim(users) {
-//     let numOfMatches = []
-//     let matches = document.querySelector(".Match__List")
-//     let matchGames = document.querySelector(".Match__Games")
-//     let bigDiv = document.querySelector(".TheBigDiv")
-//     let noMatch = document.createElement("h3")
-//     let newClone = matches.cloneNode(true)
-//     bigDiv.style = ""
-//     for (let j = 0; j < users.length; j++) {
-//         let currentUser = users[j]
-//         let UserID = currentUser._id
-//         let gejm = matchGames.querySelector(".gejms").value
-//         if (currentUser.games == gejm) {
-//             console.log(currentUser._id)
-//             numOfMatches.push(currentUser)
-
-//         }
-
-//     }
-//     if (numOfMatches.length == 0) {
-//         noMatch.innerHTML = "No matches found"
-//         bigDiv.append(noMatch)
-//     } else {
-//         let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-
-//         newClone.querySelector('.Match-Username').innerHTML = randomUser.username
-//         newClone.querySelector('.Match-Age').innerHTML = randomUser.age
-//         newClone.querySelector('.Match-Game').innerHTML = "Spelar:" + " " + randomUser.games
-//         newClone.classList.remove("Prototype")
-//         bigDiv.append(newClone)
-
-//         likeUser(randomUser)
-//     }
-// }
 
 async function likeUser(currentUser, users) {
-    let likeBtn = document.querySelector(".likeBtn")
-    let match = document.querySelector(".Match__List")
-    let profileMatchList = document.querySelector(".User__Match")
-    let userNaaame = document.querySelector(".c")
-    likeBtn.addEventListener("click", async(event) => {
+    let likeBtn = document.querySelector('.likeBtn')
+    let dislikeBtn = document.querySelector('.dislikeBtn')
+    let matchButton = document.querySelector('.Match__Button')
+    likeBtn.addEventListener('click', async(event) => {
         event.preventDefault()
-        const id = localStorage.getItem("userId")
-        const response = await fetch('http://localhost:8080/match/' + id, {
+        let userName = currentUser.username
+        const response = await fetch('http://localhost:8080/match/' + userName, {
             method: 'PATCH',
             headers: {
+                'Authorization': sessionStorage.getItem('token'),
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                match: currentUser.username
-            })
+            }
         })
-        console.log(currentUser)
-        currentUser
-        userNaaame.innerHTML = currentUser.username
+
+        let data = await response.json()
+        if (data.message == 'Liked') {
+            hanna(users)
+        } else {
+            alert(data.error)
+            hanna(users)
+        }
+    })
+}
+
+function dislike(users) {
+    let dislikeBtn = document.querySelector('.dislikeBtn')
+    dislikeBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
         hanna(users)
     })
 }
 
-let goToProfile = document.querySelector(".Button__GoToProfile")
-goToProfile.addEventListener("click", async(event) => {
-    event.preventDefault()
-    toggling([".Profile__Wrappe"])
-})
+function hanna(users) {
+    let numOfMatches = []
+    let matchGames = document.querySelector('.Match__Games')
+    let matches = document.querySelector('.Match__List')
+    let matchUser = document.querySelector('.Match-User')
+    let noMatch = document.createElement('h3')
+    for (let j = 0; j < users.length; j++) {
+        let currentUser = users[j]
+        let UserID = currentUser._id
+        let gejm = matchGames.querySelector('.gejms').value
+        if (currentUser.games == gejm) {
+            numOfMatches.push(currentUser)
+            randomMatches(numOfMatches, users)
+        }
 
+    }
+    if (numOfMatches.length == 0) {
+        noMatch.innerHTML = 'No matches found'
+        matchUser.append(noMatch)
+    }
 
-
-// Övrigt
-
-
-async function getUsers() {
-    const usersRequest = await fetch('http://localhost:8080/users', {
-        method: 'GET'
-    })
-    const usersData = await usersRequest.json()
-        //console.log(usersData.matchList)
-    return usersData.matchList
 }
 
+function randomMatches(numOfMatches, users) {
+    let matchUser = document.querySelector('.Match-User')
+    let matches = document.querySelector('.Match__Lis')
+    matchUser.innerHTML = ''
+    let newClone = matches.cloneNode(true)
+    let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
+    newClone.querySelector('.Match-Username').innerHTML = randomUser.username
+    newClone.querySelector('.Match-Age').innerHTML = randomUser.age
+    newClone.querySelector('.Info__Game-Text').innerHTML = randomUser.games
+    newClone.classList.remove('Prototype')
+    matchUser.append(newClone)
+    likeUser(randomUser, users)
+    dislike(users)
+}
+
+// Övrigt
+async function getUsers() {
+    const usersRequest = await fetch('http://localhost:8080/users', {
+        method: 'GET',
+    })
+    const usersData = await usersRequest.json()
+    return usersData.matchList
+}
 async function getGames() {
     const request = await fetch('http://localhost:8080/games', {
         method: 'GET'
     })
     const data = await request.json()
-    console.log(data.games)
     return data.games
 }
 
 function renderGejms(games) {
-    let select = document.querySelectorAll(".gejms")
+    let select = document.querySelectorAll('.gejms')
     for (let i = 0; i < games.length; i++) {
         for (let j = 0; j < select.length; j++) {
-            let option = document.createElement("option")
+            let option = document.createElement('option')
             option.innerHTML = games[i].game
             select[j].append(option)
         }
@@ -457,60 +536,39 @@ function renderGejms(games) {
 }
 
 function toggling(ids) {
-    let hideable = document.querySelectorAll(".hideable")
+    let hideable = document.querySelectorAll('.hideable')
     for (let i = 0; i < hideable.length; i++) {
         let element = hideable[i]
-        if (!element.classList.contains("Hidden")) {
-            element.classList.toggle("Hidden")
+        if (!element.classList.contains('Hidden')) {
+            element.classList.toggle('Hidden')
         }
     }
     for (let j = 0; j < ids.length; j++) {
         let element = document.querySelector(ids[j])
-        element.classList.toggle("Hidden")
-        let currentPage = window.localStorage.setItem("currentPage", ids[j])
+        element.classList.toggle('Hidden')
+        let currentPage = window.sessionStorage.setItem('currentPage', ids[j])
     }
 }
-
 window.addEventListener('load', async(event) => {
-    let currentPage = window.localStorage.getItem("currentPage")
+    let currentPage = window.sessionStorage.getItem('currentPage')
     if (currentPage) {
-        let user = window.localStorage.getItem("userId")
-        let ids = currentPage.split(",")
+        let user = window.sessionStorage.getItem('userId')
+        let ids = currentPage.split(',')
         toggling(ids)
-            // getUsers()
-        let users = await getUsers()
-        writeProfileInfo(users)
+            // let users = await getUsers()
+            // writeProfileInfo(users)
     } else {
-        toggling([".Log__Wrapper"])
+        toggling(['.Log__Wrapper'])
     }
 });
-
-
-// 
-// function renderGames(games) {
-//     let select = document.querySelector(".gejms")
-//     for (let i = 0; i < games.length; i++) {
-//         let option = document.createElement("option")
-//         option.innerHTML = games[i].gejms
-//         select.append(option)
-
-//     }
-// }
-
 
 
 async function run() {
     let games = await getGames()
     let users = await getUsers()
-        // joakim(users)
-        // hanna(users)
     writeProfileInfo(users)
     renderMatches(users)
     renderGejms(games)
-
-    // prePopulateForm(users)
-    // let secured = await secured()
-    // updateUser(users, secured)
+    prePopulateForm(users)
 }
-
 run()
