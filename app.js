@@ -117,20 +117,41 @@ app.get('/secured', auth, (req, res) => {
     res.json({ message: `${req.user}` })
 })
 
-app.patch('/users/:id', auth, async(req, res) => {
+app.patch('/users', auth, async(req, res) => {
     let result
     if (process.env.NODE_ENV == 'development') {
-        result = await collectionsNEDB.users.update({ _id: req.params.id }, {
+        result = await collectionsNEDB.users.update({ _id: req.user }, {
             $set: req.body
         })
     } else {
-        let dataUser = await Database.collectionsNEDB.users.update({ _id: req.params.id }, {
+        let dataUser = await Database.collectionsNEDB.users.update({ _id: req.user }, {
             $set: req.body
         })
         result = await dataUser.toArray()
     }
     res.json(result)
 })
+
+app.patch('/updatePassword', auth, async(req, res) => {
+    let result
+    const user = await collectionsNEDB.users.findOne({ _id: req.user })
+    if (user.password == req.body.oldPassword) {
+        if (req.body.newPassword != req.body.oldPassword) {
+            if (req.body.newPassword == req.body.confirmPassword) {
+                result = await collectionsNEDB.users.update({ _id: req.user }, {
+                    $set: { "password": req.body.newPassword }
+                })
+                res.status(200).json({ confirm: 'Lösen ändrat' })
+
+            } else {
+                res.status(400).json({ error: 'Stämmer inte!' })
+            }
+        } else {
+            res.status(400).json({ error: 'Samma lösenord som du har nu' })
+        }
+    }
+})
+
 
 app.patch('/match/:liked_user_name', auth, async(req, res) => {
     const matchResult = await collectionsNEDB.users.findOne({ _id: req.user })
