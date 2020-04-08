@@ -247,13 +247,25 @@ function buttons() {
         window.location.reload(true)
         toggling(['.Profile__Wrappe'])
     })
+
+    let changePassBtn = document.querySelector('.Change-Password__Button')
+    changePassBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Change__Password'])
+    })
+
+    let changeBackBtn = document.querySelector('.Change__Back-Btn')
+    changeBackBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Update-Profile'])
+    })
 }
 buttons()
 
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
-    const response = await fetch('http://localhost:8080/users/' + id, {
+    const response = await fetch('http://localhost:8080/users', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -337,6 +349,41 @@ function deleteAccountIndex() {
     })
 }
 deleteAccountIndex()
+
+async function changePasswordValue() {
+    let changePasswordBtn = document.querySelector('.Change__Password-Btn')
+    changePasswordBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        var oldP = document.querySelector(".oldPassword").value
+        var newP = document.querySelector(".newPassword").value
+        var confirmP = document.querySelector(".confirmPassword").value
+        let change = await changePassword(oldP, newP, confirmP)
+    })
+}
+changePasswordValue()
+
+async function changePassword(oldP, newP, confirmP) {
+    const response = await fetch('http://localhost:8080/updatePassword', {
+        method: 'PATCH',
+        headers: {
+            'Authorization': sessionStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            oldPassword: oldP,
+            newPassword: newP,
+            confirmPassword: confirmP,
+        })
+    })
+    let data = await response.json()
+    if (data.confirm == 'Lösen ändrat') {
+        window.location.reload(true)
+        toggling(['.Profile__Wrappe'])
+        alert(data.confirm)
+    } else {
+        alert(data.error)
+    }
+}
 
 // Match Sidan
 

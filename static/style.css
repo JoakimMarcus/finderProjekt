@@ -301,7 +301,11 @@ option {
     display: flex;
     justify-content: center;
     width: 50%;
-    height: 250px;
+    height: 130px;
+}
+
+.Change-Password__Button {
+    cursor: pointer;
 }
 
 .Delete__Button {
@@ -382,6 +386,58 @@ option {
 .Input__Error {
     text-align: center;
     color: red;
+}
+
+.Change-Password__Items {
+    display: flex;
+    margin: auto;
+    background-color: white;
+    display: flex;
+    min-height: 630px;
+    width: 800px;
+    justify-content: center;
+}
+
+.Change-Password__Item {
+    width: 50%;
+}
+
+.Change-Password__Form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+}
+
+.Change-Password__Input-Wrap {
+    width: 100%;
+    overflow: hidden;
+    font-size: 20px;
+    border-bottom: 1px solid black;
+}
+
+.Change-Password__Input-Wrap input {
+    border: none;
+    outline: none;
+    background: none;
+    height: 40px;
+    padding-left: 6px;
+}
+
+.Change-Password__Container {
+    display: flex;
+}
+
+.Change__Back-Btn,
+.Change__Password-Btn {
+    background-color: black;
+    width: 50%;
+    margin: auto;
+    border-radius: 10px;
+    height: 30px;
+    color: white;
+    margin-top: 20px;
+    cursor: pointer;
 }
 
 
