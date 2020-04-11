@@ -5,7 +5,7 @@ form.addEventListener('submit', async(event) => {
     event.preventDefault();
     let username = form.querySelector('.username').value
     let password = form.querySelector('.password').value
-    let response = await fetch('http://localhost:8080/login', {
+    let response = await fetch('/login', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -31,7 +31,7 @@ form.addEventListener('submit', async(event) => {
 
 async function secured() {
     const token = window.sessionStorage.getItem('token')
-    let response = await fetch('http://localhost:8080/secured', {
+    let response = await fetch('/secured', {
         headers: {
             'Authorization': token
         }
@@ -39,11 +39,10 @@ async function secured() {
     let data = await response.json()
     return data.message
 }
-
 // Registrerar sidan
 
 async function createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin) {
-    const response = await fetch('http://localhost:8080/register', {
+    const response = await fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -60,15 +59,22 @@ async function createUser(username, email, password, repeatPassword, games, user
         })
     })
     const data = await response.json()
+    createUserHandling(data, response)
+}
+
+async function createUserHandling(data, response) {
+    console.log(response.status)
     if (response.status == 200) {
         if (data.message == 'SUCCESS') {
             let Success = document.querySelector('.Success')
             Success.innerHTML = 'Användare skapad!'
+            toggling(['.Log__Wrapper'])
         }
     } else {
-        const data = await response.json()
+        // const data = await response.json()
         const p = document.querySelector('p')
         p.innerHTML = ''
+        console.log(data.errors)
         for (let i = 0; i < data.errors.length; i++) {
             const error = data.errors[i]
             switch (error) {
@@ -106,7 +112,6 @@ function init() {
         const usernameOrigin = form.querySelector('.usernameOrigin').value
         const hidden = document.querySelector('.hidden')
         const createUsers = await createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin)
-        toggling(['.Log__Wrapper'])
     })
 }
 init()
@@ -134,7 +139,7 @@ function writeProfileInfo(users) {
                     const id = sessionStorage.getItem('userId')
                     console.log('vem tar vi bort:', users[i].match[j])
                     let userName = users[i].match[j]
-                    const response = await fetch('http://localhost:8080/delete', {
+                    const response = await fetch('/delete', {
                         method: 'PATCH',
                         headers: {
                             'Authorization': sessionStorage.getItem('token'),
@@ -265,7 +270,7 @@ buttons()
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
-    const response = await fetch('http://localhost:8080/users', {
+    const response = await fetch('/users', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -318,7 +323,7 @@ function prePopulateForm(users) {
 }
 
 async function deleteAccountFunction(deletePassword) {
-    const response = await fetch('http://localhost:8080/deleteAccount/', {
+    const response = await fetch('/deleteAccount/', {
         method: 'DELETE',
         headers: {
             'Authorization': sessionStorage.getItem('token'),
@@ -354,16 +359,16 @@ async function changePasswordValue() {
     let changePasswordBtn = document.querySelector('.Change__Password-Btn')
     changePasswordBtn.addEventListener('click', async(event) => {
         event.preventDefault()
-        var oldP = document.querySelector(".oldPassword").value
-        var newP = document.querySelector(".newPassword").value
-        var confirmP = document.querySelector(".confirmPassword").value
+        var oldP = document.querySelector('.oldPassword').value
+        var newP = document.querySelector('.newPassword').value
+        var confirmP = document.querySelector('.confirmPassword').value
         let change = await changePassword(oldP, newP, confirmP)
     })
 }
 changePasswordValue()
 
 async function changePassword(oldP, newP, confirmP) {
-    const response = await fetch('http://localhost:8080/updatePassword', {
+    const response = await fetch('/updatePassword', {
         method: 'PATCH',
         headers: {
             'Authorization': sessionStorage.getItem('token'),
@@ -432,7 +437,7 @@ async function likeUser(currentUser, users) {
     likeBtn.addEventListener('click', async(event) => {
         event.preventDefault()
         let userName = currentUser.username
-        const response = await fetch('http://localhost:8080/match/' + userName, {
+        const response = await fetch('/match/' + userName, {
             method: 'PATCH',
             headers: {
                 'Authorization': sessionStorage.getItem('token'),
@@ -487,14 +492,14 @@ function randomMatches(numOfMatches, users) {
 
 // Övrigt
 async function getUsers() {
-    const usersRequest = await fetch('http://localhost:8080/users', {
+    const usersRequest = await fetch('/users', {
         method: 'GET',
     })
     const usersData = await usersRequest.json()
     return usersData.matchList
 }
 async function getGames() {
-    const request = await fetch('http://localhost:8080/games', {
+    const request = await fetch('/games', {
         method: 'GET'
     })
     const data = await request.json()
@@ -532,6 +537,7 @@ window.addEventListener('load', async(event) => {
         let user = window.sessionStorage.getItem('userId')
         let ids = currentPage.split(',')
         toggling(ids)
+        run()
             // let users = await getUsers()
             // writeProfileInfo(users)
     } else {
@@ -548,4 +554,3 @@ async function run() {
     renderGejms(games)
     prePopulateForm(users)
 }
-run()
