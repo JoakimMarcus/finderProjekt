@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <!--Matchningslistan ska skrivas ut när man klickar på börja matcha efter man loggat in-->
+        <!--Matchningslistan-->
         <div class="Match-User">
             <div class="Inner__Div">
                 <article class="Match__Lis Prototype">
@@ -109,8 +109,9 @@
                         </div>
                     </div>
                     <div class="Match-List__Info">
-                        <div class="Game-Div">
-                            <p class="Match-Game">Spel: Båt-spelet</p>
+                        <div class="Info__Game">
+                            <i class="fas fa-gamepad"></i>
+                            <p class="Info__Game-Text">Spel: Båt-spelet</p>
                         </div>
 
                         <div class="thumbs__Buttons">
@@ -126,7 +127,6 @@
 
     <!-- Log in -->
     <div class="Log__Wrapper Hidden hideable">
-        <button class="likeBtn"></button>
         <div class="Log__Items">
             <div class="Log__Item-Left">
                 <img class="Log__Image" src="./img/loginpage.png">
@@ -314,10 +314,22 @@
                 </div>
                 <div class="Match-List__Info">
                     <div class="Game-Div">
-                        <p class="Match-Game">Spel: Båt-spelet</p>
-                        <p class="Match-Discord"></p>
-                        <p class="Match-Steam"></p>
-                        <p class="Match-Origin"></p>
+                        <div class="Profile-Info__Discord">
+                            <div class="Logo-Div"><i class="fas fa-gamepad logoGame"></i></div>
+                            <p class="Match-Game">Spel: Båt-spelet</p>
+                        </div>
+                        <div class="Profile-Info__Discord">
+                            <div class="Logo-Div"><i class="fab fa-discord Profile__Discord-Logo"></i></div>
+                            <p class="Match-Discord"></p>
+                        </div>
+                        <div class="Profile-Info__Steam">
+                            <div class="Logo-Div"><i class="fab fa-steam Profile__Steam-Logo"></i></div>
+                            <p class="Match-Steam"></p>
+                        </div>
+                        <div class="Profile-Info__Origin">
+                            <div class="Logo-Div"><img src="./img/origin.jpg" alt="" class="Origin__Logo"></div>
+                            <p class="Match-Origin"></p>
+                        </div>
                     </div>
                 </div>
             </article>
@@ -326,33 +338,33 @@
     <!-- End of User Profile Page for visitors -->
 
     <div class="Change__Password Hidden hideable">
-        <div class="Change-Password__Items">
-            <div class="Change-Password__Item">
-                <div class="Log__Logo">
-                    <img src="./img/LogoFinderV21.png">
-                </div>
-                <div class="Change-Password__Container">
-                    <form class="Change-Password__Form">
-                        <div class="Change-Password__Input-Wrap">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" name="oldPassword" placeholder="Lösenord" class="oldPassword" required>
-                        </div>
-                        <div class="Change-Password__Input-Wrap">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" name="newPassword" placeholder="Nytt Lösenord" class="newPassword" required>
-                        </div>
-                        <div class="Change-Password__Input-Wrap">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" name="confirmPassword" placeholder="Skriv in Lösenordet igen" class="confirmPassword" required>
-                        </div>
-                        <div class="Change-Password__Container">
-                            <button class="Change__Back-Btn" type="submit">Tillbaka</button>
-                            <button class="Change__Password-Btn" type="submit">Ändra</button>
-                        </div>
-                    </form>
-                </div>
+        <!-- <div class="Change-Password__Items"> -->
+        <div class="Change-Password__Item">
+            <div class="Log__Logo">
+                <img src="./img/LogoFinderV21.png">
+            </div>
+            <div class="Change-Password__Container">
+                <form class="Change-Password__Form">
+                    <div class="Change-Password__Input-Wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="oldPassword" placeholder="Lösenord" class="oldPassword" required>
+                    </div>
+                    <div class="Change-Password__Input-Wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="newPassword" placeholder="Nytt Lösenord" class="newPassword" required>
+                    </div>
+                    <div class="Change-Password__Input-Wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="confirmPassword" placeholder="Skriv in Lösenordet igen" class="confirmPassword" required>
+                    </div>
+                    <div class="Change-Password__Container">
+                        <button class="Change__Back-Btn" type="submit">Tillbaka</button>
+                        <button class="Change__Password-Btn" type="submit">Ändra</button>
+                    </div>
+                </form>
             </div>
         </div>
+        <!-- </div> -->
     </div>
 
     <script src=" ./script.js"></script>
