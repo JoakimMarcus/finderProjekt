@@ -23,7 +23,6 @@ app.use(express.static('static'))
 app.use(express.json())
 
 app.post('/register', async(req, res) => {
-    // let collections = db.collection('users')
     let user, email
 
     if (process.env.NODE_ENV == 'development') {
@@ -113,10 +112,6 @@ app.post('/login', async(req, res) => {
     }
 })
 
-app.get('/secured', auth, (req, res) => {
-    res.json({ message: `${req.user}` })
-})
-
 app.patch('/users', auth, async(req, res) => {
     let result
     if (process.env.NODE_ENV == 'development') {
@@ -198,7 +193,6 @@ app.get('/users', async(req, res) => {
 })
 
 app.get('/games', async(req, res) => {
-    // let games = db.collection('games')
     let games
     if (process.env.NODE_ENV == 'development') {
         games = await collectionsNEDB.games.find({})
@@ -222,42 +216,11 @@ async function run() {
     try {
         await Database.connect()
         const port = process.env.PORT || 5000
-        app.listen(port, () =>
-            console.log(`Server started on port ${port}!`)
-        )
+        app.listen(port)
+            
     } catch (error) {
-        console.error(error.message)
+        
     }
 
 }
 run()
-
-
-
-// //app.js
-// app.patch('/match/:liked_user_id', auth, async(req, res) => {
-//         const loggedUser = await collectionsNEDB.users.findOne({ _id: req.user })​
-//         if (!loggedUser.match.includes(req.params.liked_user_id)) {
-//             const result = await collectionsNEDB.users.update({ _id: req.user }, {
-//                 $push: { 'match': req.params.liked_user_id }
-//             })
-//             res.json(result)
-//         } else {
-//             res.json({ error: 'You already liked this user!' })
-//         }
-//     })​​
-//     // script.js
-//     ​
-// async function likeUser(userId) {
-//     const response = await fetch('/match/' + userId, {
-//         headers: {
-//             'Authorization': sessionStorage.getItem('token'),
-//         }
-//     })
-//     const data = await response.json()
-//     if (data.error) {
-//         // Handle error
-//     } else {
-//         // User succesfully liked
-//     }
-// }
