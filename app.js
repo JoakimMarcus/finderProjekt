@@ -7,25 +7,19 @@ let collectionsNEDB = {
 const app = express()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 app.use(cors())
 require('dotenv').config()
-
 let Database, db
-
 if (process.env.NODE_ENV == 'development') {
     Database = require('./database/nedb')
 } else {
     Database = require('./database/mongo')
 }
-
 app.use(express.static('static'))
-
 app.use(express.json())
-
 app.post('/register', async(req, res) => {
-    // let collections = db.collection('users')
     let user, email
-
     if (process.env.NODE_ENV == 'development') {
         user = await collectionsNEDB.users.find({ username: req.body.username })
         email = await collectionsNEDB.users.find({ email: req.body.email })
@@ -40,10 +34,13 @@ app.post('/register', async(req, res) => {
         errors.push('ERROR_PASSWORD_MISMATCH')
     } else if (user == false) {
         if (email == false) {
+            const password = req.body.password
+            const hash = await bcrypt.hash(password, 10)
+            console.log(hash)
             let newUser = {
                 username: req.body.username,
                 email: req.body.email,
-                password: req.body.password,
+                password: hash,
                 gender: '',
                 age: '',
                 city: '',
@@ -52,12 +49,10 @@ app.post('/register', async(req, res) => {
                 usernameSteam: req.body.usernameSteam,
                 usernameOrigin: req.body.usernameOrigin,
                 match: []
-
             }
             if (process.env.NODE_ENV == 'development') {
                 const result = await collectionsNEDB.users.insert(newUser)
                 res.status(200).json({ message: 'SUCCESS' })
-
             } else {
                 let db = await Database.connect()
                 let users = db.collection('users')
@@ -74,7 +69,6 @@ app.post('/register', async(req, res) => {
         res.status(400).json({ errors: errors })
     }
 })
-
 const auth = (req, res, next) => {
     try {
         if (req.headers.authorization) {
@@ -88,36 +82,28 @@ const auth = (req, res, next) => {
         res.status(403).json({ error: error })
     }
 }
-
 app.post('/login', async(req, res) => {
     let user
     if (process.env.NODE_ENV == 'development') {
-        user = await collectionsNEDB.users.find({})
+        user = await collectionsNEDB.users.findOne({ username: req.body.username })
     } else {
-        let dataUser = await Database.collections.users.find({})
+        let dataUser = await Database.collections.users.findOne({ username: req.body.username })
         user = await dataUser.toArray()
     }
-    let matchedUser
-    for (let i = 0; i < user.length; i++) {
-        if (req.body.username == user[i].username && req.body.password == user[i].password) {
-            matchedUser = user[i]
-            break
+    if (user) {
+        const correctPassword = await bcrypt.compare(req.body.password, user.password)
+        if (correctPassword) {
+            const payload = { userId: user._id }
+            const token = jwt.sign(payload, 'hej', { expiresIn: '60m' })
+            res.json({ token, userId: user._id, })
+        } else {
+            res.status(403).json({ error: 'Fel användarnamn eller lösenord' })
         }
-    }
-    if (matchedUser) {
-        const payload = { userId: matchedUser._id }
-        const token = jwt.sign(payload, 'hej', { expiresIn: '60m' })
-        res.json({ token, userId: matchedUser._id, })
     } else {
-        res.status(403).json({ error: 'Invalid Credentials' })
+        res.status(404).json({ error: 'Användaren finns inte' })
     }
 })
-
-app.get('/secured', auth, (req, res) => {
-    res.json({ message: `${req.user}` })
-})
-
-app.patch('/users', auth, async(req, res) => {
+app.patch('/usersUpdate', auth, async(req, res) => {
     let result
     if (process.env.NODE_ENV == 'development') {
         result = await collectionsNEDB.users.update({ _id: req.user }, {
@@ -131,18 +117,18 @@ app.patch('/users', auth, async(req, res) => {
     }
     res.json(result)
 })
-
 app.patch('/updatePassword', auth, async(req, res) => {
     let result
     const user = await collectionsNEDB.users.findOne({ _id: req.user })
-    if (user.password == req.body.oldPassword) {
+    const correctPassword = await bcrypt.compare(req.body.oldPassword, user.password)
+    if (correctPassword) {
         if (req.body.newPassword != req.body.oldPassword) {
             if (req.body.newPassword == req.body.confirmPassword) {
+                const hash = await bcrypt.hash(req.body.newPassword, 10)
                 result = await collectionsNEDB.users.update({ _id: req.user }, {
-                    $set: { "password": req.body.newPassword }
+                    $set: { "password": hash }
                 })
                 res.status(200).json({ confirm: 'Lösen ändrat' })
-
             } else {
                 res.status(400).json({ error: 'Stämmer inte!' })
             }
@@ -151,22 +137,20 @@ app.patch('/updatePassword', auth, async(req, res) => {
         }
     }
 })
-
-
 app.patch('/match/:liked_user_name', auth, async(req, res) => {
     const matchResult = await collectionsNEDB.users.findOne({ _id: req.user })
+    console.log('user', req.user)
+    console.log('match', matchResult)
     if (!matchResult.match.includes(req.params.liked_user_name)) {
         const result = await collectionsNEDB.users.update({ _id: req.user }, {
             $push: { 'match': req.params.liked_user_name }
         })
+        console.log('result', result)
         res.json({ message: 'Liked' })
     } else {
         res.json({ error: 'You already liked this user!' })
     }
-
-
 })
-
 app.patch('/delete', auth, async(req, res) => {
     let result
     result = await collectionsNEDB.users.update({ _id: req.user }, {
@@ -174,31 +158,27 @@ app.patch('/delete', auth, async(req, res) => {
     })
     res.json(result)
 })
-
 app.delete('/deleteAccount/', auth, async(req, res) => {
     const findOne = await collectionsNEDB.users.findOne({ _id: req.user })
-    if (req.body.deletePassword == findOne.password) {
+    const correctPassword = await bcrypt.compare(req.body.deletePassword, findOne.password)
+    if (correctPassword) {
         const result = await collectionsNEDB.users.remove({ _id: req.user })
         res.status(200).json({ message: 'Deleted' })
     } else {
         res.status(400).json({ error: 'Error' })
     }
 })
-
 app.get('/users', async(req, res) => {
     let matchList
     if (process.env.NODE_ENV == 'development') {
         matchList = await collectionsNEDB.users.find({})
-
     } else {
         let cursor = await Database.collections.users.find({})
         matchList = await cursor.toArray()
     }
     res.json({ 'matchList': matchList })
 })
-
 app.get('/games', async(req, res) => {
-    // let games = db.collection('games')
     let games
     if (process.env.NODE_ENV == 'development') {
         games = await collectionsNEDB.games.find({})
@@ -217,47 +197,11 @@ app.get('/games', async(req, res) => {
         }
     }
 })
-
 async function run() {
     try {
         await Database.connect()
         const port = process.env.PORT || 5000
-        app.listen(port, () =>
-            console.log(`Server started on port ${port}!`)
-        )
-    } catch (error) {
-        console.error(error.message)
-    }
-
+        app.listen(port)
+    } catch (error) {}
 }
 run()
-
-
-
-// //app.js
-// app.patch('/match/:liked_user_id', auth, async(req, res) => {
-//         const loggedUser = await collectionsNEDB.users.findOne({ _id: req.user })​
-//         if (!loggedUser.match.includes(req.params.liked_user_id)) {
-//             const result = await collectionsNEDB.users.update({ _id: req.user }, {
-//                 $push: { 'match': req.params.liked_user_id }
-//             })
-//             res.json(result)
-//         } else {
-//             res.json({ error: 'You already liked this user!' })
-//         }
-//     })​​
-//     // script.js
-//     ​
-// async function likeUser(userId) {
-//     const response = await fetch('/match/' + userId, {
-//         headers: {
-//             'Authorization': sessionStorage.getItem('token'),
-//         }
-//     })
-//     const data = await response.json()
-//     if (data.error) {
-//         // Handle error
-//     } else {
-//         // User succesfully liked
-//     }
-// }

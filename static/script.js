@@ -24,7 +24,7 @@ form.addEventListener('submit', async(event) => {
         window.location.reload(true)
         secured()
     } else {
-        document.querySelector('.Success').innerHTML = 'Lösenord eller användarnamn finns ej'
+        document.querySelector('.Success').innerHTML = data.error
         console.log('HANDLE ERROR ON LOGIN')
     }
 })
@@ -179,7 +179,7 @@ function writeProfileInfo(users) {
     }
 }
 
-function buttons() {
+function buttons(users) {
 
     let userBack = document.querySelector('.User__Back')
     userBack.addEventListener('click', async(event) => {
@@ -274,14 +274,15 @@ function buttons() {
             // toggling(['.Update-Profile'])
     })
 }
-buttons()
+
 
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
-    const response = await fetch('/users', {
+    const response = await fetch('/usersUpdate', {
         method: 'PATCH',
         headers: {
+            'Authorization': sessionStorage.getItem('token'),
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -458,6 +459,7 @@ async function likeUser(currentUser, users) {
         })
 
         let data = await response.json()
+        console.log(data.message)
         if (data.message == 'Liked') {
             hanna(users)
         } else {
@@ -576,4 +578,5 @@ async function run() {
     renderMatches(users)
     renderGejms(games)
     prePopulateForm(users)
+    buttons(users)
 }
