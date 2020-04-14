@@ -350,6 +350,11 @@ option {
     padding-bottom: 50px
 }
 
+.confirmChangePassword {
+    text-align: center;
+    color: red;
+}
+
 .Delete {
     width: 100%;
     display: flex;
