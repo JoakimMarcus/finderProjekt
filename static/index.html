@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/bd7880edd1.js"></script>
-    <title>Document</title>
+    <title>Finder</title>
+    <link class="logo__icon" rel="icon" href="img/LogoFinderV213.png">
 </head>
 
 <body>
@@ -96,33 +97,36 @@
                 </div>
             </div>
         </div>
-        <!--Matchningslistan ska skrivas ut när man klickar på börja matcha efter man loggat in-->
-        <div class="TheBigDiv">
-            <article class="Match__Lis Prototype">
-                <div class=" Match-List__Image-Username">
-                    <img class="Image-Username__Image" src="./img/greta.jpg" alt="">
-                    <div class="Match-Info">
-                        <h3 class="Match-Username">Greta</h3>
-                        <p class="Match-Age">Ålder:12</p>
+        <!--Matchningslistan-->
+        <div class="Match-User">
+            <div class="Inner__Div">
+                <article class="Match__Lis Prototype">
+                    <div class=" Match-List__Image-Username">
+                        <img class="Image-Username__Image" src="./img/boy-sitting.jpg" alt="">
+                        <div class="Match-Info">
+                            <h3 class="Match-Username">Greta</h3>
+                            <p class="Match-Age">Ålder:12</p>
+                        </div>
                     </div>
-                </div>
-                <div class="Match-List__Info">
-                    <div class="Info">
-                        <p class="Match-Game">Spel: Båt-spelet</p>
+                    <div class="Match-List__Info">
+                        <div class="Info__Game">
+                            <i class="fas fa-gamepad"></i>
+                            <p class="Info__Game-Text">Spel: Båt-spelet</p>
+                        </div>
+
+                        <div class="thumbs__Buttons">
+                            <i class="far fa-thumbs-up likeBtn"></i>
+                            <i class="far fa-thumbs-down dislikeBtn"></i>
+                        </div>
                     </div>
-                    <div class="thumbs__Buttons">
-                        <i class="far fa-thumbs-up likeBtn"></i>
-                        <i class="far fa-thumbs-down dislikeBtn"></i>
-                    </div>
-                </div>
-            </article>
+                </article>
+            </div>
         </div>
     </div>
     <!-- End of Matchning Page -->
 
     <!-- Log in -->
     <div class="Log__Wrapper Hidden hideable">
-        <button class="likeBtn"></button>
         <div class="Log__Items">
             <div class="Log__Item-Left">
                 <img class="Log__Image" src="./img/loginpage.png">
@@ -163,10 +167,13 @@
                 <h2 class="Profile__Heading">
                     Profilbild
                 </h2>
+
                 <div class="Profil__Picture-Button">
                     <img src="./img/LogoFinderV21.png" alt="" class="Profile__Profile-Picture">
                     <button type="submit" class="Profiles__Button">Ladda upp profilbild</button>
                 </div>
+
+
                 <div class="Profile__Gender">
                     <h3 class="Gender__Heading">Kön</h3>
                     <input type="text" name="gender" class="Gender__Input" placeholder="Kön">
@@ -201,10 +208,33 @@
                     <button type="submit" class="Profile-Right__Back nav-link">Tillbaka</button>
                     <button type="submit" class="Profile-Right__Update nav-link">Uppdatera</button>
                 </div>
+                <div class="Change-Password__Button">Vill du ändra lösenord?</div>
             </div>
+        </div>
+        <div class="Delete">
+            <div class="Delete__Button">Vill du ta bort ditt konto?</div>
         </div>
     </div>
     <!-- End of Update Profile -->
+
+    <div class="Delete-Account Hidden">
+        <div class="Delete-Account__Close">
+            <div class="Close__Heading">
+                <h3>Vill du ta bort ditt konto?</h3>
+            </div>
+            <div class="Close__Close-Button">
+                <span class="Delete-Account__Close">&times;</span>
+            </div>
+        </div>
+        <div class="Delete-Account__Input">
+            <p class="Input__Confirm">Bekräfta ditt lösenord:</p>
+            <input type="password" name="delete-password" class="Delete-Account__Password" placeholder="Skriv in ditt lösenord">
+        </div>
+        <p class="Input__Error"></p>
+        <div class="Delete-Account__Button-wrap">
+            <div class="Delete-Account__Button">Delete</div>
+        </div>
+    </div>
 
     <!-- Profile Page -->
     <div class="Profile__Wrappe Hidden hideable">
@@ -249,8 +279,8 @@
                 <h2 class="MatchList__Heading">Mina matchningar</h2>
                 <div class="Append">
                     <div class="User__match Prototype">
-                        <div class="flex">
-                            <p class="c">Username</p>
+                        <div class="MatchList__Info">
+                            <p class="MatchList__Username">Username</p>
                             <div class="center">
                                 <i class="fas fa-user-times deleteBtn"></i>
                             </div>
@@ -262,6 +292,78 @@
         </div>
     </div>
     <!-- End of Profile Page -->
+
+    <!-- User Profile Page for visitors -->
+    <div class="Match__User Hidden hideable">
+        <div class="Match-User__Logo-Button">
+            <div class="Logo-Button__Logo">
+                <img src="./img/LogoFinderV21.png" alt="">
+            </div>
+            <div class="Logo-Button__Button">
+                <p class="User__Back">Gå till profil</p>
+            </div>
+        </div>
+        <div class="Match-User__Info">
+            <article class="Match__List2 Prototype">
+                <div class="Match-List__Image-Username">
+                    <img class="Image-Username__Image" src="./img/boy-sitting.jpg" alt="">
+                    <div class="Match-Info">
+                        <h3 class="Match-Username">Greta</h3>
+                        <p class="Match-Age">Ålder:12</p>
+                    </div>
+                </div>
+                <div class="Match-List__Info">
+                    <div class="Game-Div">
+                        <div class="Profile-Info__Discord">
+                            <div class="Logo-Div"><i class="fas fa-gamepad logoGame"></i></div>
+                            <p class="Match-Game">Spel: Båt-spelet</p>
+                        </div>
+                        <div class="Profile-Info__Discord">
+                            <div class="Logo-Div"><i class="fab fa-discord Profile__Discord-Logo"></i></div>
+                            <p class="Match-Discord"></p>
+                        </div>
+                        <div class="Profile-Info__Steam">
+                            <div class="Logo-Div"><i class="fab fa-steam Profile__Steam-Logo"></i></div>
+                            <p class="Match-Steam"></p>
+                        </div>
+                        <div class="Profile-Info__Origin">
+                            <div class="Logo-Div"><img src="./img/origin.jpg" alt="" class="Origin__Logo"></div>
+                            <p class="Match-Origin"></p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <!-- End of User Profile Page for visitors -->
+
+    <div class="Change__Password Hidden hideable">
+        <div class="Change-Password__Item">
+            <div class="Log__Logo">
+                <img src="./img/LogoFinderV21.png">
+            </div>
+            <div class="Change-Password__Container">
+                <form class="Change-Password__Form">
+                    <div class="Change-Password__Input-Wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="oldPassword" placeholder="Lösenord" class="oldPassword" required>
+                    </div>
+                    <div class="Change-Password__Input-Wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="newPassword" placeholder="Nytt Lösenord" class="newPassword" required>
+                    </div>
+                    <div class="Change-Password__Input-Wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="confirmPassword" placeholder="Skriv in Lösenordet igen" class="confirmPassword" required>
+                    </div>
+                    <div class="Change-Password__Container">
+                        <button class="Change__Back-Btn" type="submit">Tillbaka</button>
+                        <button class="Change__Password-Btn" type="submit">Ändra</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src=" ./script.js"></script>
 </body>
