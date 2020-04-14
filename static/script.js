@@ -15,29 +15,20 @@ form.addEventListener('submit', async(event) => {
             password
         })
     })
-
     let data = await response.json()
+    console.log(response.status)
     if (response.status == 200) {
         window.sessionStorage.setItem('token', data.token)
         window.sessionStorage.setItem('userId', data.userId)
         toggling(['.Profile__Wrappe'])
         window.location.reload(true)
-        secured()
     } else {
-        document.querySelector('.Success').innerHTML = 'Lösenord eller användarnamn finns ej'
+        document.querySelector('.Success').innerHTML = data.error
+        console.log('HANDLE ERROR ON LOGIN')
     }
 })
 
-async function secured() {
-    const token = window.sessionStorage.getItem('token')
-    let response = await fetch('/secured', {
-        headers: {
-            'Authorization': token
-        }
-    })
-    let data = await response.json()
-    return data.message
-}
+
 // Registrerar sidan
 
 async function createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin) {
@@ -271,9 +262,10 @@ buttons()
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
-    const response = await fetch('/users', {
+    const response = await fetch('/usersUpdate', {
         method: 'PATCH',
         headers: {
+            'Authorization': sessionStorage.getItem('token'),
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
