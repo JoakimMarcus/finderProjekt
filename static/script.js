@@ -1,10 +1,6 @@
 // Login koder
 
-let form = document.querySelector('.Log-Form-1')
-form.addEventListener('submit', async(event) => {
-    event.preventDefault();
-    let username = form.querySelector('.username').value
-    let password = form.querySelector('.password').value
+async function login(username, password) {
     let response = await fetch('/login', {
         headers: {
             'Content-Type': 'application/json'
@@ -15,29 +11,31 @@ form.addEventListener('submit', async(event) => {
             password
         })
     })
-
     let data = await response.json()
-    if (response.status == 200) {
-        window.sessionStorage.setItem('token', data.token)
-        window.sessionStorage.setItem('userId', data.userId)
-        toggling(['.Profile__Wrappe'])
-        window.location.reload(true)
-        secured()
-    } else {
-        document.querySelector('.Success').innerHTML = 'Lösenord eller användarnamn finns ej'
-    }
-})
+    window.sessionStorage.setItem('token', data.token)
+    window.sessionStorage.setItem('userId', data.userId)
+    return response
+}
 
-async function secured() {
-    const token = window.sessionStorage.getItem('token')
-    let response = await fetch('/secured', {
-        headers: {
-            'Authorization': token
+function loginButton() {
+    let form = document.querySelector('.Log-Form-1')
+    form.addEventListener('submit', async(event) => {
+        event.preventDefault();
+        let username = form.querySelector('.username').value
+        let password = form.querySelector('.password').value
+        const success = await login(username, password)
+        if (success.status == 200) {
+            window.location.reload(true)
+            toggling(['.Profile__Wrappe'])
+        } else {
+            document.querySelector('.Success').innerHTML = 'Lösenord eller användarnamn finns ej'
         }
     })
-    let data = await response.json()
-    return data.message
 }
+loginButton()
+
+
+
 // Registrerar sidan
 
 async function createUser(username, email, password, repeatPassword, games, usernameDiscord, usernameSteam, usernameOrigin) {
@@ -336,12 +334,17 @@ async function deleteAccountFunction(deletePassword) {
     })
 
     const data = await response.json()
+    deleteAccountHandling(data)
+}
+
+function deleteAccountHandling(data) {
     if (data.message == 'Deleted') {
         window.location.reload(true)
         toggling(['.Log__Wrapper'])
     } else {
         document.querySelector('.Input__Error').innerHTML = 'Lösenordet stämmer ej'
     }
+
 }
 
 function deleteAccountIndex() {
@@ -380,12 +383,17 @@ async function changePassword(oldP, newP, confirmP) {
         })
     })
     let data = await response.json()
+    changePasswordHandling(data)
+}
+
+function changePasswordHandling(data) {
+    let confirm = document.querySelector('.confirmChangePassword')
     if (data.confirm == 'Lösen ändrat') {
         window.location.reload(true)
         toggling(['.Profile__Wrappe'])
         alert(data.confirm)
     } else {
-        alert(data.error)
+        confirm.innerHTML = data.error
     }
 }
 

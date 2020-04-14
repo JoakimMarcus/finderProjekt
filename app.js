@@ -112,6 +112,10 @@ app.post('/login', async(req, res) => {
     }
 })
 
+app.get('/secured', auth, (req, res) => {
+    res.json({message: `${req.user}`})
+})
+
 app.patch('/users', auth, async(req, res) => {
     let result
     if (process.env.NODE_ENV == 'development') {
