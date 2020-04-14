@@ -4,7 +4,6 @@
 }
 
 body {
-    /* background-image: linear-gradient(to right, white, grey); */
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
@@ -349,6 +348,11 @@ option {
     display: flex;
     justify-content: center;
     padding-bottom: 50px
+}
+
+.confirmChangePassword {
+    text-align: center;
+    color: red;
 }
 
 .Delete {
