@@ -269,9 +269,10 @@ buttons()
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
-    const response = await fetch('/users', {
+    const response = await fetch('/usersUpdate', {
         method: 'PATCH',
         headers: {
+            'Authorization': sessionStorage.getItem('token'),
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
