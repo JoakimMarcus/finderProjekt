@@ -25,7 +25,6 @@ form.addEventListener('submit', async(event) => {
         secured()
     } else {
         document.querySelector('.Success').innerHTML = 'Lösenord eller användarnamn finns ej'
-        console.log('HANDLE ERROR ON LOGIN')
     }
 })
 
@@ -63,7 +62,6 @@ async function createUser(username, email, password, repeatPassword, games, user
 }
 
 async function createUserHandling(data, response) {
-    console.log(response.status)
     if (response.status == 200) {
         if (data.message == 'SUCCESS') {
             let Success = document.querySelector('.Success')
@@ -71,10 +69,8 @@ async function createUserHandling(data, response) {
             toggling(['.Log__Wrapper'])
         }
     } else {
-        // const data = await response.json()
         const p = document.querySelector('p')
         p.innerHTML = ''
-        console.log(data.errors)
         for (let i = 0; i < data.errors.length; i++) {
             const error = data.errors[i]
             switch (error) {
@@ -137,7 +133,6 @@ function writeProfileInfo(users) {
                 destroyBtn.addEventListener('click', async(event) => {
                     newClone.remove()
                     const id = sessionStorage.getItem('userId')
-                    console.log('vem tar vi bort:', users[i].match[j])
                     let userName = users[i].match[j]
                     const response = await fetch('/delete', {
                         method: 'PATCH',
@@ -205,8 +200,8 @@ function buttons() {
     logoutBtn.addEventListener('click', async(event) => {
         event.preventDefault()
         window.location.reload(true)
-            // window.sessionStorage.removeItem('token')
-            // window.sessionStorage.removeItem('userId')
+        window.sessionStorage.removeItem('token')
+        window.sessionStorage.removeItem('userId')
         toggling(['.Log__Wrapper'])
     })
 
@@ -260,8 +255,6 @@ function buttons() {
         let updateProfile = document.querySelector('.Update-Profile')
         updateProfile.style.filter = 'blur(2px)'
         changePassword.classList.toggle('Hidden')
-
-        // toggling(['.Change__Password'])
     })
 
     let changeBackBtn = document.querySelector('.Change__Back-Btn')
@@ -271,7 +264,6 @@ function buttons() {
         let updateProfile = document.querySelector('.Update-Profile')
         updateProfile.style.filter = 'none'
         changePassword.classList.toggle('Hidden')
-            // toggling(['.Update-Profile'])
     })
 }
 buttons()
@@ -346,8 +338,6 @@ async function deleteAccountFunction(deletePassword) {
     const data = await response.json()
     if (data.message == 'Deleted') {
         window.location.reload(true)
-            // window.sessionStorage.removeItem('token')
-            // window.sessionStorage.removeItem('userId')
         toggling(['.Log__Wrapper'])
     } else {
         document.querySelector('.Input__Error').innerHTML = 'Lösenordet stämmer ej'
@@ -409,34 +399,7 @@ function renderMatches(users) {
     let noMatch = document.createElement('h3')
 
     matchButton.addEventListener('click', async(event) => {
-        hanna(users)
-
-        // let numOfMatches = []
-
-        // let newClone = matches.cloneNode(true)
-        // bigDiv.style = ''
-        // for (let j = 0; j < users.length; j++) {
-        //     let currentUser = users[j]
-        //     let UserID = currentUser._id
-        //     let gejm = matchGames.querySelector('.gejms').value
-        //     if (currentUser.games == gejm) {
-        //         numOfMatches.push(currentUser)
-
-        //     }
-
-        // }
-        // if (numOfMatches.length == 0) {
-        //     noMatch.innerHTML = 'No matches found'
-        //     bigDiv.append(noMatch)
-        // } else {
-        //     let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
-        //     newClone.querySelector('.Match-Username').innerHTML = randomUser.username
-        //     newClone.querySelector('.Match-Age').innerHTML = randomUser.age
-        //     newClone.querySelector('.Match-Game').innerHTML = 'Spelar:' + ' ' + randomUser.games
-        //     newClone.classList.remove('Prototype')
-        //     bigDiv.append(newClone)
-        //     likeUser(randomUser)
-        // }
+        filterUserThatPlaysTheSameGame(users)
     })
 }
 
@@ -459,10 +422,10 @@ async function likeUser(currentUser, users) {
 
         let data = await response.json()
         if (data.message == 'Liked') {
-            hanna(users)
+            filterUserThatPlaysTheSameGame(users)
         } else {
             alert(data.error)
-            hanna(users)
+            filterUserThatPlaysTheSameGame(users)
         }
     })
 }
@@ -471,11 +434,11 @@ function dislike(users) {
     let dislikeBtn = document.querySelector('.dislikeBtn')
     dislikeBtn.addEventListener('click', async(event) => {
         event.preventDefault()
-        hanna(users)
+        filterUserThatPlaysTheSameGame(users)
     })
 }
 
-function hanna(users) {
+function filterUserThatPlaysTheSameGame(users) {
     let numOfMatches = []
     let matchGames = document.querySelector('.Match__Games')
     let matches = document.querySelector('.Match__List')
@@ -561,8 +524,6 @@ window.addEventListener('load', async(event) => {
         let ids = currentPage.split(',')
         toggling(ids)
         run()
-            // let users = await getUsers()
-            // writeProfileInfo(users)
     } else {
         toggling(['.Log__Wrapper'])
     }
