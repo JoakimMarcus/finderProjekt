@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken')
 const auth = require('../assets/js/auth')
 
 
-
 router.patch('/usersUpdate', auth, async(req, res) => {
     let result
     if (process.env.NODE_ENV == 'development') {
@@ -54,11 +53,11 @@ router.delete('/deleteAccount/', auth, async(req, res) => {
     }
 })
 
-router.post('/theroute', auth, async(req, res) => {
-    let result
-    console.log(req.body.fileInput.files[0])
-    result = await Database.collections.users.update({ _id: req.user }, {
-        $set: { "img": req.body.fileInput.files[0] }
-    })
-})
+// router.post('/theroute', auth, async(req, res) => {
+//     let result
+//     console.log(req.body.fileInput.files[0])
+//     result = await Database.collections.users.update({ _id: req.user }, {
+//         $set: { "img": req.body.fileInput.files[0] }
+//     })
+// })
 module.exports = router

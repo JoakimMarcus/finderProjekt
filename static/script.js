@@ -1,10 +1,6 @@
 // Login koder
 
-let form = document.querySelector('.Log-Form-1')
-form.addEventListener('submit', async(event) => {
-    event.preventDefault();
-    let username = form.querySelector('.username').value
-    let password = form.querySelector('.password').value
+async function login(username, password) {
     let response = await fetch('/login', {
         headers: {
             'Content-Type': 'application/json'
@@ -16,17 +12,25 @@ form.addEventListener('submit', async(event) => {
         })
     })
     let data = await response.json()
-    console.log(response.status)
-    if (response.status == 200) {
-        window.sessionStorage.setItem('token', data.token)
-        window.sessionStorage.setItem('userId', data.userId)
-        toggling(['.Profile__Wrappe'])
+    window.sessionStorage.setItem('token', data.token)
+    window.sessionStorage.setItem('userId', data.userId)
+    if (response.status == 200) { return true } else { return false }
+}
+
+async function loginButton() {
+    event.preventDefault();
+    let form = document.querySelector('.Log-Form-1')
+    let username = form.querySelector('.username').value
+    let password = form.querySelector('.password').value
+    const success = await login(username, password)
+    if (success) {
         window.location.reload(true)
+        toggling(['.Profile__Wrappe'])
     } else {
-        document.querySelector('.Success').innerHTML = data.error
-        console.log('HANDLE ERROR ON LOGIN')
+        document.querySelector('.Success').innerHTML = 'Lösenord eller användarnamn finns ej'
     }
-})
+
+}
 
 
 // Registrerar sidan
@@ -49,10 +53,12 @@ async function createUser(username, email, password, repeatPassword, games, user
         })
     })
     const data = await response.json()
+    console.log(data)
     createUserHandling(data, response)
 }
 
 async function createUserHandling(data, response) {
+    console.log(response.status)
     if (response.status == 200) {
         if (data.message == 'SUCCESS') {
             let Success = document.querySelector('.Success')
@@ -102,6 +108,7 @@ function init() {
     })
 }
 init()
+
 
 // Profil Sidan
 function writeProfileInfo(users) {
@@ -174,6 +181,9 @@ function buttons() {
         event.preventDefault()
         toggling(['.Profile__Wrappe'])
     })
+
+    let form = document.querySelector('.Log-Form-1')
+    form.addEventListener('submit', loginButton)
 
     let profileUpdateBtn = document.querySelector('.Profile-Button__Update')
     profileUpdateBtn.addEventListener('click', async(event) => {
@@ -258,6 +268,15 @@ function buttons() {
         updateProfile.style.filter = 'none'
         changePassword.classList.toggle('Hidden')
     })
+
+    let updateProfileBtn = document.querySelector('.Profile-Right__Update')
+    updateProfileBtn.addEventListener('click', updateUsersIndex)
+
+    let deleteAccountBtn = document.querySelector('.Delete-Account__Button')
+    deleteAccountBtn.addEventListener('click', deleteAccountIndex)
+
+    let changePasswordBtn = document.querySelector('.Change__Password-Btn')
+    changePasswordBtn.addEventListener('click', changePasswordValue)
 }
 buttons()
 
@@ -278,29 +297,28 @@ async function updateUser(age, city, gender, games, discord, steam, origin, img)
             usernameDiscord: discord,
             usernameSteam: steam,
             usernameOrigin: origin,
+            img: img
         })
     })
     const data = await response.json()
 }
 
-function updateUsersIndex() {
-    let updateProfileBtn = document.querySelector('.Profile-Right__Update')
-    updateProfileBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        const age = document.querySelector('.Age__Input').value
-        const city = document.querySelector('.City__Input').value
-        const gender = document.querySelector('.Gender__Input').value
-        const discord = document.querySelector('.Discord__Input').value
-        const steam = document.querySelector('.Steam__Input').value
-        const origin = document.querySelector('.Origin__Input').value
-        const games = document.querySelector('.Profile-Right__Select-Game').value
-        const hidden = document.querySelector('.hidden')
-        const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
-        window.location.reload(true)
-        toggling(['.Profile__Wrappe'])
-    })
+async function updateUsersIndex() {
+    event.preventDefault();
+    const age = document.querySelector('.Age__Input').value
+    const city = document.querySelector('.City__Input').value
+    const gender = document.querySelector('.Gender__Input').value
+    const discord = document.querySelector('.Discord__Input').value
+    const steam = document.querySelector('.Steam__Input').value
+    const origin = document.querySelector('.Origin__Input').value
+    const games = document.querySelector('.Profile-Right__Select-Game').value
+    const img = document.querySelector('.myImg').src
+    const hidden = document.querySelector('.hidden')
+    const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin, img)
+    window.location.reload(true)
+    toggling(['.Profile__Wrappe'])
 }
-updateUsersIndex()
+
 
 function prePopulateForm(users) {
     const id = sessionStorage.getItem('userId')
@@ -330,35 +348,33 @@ async function deleteAccountFunction(deletePassword) {
     })
 
     const data = await response.json()
+    deleteAccountHandling(data)
+}
+
+function deleteAccountHandling(data) {
     if (data.message == 'Deleted') {
         window.location.reload(true)
         toggling(['.Log__Wrapper'])
     } else {
         document.querySelector('.Input__Error').innerHTML = 'Lösenordet stämmer ej'
     }
+
 }
 
-function deleteAccountIndex() {
-    let deleteAccountBtn = document.querySelector('.Delete-Account__Button')
-    deleteAccountBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        const deletePassword = document.querySelector('.Delete-Account__Password').value
-        const deleteAccounts = await deleteAccountFunction(deletePassword)
-    })
+async function deleteAccountIndex() {
+    event.preventDefault()
+    const deletePassword = document.querySelector('.Delete-Account__Password').value
+    const deleteAccounts = await deleteAccountFunction(deletePassword)
 }
-deleteAccountIndex()
 
 async function changePasswordValue() {
-    let changePasswordBtn = document.querySelector('.Change__Password-Btn')
-    changePasswordBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        var oldP = document.querySelector('.oldPassword').value
-        var newP = document.querySelector('.newPassword').value
-        var confirmP = document.querySelector('.confirmPassword').value
-        let change = await changePassword(oldP, newP, confirmP)
-    })
+    event.preventDefault()
+    var oldP = document.querySelector('.oldPassword').value
+    var newP = document.querySelector('.newPassword').value
+    var confirmP = document.querySelector('.confirmPassword').value
+    let change = await changePassword(oldP, newP, confirmP)
 }
-changePasswordValue()
+
 
 async function changePassword(oldP, newP, confirmP) {
     const response = await fetch('/updatePassword', {
@@ -374,12 +390,17 @@ async function changePassword(oldP, newP, confirmP) {
         })
     })
     let data = await response.json()
+    changePasswordHandling(data)
+}
+
+function changePasswordHandling(data) {
+    let confirm = document.querySelector('.confirmChangePassword')
     if (data.confirm == 'Lösen ändrat') {
         window.location.reload(true)
         toggling(['.Profile__Wrappe'])
         alert(data.confirm)
     } else {
-        alert(data.error)
+        confirm.innerHTML = data.error
     }
 }
 
@@ -524,17 +545,17 @@ window.addEventListener('load', async(event) => {
 });
 
 
-const fileInput = document.querySelector('input[type="file"]');
-fileInput.addEventListener("change", async() => {
-    await fetch('/theroute', {
-        method: 'POST',
-        headers: {
-            'Authorization': sessionStorage.getItem('token'),
-            'Content-Type': 'application/json',
-        },
-        body: fileInput.files[0]
-    })
-})
+// const fileInput = document.querySelector('input[type="file"]');
+// fileInput.addEventListener("change", async() => {
+//     await fetch('/theroute', {
+//         method: 'POST',
+//         headers: {
+//             'Authorization': sessionStorage.getItem('token'),
+//             'Content-Type': 'application/json',
+//         },
+//         body: fileInput.files[0]
+//     })
+// })
 
 // window.addEventListener('load', function() {
 //     document.querySelector('input[type="file"]').addEventListener('change', function() {

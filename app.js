@@ -20,8 +20,6 @@ app.use(authentication)
 app.use(profile)
 app.use(matching)
 
-
-
 app.get('/users', async(req, res) => {
     let matchList
     if (process.env.NODE_ENV == 'development') {
