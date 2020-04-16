@@ -54,4 +54,11 @@ router.delete('/deleteAccount/', auth, async(req, res) => {
     }
 })
 
+router.post('/theroute', auth, async(req, res) => {
+    let result
+    console.log(req.body.fileInput.files[0])
+    result = await Database.collections.users.update({ _id: req.user }, {
+        $set: { "img": req.body.fileInput.files[0] }
+    })
+})
 module.exports = router

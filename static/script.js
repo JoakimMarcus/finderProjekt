@@ -108,11 +108,13 @@ function writeProfileInfo(users) {
     const id = sessionStorage.getItem('userId')
     for (let i = 0; i < users.length; i++) {
         if (id == users[i]._id) {
+            console.log(users[i].img)
             const profileUsername = document.querySelector('.Profile-Info__Username-Age').innerHTML = users[i].username + ', ' + users[i].age
             const city = document.querySelector('.Profile-Info__City').innerHTML = users[i].city
             const discord = document.querySelector('.Profile-Info__Username-Discord').innerHTML = users[i].usernameDiscord
             const steam = document.querySelector('.Profile-Info__Username-Steam').innerHTML = users[i].usernameSteam
             const origin = document.querySelector('.Profile-Info__Username-Origin').innerHTML = users[i].usernameOrigin
+            const img = document.querySelector(".Profile-Picture__Img").src = users[i].img
             for (let j = 0; j < users[i].match.length; j++) {
                 let div = document.querySelector('.Append')
                 let userMatch = document.querySelector('.User__match')
@@ -260,7 +262,7 @@ function buttons() {
 buttons()
 
 // Uppdatera Profil
-async function updateUser(age, city, gender, games, discord, steam, origin) {
+async function updateUser(age, city, gender, games, discord, steam, origin, img) {
     const id = sessionStorage.getItem('userId')
     const response = await fetch('/usersUpdate', {
         method: 'PATCH',
@@ -275,7 +277,7 @@ async function updateUser(age, city, gender, games, discord, steam, origin) {
             games: games,
             usernameDiscord: discord,
             usernameSteam: steam,
-            usernameOrigin: origin
+            usernameOrigin: origin,
         })
     })
     const data = await response.json()
@@ -521,6 +523,32 @@ window.addEventListener('load', async(event) => {
     }
 });
 
+
+const fileInput = document.querySelector('input[type="file"]');
+fileInput.addEventListener("change", async() => {
+    await fetch('/theroute', {
+        method: 'POST',
+        headers: {
+            'Authorization': sessionStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: fileInput.files[0]
+    })
+})
+
+// window.addEventListener('load', function() {
+//     document.querySelector('input[type="file"]').addEventListener('change', function() {
+//         if (this.files && this.files[0]) {
+//             var img = document.querySelector(".myImg"); // $('img')[0]
+//             img.onload = imageIsLoaded;
+//             img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+//         }
+//     });
+// });
+
+// function imageIsLoaded() {
+//     alert(this.src);
+// }
 
 async function run() {
     let games = await getGames()
