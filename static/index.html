@@ -11,7 +11,6 @@
 </head>
 
 <body>
-    <!-- Body class?-->
 
     <!-- Register Page -->
     <div class="Reg__Wrapper Hidden hideable">
@@ -169,8 +168,10 @@
                 </h2>
 
                 <div class="Profil__Picture-Button">
-                    <img src="./img/LogoFinderV21.png" alt="" class="Profile__Profile-Picture">
-                    <button type="submit" class="Profiles__Button">Ladda upp profilbild</button>
+                    <!-- <img src="./img/LogoFinderV21.png" alt="" class="Profile__Profile-Picture">
+                    <button type="submit" class="Profiles__Button">Ladda upp profilbild</button> -->
+                    <img src="./img/finderBlue.png" alt="your image" class="Profile__Profile-Picture myImg">
+                    <input type="file" />
                 </div>
 
 
@@ -241,7 +242,7 @@
         <div class="Profile__Background">
             <div class="Profile-Picture__Wrapper">
                 <div class="Profile__Picture">
-                    <img src="./img/greta.jpg" alt="" class="Profile-Picture__Img">
+                    <img src=" " alt="" class="Profile-Picture__Img">
                 </div>
             </div>
             <div class="Profile__Info">
@@ -338,12 +339,13 @@
     <!-- End of User Profile Page for visitors -->
 
     <div class="Change__Password Hidden hideable">
-        <!-- <div class="Change-Password__Items"> -->
         <div class="Change-Password__Item">
             <div class="Log__Logo">
                 <img src="./img/LogoFinderV21.png">
             </div>
+            <p class="confirmChangePassword"></p>
             <div class="Change-Password__Container">
+
                 <form class="Change-Password__Form">
                     <div class="Change-Password__Input-Wrap">
                         <i class="fas fa-lock"></i>
@@ -364,7 +366,6 @@
                 </form>
             </div>
         </div>
-        <!-- </div> -->
     </div>
 
     <script src=" ./script.js"></script>
