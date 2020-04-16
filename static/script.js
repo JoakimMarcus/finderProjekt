@@ -174,7 +174,6 @@ function writeProfileInfo(users) {
     }
 }
 
-
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
@@ -347,9 +346,8 @@ async function likeUser(currentUser, users) {
                 'Content-Type': 'application/json',
             }
         })
-
-        let data = await response.json()
-        likeUserHandling(data)
+        let data = await response.json() <<
+            likeUserHandling(data)
     })
 }
 
@@ -578,4 +576,5 @@ async function run() {
     renderMatches(users)
     renderGejms(games)
     prePopulateForm(users)
+    buttons(users)
 }
