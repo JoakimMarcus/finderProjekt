@@ -40,7 +40,7 @@ router.post('/register', async(req, res) => {
                 match: []
             }
             if (process.env.NODE_ENV == 'development') {
-                const result = await collectionsNEDB.users.insert(newUser)
+                const result = await Database.collections.users.insert(newUser)
                 res.status(200).json({ message: 'SUCCESS' })
             } else {
                 let db = await Database.connect()
