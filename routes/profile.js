@@ -13,13 +13,13 @@ router.patch('/usersUpdate', auth, async(req, res) => {
     if (process.env.NODE_ENV == 'development') {
         result = await Database.collections.users.update({ _id: req.user }, {
             $set: {
-                "age": req.body.age,
-                "city": req.body.city,
-                "gender": req.body.gender,
-                "games": req.body.games,
-                "usernameDiscord": req.body.usernameDiscord,
-                "usernameSteam": req.body.usernameSteam,
-                "usernameOrigin": req.body.usernameOrigin,
+                'age': req.body.age,
+                'city': req.body.city,
+                'gender': req.body.gender,
+                'games': req.body.games,
+                'usernameDiscord': req.body.usernameDiscord,
+                'usernameSteam': req.body.usernameSteam,
+                'usernameOrigin': req.body.usernameOrigin,
             }
         })
     } else {
@@ -40,7 +40,7 @@ router.patch('/updatePassword', auth, async(req, res) => {
             if (req.body.newPassword == req.body.confirmPassword) {
                 const hash = await bcrypt.hash(req.body.newPassword, 10)
                 result = await Database.collections.users.update({ _id: req.user }, {
-                    $set: { "password": hash }
+                    $set: { 'password': hash }
                 })
                 res.status(200).json({ confirm: 'Lösen ändrat' })
             } else {
@@ -68,7 +68,9 @@ router.post('/fileUpload', auth, async(req, res) => {
     const filename = uuid() + '.jpg'
     fs.renameSync(req.files.avatar.tempFilePath, 'static/img-upload/' + filename)
     result = await Database.collections.users.update({ _id: req.user }, {
-        $set: { "img": filename }
+        $set: {
+            'img': filename
+        }
     })
 })
 module.exports = router
