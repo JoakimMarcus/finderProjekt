@@ -826,6 +826,11 @@ h3.Match-Username {
     margin-top: 25px;
 }
 
+.Match-Gender {
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
 .thumbs__Buttons {
     font-size: 40px;
 }

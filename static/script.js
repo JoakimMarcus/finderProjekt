@@ -115,13 +115,12 @@ function writeProfileInfo(users) {
     const id = sessionStorage.getItem('userId')
     for (let i = 0; i < users.length; i++) {
         if (id == users[i]._id) {
-            //console.log(users[i].img)
             const profileUsername = document.querySelector('.Profile-Info__Username-Age').innerHTML = users[i].username + ', ' + users[i].age
             const city = document.querySelector('.Profile-Info__City').innerHTML = users[i].city
             const discord = document.querySelector('.Profile-Info__Username-Discord').innerHTML = users[i].usernameDiscord
             const steam = document.querySelector('.Profile-Info__Username-Steam').innerHTML = users[i].usernameSteam
             const origin = document.querySelector('.Profile-Info__Username-Origin').innerHTML = users[i].usernameOrigin
-            const img = document.querySelector(".Profile-Picture__Img").src = 'img-upload/' + users[i].img
+            const img = document.querySelector('.Profile-Picture__Img').src = 'img-upload/' + users[i].img
             for (let j = 0; j < users[i].match.length; j++) {
                 let div = document.querySelector('.Append')
                 let userMatch = document.querySelector('.User__match')
@@ -155,6 +154,7 @@ function writeProfileInfo(users) {
                         let currentUser = users[k]
                         if (currentUser.username == currentUserClicked) {
                             let newClone = clone.cloneNode(true)
+                            newClone.querySelector('.Image-Username__Image').src = 'img-upload/' + currentUser.img
                             newClone.querySelector('.Match-Username').innerHTML = currentUser.username
                             newClone.querySelector('.Match-Age').innerHTML = currentUser.age
                             newClone.querySelector('.Match-Game').innerHTML = currentUser.games
@@ -227,7 +227,6 @@ const uploadFile = async(file) => {
             'Authorization': sessionStorage.getItem('token'),
         }
     })
-    console.log(result)
 }
 
 
@@ -331,7 +330,6 @@ function renderMatches(users) {
 }
 
 
-
 async function likeUser(currentUser, users) {
     let likeBtn = document.querySelector('.likeBtn')
     let dislikeBtn = document.querySelector('.dislikeBtn')
@@ -346,12 +344,12 @@ async function likeUser(currentUser, users) {
                 'Content-Type': 'application/json',
             }
         })
-        let data = await response.json() <<
-            likeUserHandling(data)
+        let data = await response.json()
+        likeUserHandling(data, users)
     })
 }
 
-function likeUserHandling(data) {
+function likeUserHandling(data, users) {
     if (data.message == 'Liked') {
         filterUserThatPlaysTheSameGame(users)
     } else {
@@ -361,8 +359,11 @@ function likeUserHandling(data) {
 }
 
 function dislike(users) {
-    event.preventDefault()
-    filterUserThatPlaysTheSameGame(users)
+    let dislikeBtn = document.querySelector('.dislikeBtn')
+    dislikeBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+        filterUserThatPlaysTheSameGame(users)
+    })
 }
 
 function filterUserThatPlaysTheSameGame(users) {
@@ -395,6 +396,7 @@ function randomMatches(numOfMatches, users) {
     let newClone = matches.cloneNode(true)
     let randomUser = numOfMatches[Math.floor(Math.random() * numOfMatches.length)]
     newClone.querySelector('.Match-Username').innerHTML = randomUser.username
+    newClone.querySelector('.Match-Gender').innerHTML = randomUser.gender
     newClone.querySelector('.Match-Age').innerHTML = randomUser.age
     newClone.querySelector('.Info__Game-Text').innerHTML = randomUser.games
     newClone.classList.remove('Prototype')
@@ -474,8 +476,6 @@ function buttons() {
     let profileUpdateBtn = document.querySelector('.Profile-Button__Update')
     profileUpdateBtn.addEventListener('click', async(event) => {
         event.preventDefault()
-        let users = await getUsers()
-        prePopulateForm(users)
         toggling(['.Update-Profile'])
     })
 
@@ -564,8 +564,6 @@ function buttons() {
     let changePasswordBtn = document.querySelector('.Change__Password-Btn')
     changePasswordBtn.addEventListener('click', changePasswordValue)
 
-    let dislikeBtn = document.querySelector('.dislikeBtn')
-    dislikeBtn.addEventListener('click', dislike)
 }
 buttons()
 
@@ -576,5 +574,4 @@ async function run() {
     renderMatches(users)
     renderGejms(games)
     prePopulateForm(users)
-    buttons(users)
 }
