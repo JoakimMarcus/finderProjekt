@@ -1,4 +1,4 @@
-const Datastore = require("nedb-promise")
+const Datastore = require('nedb-promise')
 
 const users = new Datastore({ filename: './data/users.db', autoload: true })
 const games = new Datastore({ filename: './data/games.db', autoload: true })
@@ -9,7 +9,7 @@ async function connect() {
     return {
         collection: function(collectionName) {
             let c = collections[collectionName]
-            if (!c) { throw new Error("collection not found") }
+            if (!c) { throw new Error('collection not found') }
             return c
         }
     }
