@@ -3,6 +3,7 @@ const authentication = require('./routes/authentication.js')
 const profile = require('./routes/profile.js')
 const matching = require('./routes/matching.js')
 const Database = require('./database/nedb.js')
+const fileUpload = require('express-fileupload')
 
 // 
 const app = express()
@@ -13,7 +14,9 @@ require('dotenv').config()
 // Middleware
 app.use(express.static('static'))
 app.use(express.json())
-
+app.use(fileUpload({
+    useTempFiles: true,
+}));
 
 // Routes
 app.use(authentication)
@@ -30,7 +33,6 @@ app.get('/users', async(req, res) => {
     }
     res.json({ 'matchList': matchList })
 })
-
 
 app.get('/games', async(req, res) => {
     let games
@@ -56,7 +58,7 @@ app.get('/games', async(req, res) => {
 async function run() {
     try {
         const port = process.env.PORT || 5000
-        app.listen(port)
+        app.listen(port, () => console.log('Server started'))
     } catch (error) {}
 }
 run()

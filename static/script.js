@@ -174,130 +174,6 @@ function writeProfileInfo(users) {
     }
 }
 
-const input = document.getElementById('avatar')
-input.addEventListener('change', () => {
-    uploadFile(input.files[0]);
-});
-
-const uploadFile = async(file) => {
-    const fd = new FormData();
-    fd.append('avatar', file);
-    let result = await fetch('/fileUpload', {
-        method: 'POST',
-        body: fd,
-        headers: {
-            'Authorization': sessionStorage.getItem('token'),
-        }
-    })
-    console.log(result)
-}
-
-function buttons() {
-
-    let userBack = document.querySelector('.User__Back')
-    userBack.addEventListener('click', async(event) => {
-        event.preventDefault()
-        toggling(['.Profile__Wrappe'])
-    })
-
-    let form = document.querySelector('.Log-Form-1')
-    form.addEventListener('submit', loginButton)
-
-    let profileUpdateBtn = document.querySelector('.Profile-Button__Update')
-    profileUpdateBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        let users = await getUsers()
-        prePopulateForm(users)
-        toggling(['.Update-Profile'])
-    })
-
-    let profileBtn = document.querySelector('.Match-Button')
-    profileBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        toggling(['.Match__Games'])
-    })
-
-    let logoutBtn = document.querySelector('.Profile-Button__Logout')
-    logoutBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        window.location.reload(true)
-        window.sessionStorage.removeItem('token')
-        window.sessionStorage.removeItem('userId')
-        toggling(['.Log__Wrapper'])
-    })
-
-    let backBtn = document.querySelector('.Back-Btn')
-    backBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        toggling(['.Log__Wrapper'])
-    })
-
-    let createBtn = document.querySelector('.Create-Btn')
-    createBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        toggling(['.Reg__Wrapper'])
-    })
-
-    let profileUpdateBackBtn = document.querySelector('.Profile-Right__Back')
-    profileUpdateBackBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        toggling(['.Profile__Wrappe'])
-    })
-
-    let openDeleteAccountBtn = document.querySelector('.Delete__Button')
-    openDeleteAccountBtn.addEventListener('click', async(event) => {
-        deleteAccount = document.querySelector('.Delete-Account')
-        updateProfile = document.querySelector('.Update-Profile')
-        event.preventDefault()
-        updateProfile.style.filter = 'blur(2px)'
-        deleteAccount.classList.toggle('Hidden')
-    })
-
-    let closeDeleteAccountBtn = document.querySelector('.Delete-Account__Close')
-    closeDeleteAccountBtn.addEventListener('click', async(event) => {
-        deleteAccount = document.querySelector('.Delete-Account')
-        updateProfile = document.querySelector('.Update-Profile')
-        event.preventDefault()
-        updateProfile.style.filter = 'none'
-        deleteAccount.classList.toggle('Hidden')
-    })
-
-    let goToProfile = document.querySelector('.Button__GoToProfile')
-    goToProfile.addEventListener('click', async(event) => {
-        event.preventDefault()
-        window.location.reload(true)
-        toggling(['.Profile__Wrappe'])
-    })
-
-    let changePassBtn = document.querySelector('.Change-Password__Button')
-    changePassBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        let changePassword = document.querySelector('.Change__Password')
-        let updateProfile = document.querySelector('.Update-Profile')
-        updateProfile.style.filter = 'blur(2px)'
-        changePassword.classList.toggle('Hidden')
-    })
-
-    let changeBackBtn = document.querySelector('.Change__Back-Btn')
-    changeBackBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
-        let changePassword = document.querySelector('.Change__Password')
-        let updateProfile = document.querySelector('.Update-Profile')
-        updateProfile.style.filter = 'none'
-        changePassword.classList.toggle('Hidden')
-    })
-
-    let updateProfileBtn = document.querySelector('.Profile-Right__Update')
-    updateProfileBtn.addEventListener('click', updateUsersIndex)
-
-    let deleteAccountBtn = document.querySelector('.Delete-Account__Button')
-    deleteAccountBtn.addEventListener('click', deleteAccountIndex)
-
-    let changePasswordBtn = document.querySelector('.Change__Password-Btn')
-    changePasswordBtn.addEventListener('click', changePasswordValue)
-}
-buttons()
-
 // Uppdatera Profil
 async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
@@ -329,12 +205,31 @@ async function updateUsersIndex() {
     const steam = document.querySelector('.Steam__Input').value
     const origin = document.querySelector('.Origin__Input').value
     const games = document.querySelector('.Profile-Right__Select-Game').value
-    const img = document.querySelector('.myImg').src
     const hidden = document.querySelector('.hidden')
-    const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin, img)
+    const updateUsers = await updateUser(age, city, gender, games, discord, steam, origin)
     window.location.reload(true)
     toggling(['.Profile__Wrappe'])
 }
+
+
+const input = document.getElementById('avatar')
+input.addEventListener('change', () => {
+    uploadFile(input.files[0]);
+});
+
+const uploadFile = async(file) => {
+    const fd = new FormData();
+    fd.append('avatar', file);
+    let result = await fetch('/fileUpload', {
+        method: 'POST',
+        body: fd,
+        headers: {
+            'Authorization': sessionStorage.getItem('token'),
+        }
+    })
+    console.log(result)
+}
+
 
 
 function prePopulateForm(users) {
@@ -451,23 +346,23 @@ async function likeUser(currentUser, users) {
                 'Content-Type': 'application/json',
             }
         })
-
-        let data = await response.json()
-        if (data.message == 'Liked') {
-            filterUserThatPlaysTheSameGame(users)
-        } else {
-            alert(data.error)
-            filterUserThatPlaysTheSameGame(users)
-        }
+        let data = await response.json() <<
+            likeUserHandling(data)
     })
 }
 
-function dislike(users) {
-    let dislikeBtn = document.querySelector('.dislikeBtn')
-    dislikeBtn.addEventListener('click', async(event) => {
-        event.preventDefault()
+function likeUserHandling(data) {
+    if (data.message == 'Liked') {
         filterUserThatPlaysTheSameGame(users)
-    })
+    } else {
+        alert(data.error)
+        filterUserThatPlaysTheSameGame(users)
+    }
+}
+
+function dislike(users) {
+    event.preventDefault()
+    filterUserThatPlaysTheSameGame(users)
 }
 
 function filterUserThatPlaysTheSameGame(users) {
@@ -562,31 +457,117 @@ window.addEventListener('load', async(event) => {
 });
 
 
-// const fileInput = document.querySelector('input[type="file"]');
-// fileInput.addEventListener("change", async() => {
-//     await fetch('/theroute', {
-//         method: 'POST',
-//         headers: {
-//             'Authorization': sessionStorage.getItem('token'),
-//             'Content-Type': 'application/json',
-//         },
-//         body: fileInput.files[0]
-//     })
-// })
 
-// window.addEventListener('load', function() {
-//     document.querySelector('input[type="file"]').addEventListener('change', function() {
-//         if (this.files && this.files[0]) {
-//             var img = document.querySelector(".myImg"); // $('img')[0]
-//             img.onload = imageIsLoaded;
-//             img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-//         }
-//     });
-// });
 
-// function imageIsLoaded() {
-//     alert(this.src);
-// }
+
+function buttons() {
+
+    let userBack = document.querySelector('.User__Back')
+    userBack.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Profile__Wrappe'])
+    })
+
+    let form = document.querySelector('.Log-Form-1')
+    form.addEventListener('submit', loginButton)
+
+    let profileUpdateBtn = document.querySelector('.Profile-Button__Update')
+    profileUpdateBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        let users = await getUsers()
+        prePopulateForm(users)
+        toggling(['.Update-Profile'])
+    })
+
+    let profileBtn = document.querySelector('.Match-Button')
+    profileBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Match__Games'])
+    })
+
+    let logoutBtn = document.querySelector('.Profile-Button__Logout')
+    logoutBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        window.location.reload(true)
+        window.sessionStorage.removeItem('token')
+        window.sessionStorage.removeItem('userId')
+        toggling(['.Log__Wrapper'])
+    })
+
+    let backBtn = document.querySelector('.Back-Btn')
+    backBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Log__Wrapper'])
+    })
+
+    let createBtn = document.querySelector('.Create-Btn')
+    createBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Reg__Wrapper'])
+    })
+
+    let profileUpdateBackBtn = document.querySelector('.Profile-Right__Back')
+    profileUpdateBackBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        toggling(['.Profile__Wrappe'])
+    })
+
+    let openDeleteAccountBtn = document.querySelector('.Delete__Button')
+    openDeleteAccountBtn.addEventListener('click', async(event) => {
+        deleteAccount = document.querySelector('.Delete-Account')
+        updateProfile = document.querySelector('.Update-Profile')
+        event.preventDefault()
+        updateProfile.style.filter = 'blur(2px)'
+        deleteAccount.classList.toggle('Hidden')
+    })
+
+    let closeDeleteAccountBtn = document.querySelector('.Delete-Account__Close')
+    closeDeleteAccountBtn.addEventListener('click', async(event) => {
+        deleteAccount = document.querySelector('.Delete-Account')
+        updateProfile = document.querySelector('.Update-Profile')
+        event.preventDefault()
+        updateProfile.style.filter = 'none'
+        deleteAccount.classList.toggle('Hidden')
+    })
+
+    let goToProfile = document.querySelector('.Button__GoToProfile')
+    goToProfile.addEventListener('click', async(event) => {
+        event.preventDefault()
+        window.location.reload(true)
+        toggling(['.Profile__Wrappe'])
+    })
+
+    let changePassBtn = document.querySelector('.Change-Password__Button')
+    changePassBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        let changePassword = document.querySelector('.Change__Password')
+        let updateProfile = document.querySelector('.Update-Profile')
+        updateProfile.style.filter = 'blur(2px)'
+        changePassword.classList.toggle('Hidden')
+    })
+
+    let changeBackBtn = document.querySelector('.Change__Back-Btn')
+    changeBackBtn.addEventListener('click', async(event) => {
+        event.preventDefault()
+        let changePassword = document.querySelector('.Change__Password')
+        let updateProfile = document.querySelector('.Update-Profile')
+        updateProfile.style.filter = 'none'
+        changePassword.classList.toggle('Hidden')
+    })
+
+    let updateProfileBtn = document.querySelector('.Profile-Right__Update')
+    updateProfileBtn.addEventListener('click', updateUsersIndex)
+
+    let deleteAccountBtn = document.querySelector('.Delete-Account__Button')
+    deleteAccountBtn.addEventListener('click', deleteAccountIndex)
+
+    let changePasswordBtn = document.querySelector('.Change__Password-Btn')
+    changePasswordBtn.addEventListener('click', changePasswordValue)
+
+    let dislikeBtn = document.querySelector('.dislikeBtn')
+    dislikeBtn.addEventListener('click', dislike)
+}
+buttons()
 
 async function run() {
     let games = await getGames()
@@ -595,4 +576,5 @@ async function run() {
     renderMatches(users)
     renderGejms(games)
     prePopulateForm(users)
+    buttons(users)
 }
