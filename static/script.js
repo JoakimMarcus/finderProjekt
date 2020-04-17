@@ -115,13 +115,13 @@ function writeProfileInfo(users) {
     const id = sessionStorage.getItem('userId')
     for (let i = 0; i < users.length; i++) {
         if (id == users[i]._id) {
-            console.log(users[i].img)
+            //console.log(users[i].img)
             const profileUsername = document.querySelector('.Profile-Info__Username-Age').innerHTML = users[i].username + ', ' + users[i].age
             const city = document.querySelector('.Profile-Info__City').innerHTML = users[i].city
             const discord = document.querySelector('.Profile-Info__Username-Discord').innerHTML = users[i].usernameDiscord
             const steam = document.querySelector('.Profile-Info__Username-Steam').innerHTML = users[i].usernameSteam
             const origin = document.querySelector('.Profile-Info__Username-Origin').innerHTML = users[i].usernameOrigin
-            const img = document.querySelector(".Profile-Picture__Img").src = users[i].img
+            const img = document.querySelector(".Profile-Picture__Img").src = 'img-upload/' + users[i].img
             for (let j = 0; j < users[i].match.length; j++) {
                 let div = document.querySelector('.Append')
                 let userMatch = document.querySelector('.User__match')
@@ -172,6 +172,24 @@ function writeProfileInfo(users) {
             }
         }
     }
+}
+
+const input = document.getElementById('avatar')
+input.addEventListener('change', () => {
+    uploadFile(input.files[0]);
+});
+
+const uploadFile = async(file) => {
+    const fd = new FormData();
+    fd.append('avatar', file);
+    let result = await fetch('/fileUpload', {
+        method: 'POST',
+        body: fd,
+        headers: {
+            'Authorization': sessionStorage.getItem('token'),
+        }
+    })
+    console.log(result)
 }
 
 function buttons() {
@@ -281,7 +299,7 @@ function buttons() {
 buttons()
 
 // Uppdatera Profil
-async function updateUser(age, city, gender, games, discord, steam, origin, img) {
+async function updateUser(age, city, gender, games, discord, steam, origin) {
     const id = sessionStorage.getItem('userId')
     const response = await fetch('/usersUpdate', {
         method: 'PATCH',
@@ -297,7 +315,6 @@ async function updateUser(age, city, gender, games, discord, steam, origin, img)
             usernameDiscord: discord,
             usernameSteam: steam,
             usernameOrigin: origin,
-            img: img
         })
     })
     const data = await response.json()
